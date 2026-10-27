@@ -12,6 +12,8 @@
 import {cpSync, existsSync, readFileSync, rmSync, writeFileSync} from 'node:fs'
 import {dirname, join} from 'node:path'
 import {fileURLToPath} from 'node:url'
+import vm from 'node:vm'
+import {applySEO} from './seo.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const pub = join(root, 'public')
@@ -82,6 +84,7 @@ async function loadArticles() {
   return (await res.json()).result
 }
 
+let ARTICLES
 if (projectId || fixture) {
   const raw = await loadArticles()
   const articles = raw.map((a, i) => {
@@ -102,10 +105,16 @@ if (projectId || fixture) {
   })
   const file = `/* Generated from Sanity at build time. Do not edit: changes are overwritten. */\nwindow.HOP_ARTICLES = ${JSON.stringify(articles, null, 2)};\n`
   writeFileSync(join(dist, 'assets', 'articles.js'), file)
+  ARTICLES = articles
   console.log(`House of Poland: ${articles.length} article(s) from ${fixture ? 'fixture' : `Sanity project ${projectId}`}`)
 } else {
   console.log('House of Poland: SANITY_PROJECT_ID not set, using the sample articles')
+  const sandbox = {window: {}}
+  vm.runInNewContext(readFileSync(join(pub, 'assets', 'articles.js'), 'utf8'), sandbox)
+  ARTICLES = sandbox.window.HOP_ARTICLES || []
 }
+
+applySEO(dist, ARTICLES)
 
 if (!existsSync(join(dist, 'index.html'))) throw new Error('Build failed: dist/index.html missing')
 console.log('Built to dist/')

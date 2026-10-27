@@ -76,3 +76,10 @@ Spam protection: a hidden honeypot field, a minimum time on the page, and a rate
 - [ ] Privacy notice
 - [ ] Remove `class="wf"` for brand colours
 - [ ] Polish URLs (`/pl/...`) for search engines, if you want Polish pages indexed separately
+
+## Search (SEO) and launch switch
+
+The build writes one page per article at `/house-of-poland/<slug>`, plus canonical URLs, share cards (Open Graph), structured data, `sitemap.xml` and `robots.txt`.
+
+Until launch every page is marked `noindex`, so the vercel.app copy with placeholder text stays out of Google.
+**At launch:** in Vercel → Settings → Environment Variables add `SITE_URL` = `https://hoppartners.pl` (the final address, no trailing slash) and redeploy. That turns indexing on and points every canonical and the sitemap at the real domain. Then submit `https://hoppartners.pl/sitemap.xml` in Google Search Console.

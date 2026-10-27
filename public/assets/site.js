@@ -237,7 +237,7 @@
   function articleRow(a, q) {
     var li = el("li", "article-row");
     var link = el("a");
-    link.href = "article.html#" + a.slug;
+    link.href = "/house-of-poland/" + a.slug;
 
     var meta = el("div", "meta label");
     meta.setAttribute("data-notr", "");
@@ -291,7 +291,7 @@
     feat.textContent = "";
     if (!a) return;
     var link = el("a", "feature");
-    link.href = "article.html#" + a.slug;
+    link.href = "/house-of-poland/" + a.slug;
     var left = el("div", "feature-text");
     var meta = el("p", "label");
     meta.setAttribute("data-notr", "");
@@ -477,7 +477,13 @@
   }
 
   function renderArticlePage(root) {
-    var slug = decodeURIComponent((location.hash || "").replace(/^#/, ""));
+    /* Pre-rendered article pages carry their slug; the old article.html#slug form forwards to them */
+    var slug = root.getAttribute("data-slug");
+    if (!slug) {
+      var h = decodeURIComponent((location.hash || "").replace(/^#/, ""));
+      var hit = ARTICLES.filter(function (x) { return x.slug === h; })[0] || ARTICLES[0];
+      if (hit) { location.replace("/house-of-poland/" + hit.slug); return; }
+    }
     var idx = 0;
     ARTICLES.forEach(function (a, i) { if (a.slug === slug) idx = i; });
     var a = ARTICLES[idx];
@@ -498,7 +504,7 @@
       (a.topics || []).forEach(function (tpc) {
         var li = el("li");
         var l = el("a", "chip", tpc);
-        l.href = "articles.html#" + topicSlug(tpc);
+        l.href = "/articles#" + topicSlug(tpc);
         li.appendChild(l);
         tl.appendChild(li);
       });
@@ -508,23 +514,14 @@
     var older = ARTICLES[idx + 1], newer = ARTICLES[idx - 1];
     var prev = root.querySelector("[data-a=older]"), next = root.querySelector("[data-a=newer]");
     prev.hidden = !older; next.hidden = !newer;
-    if (older) { prev.href = "#" + older.slug; mark(prev.querySelector(".t"), older.title).textContent = tx(older.title); }
-    if (newer) { next.href = "#" + newer.slug; mark(next.querySelector(".t"), newer.title).textContent = tx(newer.title); }
+    if (older) { prev.href = "/house-of-poland/" + older.slug; mark(prev.querySelector(".t"), older.title).textContent = tx(older.title); }
+    if (newer) { next.href = "/house-of-poland/" + newer.slug; mark(next.querySelector(".t"), newer.title).textContent = tx(newer.title); }
 
     document.title = tx(a.title) + ". House of Poland · HOP.";
   }
 
   var listEl = document.getElementById("article-list");
   var articleEl = document.getElementById("article");
-  if (articleEl) {
-    window.addEventListener("hashchange", function () {
-      renderArticlePage(articleEl);
-      translateTree(articleEl, currentLang);
-      formatDates(articleEl, currentLang);
-      updateReadTimes();
-      window.scrollTo(0, 0);
-    });
-  }
 
   /* The letter, revealed on the master page */
   var toggle = document.getElementById("letter-toggle");
@@ -535,7 +532,7 @@
     if (!panel || !letter || !letterOpen) return;
     renderBody(letter, panel.querySelector("[data-a=body]"));
     var link = panel.querySelector("[data-a=open]");
-    if (link) link.href = "article.html#" + letter.slug;
+    if (link) link.href = "/house-of-poland/" + letter.slug;
   }
   if (toggle && panel) {
     var setOpen = function (open) {
@@ -793,7 +790,7 @@
   function tr(key) { return T[key][currentLang] || T[key].en; }
 
   /* On the master page, section links scroll in place instead of reloading */
-  document.querySelectorAll('a[href^="index.html#"]').forEach(function (a) {
+  document.querySelectorAll('a[href^="/#"]').forEach(function (a) {
     var id = a.getAttribute("href").split("#")[1];
     if (document.getElementById(id)) a.setAttribute("href", "#" + id);
   });

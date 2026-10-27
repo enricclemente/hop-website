@@ -93,5 +93,17 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/house-of-poland.html",
+      "destination": "/house-of-poland",
+      "permanent": true
+    },
+    {
+      "source": "/index",
+      "destination": "/",
+      "permanent": true
+    }
   ]
 }
