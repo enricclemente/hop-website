@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en" class="wf">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Contact · HOP.</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Contact HOP.: tell us about your business and where it wants to go.">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/SourceSerif4-Italic.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="assets/fonts/Manrope.woff" as="font" type="font/woff" crossorigin>
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!--HEADER-->
+<header class="site-head" id="site-head">
+  <div class="wrap head-row">
+    <a class="wordmark wordmark--cut" href="index.html" aria-label="HOP. Home"><span class="wm-word" aria-hidden="true">HOP</span><span class="wm-dot" aria-hidden="true"></span></a>
+
+    <nav class="nav" aria-label="Main">
+      <ul class="nav-links">
+        <li><a href="index.html#who" data-spy="who">Who we are</a></li>
+        <li><a href="contact.html" data-spy="contact" aria-current="page">Contact</a></li>
+        <li><a href="index.html#what" data-spy="what">What we do</a></li>
+        <li><a href="index.html#how" data-spy="how">How we work</a></li>
+        <li><a href="house-of-poland.html" data-spy="hop">House of Poland</a></li>
+      </ul>
+      <span class="nav-dot" aria-hidden="true"></span>
+    </nav>
+
+    <div class="head-tools">
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-lang="en" aria-pressed="true" lang="en">EN</button>
+        <button type="button" data-lang="pl" aria-pressed="false" lang="pl">PL</button>
+        <span class="lang-dot" aria-hidden="true"></span>
+      </div>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu">
+        <span class="menu-word"><span class="w-open">Menu</span><span class="w-close" aria-hidden="true">Close</span></span>
+        <span class="menu-icon" aria-hidden="true"><i></i><i></i></span>
+      </button>
+    </div>
+  </div>
+  <div class="progress" aria-hidden="true"><span></span></div>
+</header>
+<p class="lang-note" data-notr>PL · Tekst zastępczy. Placeholder Polish until the final copy arrives.</p>
+
+<div class="menu" id="menu" hidden>
+  <nav class="wrap menu-inner" aria-label="Menu">
+    <ol class="menu-links">
+      <li><a href="index.html#who"><span class="mnum">01</span><span class="mtxt">Who we are</span></a></li>
+      <li><a href="contact.html"><span class="mnum">02</span><span class="mtxt">Contact</span></a></li>
+      <li><a href="index.html#what"><span class="mnum">03</span><span class="mtxt">What we do</span></a></li>
+      <li><a href="index.html#how"><span class="mnum">04</span><span class="mtxt">How we work</span></a></li>
+      <li><a href="house-of-poland.html"><span class="mnum">05</span><span class="mtxt">House of Poland</span></a></li>
+      <li><a href="articles.html"><span class="mnum">06</span><span class="mtxt">All articles</span></a></li>
+    </ol>
+    <a class="btn menu-cta" href="contact.html">Send us a message <span aria-hidden="true">→</span></a>
+    <div class="menu-foot" data-notr>
+      <a href="mailto:philip@hoppartners.com">philip@hoppartners.com</a>
+      <a href="mailto:david@hoppartners.com">david@hoppartners.com</a>
+      <p class="label">Poznań</p>
+    </div>
+  </nav>
+</div>
+<!--/HEADER-->
+
+<main id="main">
+  <section class="paper contact-hero">
+    <div class="wrap">
+      <p class="label eyebrow"><span class="enum">02</span>Contact</p>
+      <h1>Tell us about the leap<span class="stop">.</span></h1>
+      <p class="lead" style="max-width:52ch">Write to us, or call one of us directly.</p>
+    </div>
+  </section>
+
+  <section class="paper contact-body">
+    <div class="wrap contact-layout">
+      <div class="form-col">
+        <form class="form" id="contact-form" novalidate>
+          <div class="form-alert" id="form-alert" tabindex="-1" hidden></div>
+
+          <fieldset class="fset">
+            <legend class="label fset-legend"><span class="enum">A</span>About you</legend>
+            <div class="grid-2">
+              <div class="fld" data-field="name">
+                <label for="c-name">Name <span class="req" aria-hidden="true">*</span></label>
+                <input id="c-name" name="name" type="text" autocomplete="name" required maxlength="120" aria-describedby="c-name-err">
+                <p class="err" id="c-name-err"></p>
+              </div>
+              <div class="fld" data-field="email">
+                <label for="c-email">Email <span class="req" aria-hidden="true">*</span></label>
+                <input id="c-email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" required maxlength="200" aria-describedby="c-email-err">
+                <p class="err" id="c-email-err"></p>
+              </div>
+              <div class="fld" data-field="company">
+                <label for="c-company">Company <span class="opt">Optional</span></label>
+                <input id="c-company" name="company" type="text" autocomplete="organization" maxlength="160">
+              </div>
+              <div class="fld" data-field="phone">
+                <label for="c-phone">Phone <span class="opt">Optional</span></label>
+                <input id="c-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="40" aria-describedby="c-phone-err">
+                <p class="err" id="c-phone-err"></p>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="fset">
+            <legend class="label fset-legend"><span class="enum">B</span>What can we help with?</legend>
+            <div class="picks">
+            <label class="pick"><input type="checkbox" name="interests" value="Brand audit"><span>Brand audit</span></label>
+            <label class="pick"><input type="checkbox" name="interests" value="Audience research"><span>Audience research</span></label>
+            <label class="pick"><input type="checkbox" name="interests" value="Positioning"><span>Positioning</span></label>
+            <label class="pick"><input type="checkbox" name="interests" value="Internationalisation"><span>Internationalisation</span></label>
+            <label class="pick"><input type="checkbox" name="interests" value="Creative platform"><span>Creative platform</span></label>
+            <label class="pick"><input type="checkbox" name="interests" value="Identity & messaging"><span>Identity &amp; messaging</span></label>
+            <label class="pick"><input type="checkbox" name="interests" value="Brand strategy"><span>Brand strategy</span></label>
+            <label class="pick"><input type="checkbox" name="interests" value="Performance"><span>Performance</span></label>
+            <label class="pick"><input type="checkbox" name="interests" value="Not sure yet"><span>Not sure yet</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="fset">
+            <legend class="label fset-legend"><span class="enum">C</span>Your project</legend>
+            <div class="fld" data-field="message">
+              <label for="c-message">Message <span class="req" aria-hidden="true">*</span></label>
+              <textarea id="c-message" name="message" rows="5" required minlength="20" maxlength="2000" aria-describedby="c-message-err c-message-count"></textarea>
+              <div class="field-foot">
+                <p class="err" id="c-message-err"></p>
+                <p class="counter label" id="c-message-count" data-notr>0 / 2000</p>
+              </div>
+            </div>
+            <div class="fld">
+              <p class="flabel" id="who-label">Who would you like to talk to?</p>
+              <div class="seg" role="radiogroup" aria-labelledby="who-label">
+                <label><input type="radio" name="partner" value="Either" checked><span>Either</span></label>
+                <label><input type="radio" name="partner" value="Philip"><span data-notr>Philip</span></label>
+                <label><input type="radio" name="partner" value="David"><span data-notr>David</span></label>
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="hp" aria-hidden="true">
+            <label for="c-website">Leave this empty</label>
+            <input id="c-website" name="website" type="text" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div class="fld consent" data-field="consent">
+            <label class="check">
+              <input id="c-consent" name="consent" type="checkbox" required aria-describedby="c-consent-err">
+              <span class="box" aria-hidden="true"></span>
+              <span>HOP. may store my details to reply. <a href="privacy.html">Privacy notice</a></span>
+            </label>
+            <p class="err" id="c-consent-err"></p>
+          </div>
+
+          <div class="submit-row">
+            <button class="btn btn--big" id="c-submit" type="submit"><span class="btn-txt">Send message</span><span class="spinner" aria-hidden="true"></span><span class="btn-arrow" aria-hidden="true">→</span></button>
+            <p class="hint draft-note" id="draft-note" hidden>Draft restored. <button type="button" class="ulink linkbtn" id="draft-clear">Clear form</button></p>
+          </div>
+        </form>
+
+        <div class="sent" id="form-sent" tabindex="-1" hidden>
+          <span class="sent-dot" aria-hidden="true"></span>
+          <h2>Thank you<span data-sent="name"></span><span class="stop">.</span></h2>
+          <p class="lead">We’ll reply to <strong data-sent="email" data-notr></strong>.</p>
+          <p class="body-copy sent-demo" hidden>Preview only: nothing was sent from this preview.</p>
+          <div class="sent-actions">
+            <a class="btn" href="index.html">Back to home</a>
+            <button class="btn btn--ghost" type="button" id="send-another">Send another message</button>
+          </div>
+        </div>
+      </div>
+
+      <aside class="contact-aside">
+        <div class="aside-card holeband">
+          <p class="label">Or reach us directly</p>
+          <div class="direct">
+            <div class="direct-p">
+              <h3 data-notr>Philip Jacobson</h3>
+              <ul class="rows" data-notr>
+                <li class="row"><a href="mailto:philip@hoppartners.com"><span class="k label">Email</span><span class="v">philip@hoppartners.com</span></a><button class="copy" type="button" data-copy="philip@hoppartners.com" aria-label="Copy Philip’s email">Copy</button></li>
+                <li class="row"><a href="tel:+48571357205"><span class="k label">Phone</span><span class="v">+48 571 357 205</span></a><button class="copy" type="button" data-copy="+48 571 357 205" aria-label="Copy Philip’s phone number">Copy</button></li>
+              </ul>
+            </div>
+            <div class="direct-p">
+              <h3 data-notr>David Anson</h3>
+              <ul class="rows" data-notr>
+                <li class="row"><a href="mailto:david@hoppartners.com"><span class="k label">Email</span><span class="v">david@hoppartners.com</span></a><button class="copy" type="button" data-copy="david@hoppartners.com" aria-label="Copy David’s email">Copy</button></li>
+                <li class="row"><a href="tel:+48602638219"><span class="k label">Phone</span><span class="v">+48 602 638 219</span></a><button class="copy" type="button" data-copy="+48 602 638 219" aria-label="Copy David’s phone number">Copy</button></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+</main>
+
+
+<!--FOOTER-->
+<footer class="site-foot carbon">
+  <div class="wrap">
+    <div class="foot-top">
+      <a class="wordmark wordmark--cut" href="index.html" aria-label="HOP. Home"><span class="wm-word" aria-hidden="true">HOP</span><span class="wm-dot" aria-hidden="true"></span></a>
+      <p class="foot-say">Say it early. Then jump.</p>
+    </div>
+    <div class="foot-grid">
+      <div class="stack-s">
+        <p class="label">Talk to us</p>
+        <a class="foot-link" href="mailto:philip@hoppartners.com" data-notr>philip@hoppartners.com</a>
+        <a class="foot-link" href="mailto:david@hoppartners.com" data-notr>david@hoppartners.com</a>
+        <a class="foot-link" href="contact.html">Contact form</a>
+      </div>
+      <div class="stack-s">
+        <p class="label">Read</p>
+        <a class="foot-link" href="house-of-poland.html">House of Poland</a>
+        <a class="foot-link" href="articles.html">All articles</a>
+        <a class="foot-link" href="article.html#say-hop">Say Hop. A letter</a>
+      </div>
+      <div class="stack-s">
+        <p class="label">Follow</p>
+        <a class="foot-link" href="#" data-notr>LinkedIn</a>
+      </div>
+      <button class="to-top" type="button" data-totop><span class="label">Back to top</span><span class="tt-dot" aria-hidden="true"></span></button>
+    </div>
+    <div class="foot-bottom">
+      <p class="label" data-notr>Poznań</p>
+      <p class="label"><a href="privacy.html">Privacy</a> · <span data-notr>© 2026 HOP.</span></p>
+    </div>
+  </div>
+</footer>
+<!--/FOOTER-->
+
+<div class="toast" role="status" aria-live="polite"></div>
+<script src="assets/articles.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>

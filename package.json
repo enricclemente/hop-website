@@ -1,0 +1,12 @@
+{
+  "name": "hop-site",
+  "private": true,
+  "version": "0.1.0",
+  "description": "HOP. website: static site on Vercel, House of Poland articles from Sanity",
+  "type": "module",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "preview": "node scripts/build.mjs && npx serve dist"
+  }
+}
