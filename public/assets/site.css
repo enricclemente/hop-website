@@ -1193,3 +1193,184 @@ html[lang="pl"] .hero { margin-top: 0; padding-top: 0; min-height: max(520px, ca
 .aside-card .row > a { display: grid; gap: 2px; padding-block: 2px; }
 .aside-card .row .k { width: auto; font-size: .625rem; }
 .foot-say { max-width: 20ch; }
+
+/* =====================================================================
+   THE STAGE  (master page)
+   One dark continuous stage, giant italic type, and one red dot that
+   leaps from the logo to the full stop of each headline as you read.
+   ===================================================================== */
+.stage { --fs-big: clamp(2.75rem, 7.4vw, 8rem); }
+.stage .carbon { border: 0; }
+.stage .sec-index { display: inline-flex; align-items: center; gap: 12px; margin-bottom: clamp(28px, 3.4vw, 48px); }
+.stage .big {
+  font-size: var(--fs-big); line-height: .98; letter-spacing: -0.03em; font-weight: 600;
+  max-width: none; text-wrap: balance;
+}
+.stage .carbon .big, .stage .carbon .statement {
+  background: var(--tex-paper) 0 0 / 360px, var(--paper);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  filter: drop-shadow(1px 2px .5px rgba(0, 0, 0, .5)) drop-shadow(3px 6px 10px rgba(0, 0, 0, .3));
+}
+@media (min-width: 621px) { .stage .big.lines .ln { display: block; } }
+
+/* Cover: the word alone in the middle, three quiet facts along the bottom */
+.stage .hero-inner { justify-self: center; justify-items: center; padding-bottom: 6vh; }
+.stage .hero .wordmark { font-size: clamp(8rem, 34vw, 30rem); margin: 0; }
+.stage .hero-foot { display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; }
+.stage .hero-tag { justify-self: start; padding-left: 0; max-width: 22ch; }
+.stage .scroll-cue { justify-self: center; flex-direction: column-reverse; gap: 10px; }
+.stage .hero-clock { justify-self: end; color: var(--graphite); }
+.stage .hero-clock time { color: var(--paper); margin-left: 8px; font-variant-numeric: tabular-nums; }
+@media (max-width: 620px) {
+  .stage .hero .wordmark { font-size: 40vw; }
+  .stage .hero-foot { grid-template-columns: 1fr 1fr; row-gap: 18px; }
+  .stage .scroll-cue { display: none; }
+}
+
+/* Proposition: the statement lights up word by word as you read it */
+.stage .intro { padding-block: var(--sp-l) var(--sp-l); }
+.stage .statement { font-size: clamp(2.5rem, 6.4vw, 7rem); line-height: 1; letter-spacing: -0.028em; max-width: 15ch; }
+.stage .statement .w { transition: opacity .25s linear; opacity: var(--wo, 1); -webkit-text-fill-color: transparent; }
+.js .stage .statement .w { --wo: .14; }
+.js .stage .statement .w.lit { --wo: 1; }
+.stage .pillars { margin-top: var(--sp-l); }
+.stage .pillar { border-top-color: var(--s-line); }
+.stage .pillar-text { color: var(--paper-dim); }
+.stage .pillar--promise { border-top-color: var(--s-line-strong); }
+.stage .promise { color: var(--paper); }
+
+/* 01 Who we are: the headline crosses the photo, inverting where it overlaps */
+.stage .who { padding-block: var(--sp-l); overflow: hidden; }
+.stage .who-stage { position: relative; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); align-items: center; }
+.stage .who-stage .window { grid-column: 6 / -1; grid-row: 1; width: calc(100% + var(--gutter)); align-self: center; }
+.stage .who-stage h2 {
+  grid-column: 1 / span 9; grid-row: 1; position: relative; z-index: 2;
+  background: none; -webkit-text-fill-color: currentColor; filter: none; color: var(--paper);
+  mix-blend-mode: difference;
+}
+.stage .who-body { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); row-gap: var(--sp-s); margin-top: var(--sp-m); }
+.stage .who-body .lead { grid-column: 1 / span 5; color: var(--paper-dim); font-size: var(--fs-lead); }
+.stage .who-body .partners { grid-column: 7 / -1; }
+.stage .who-body .closing-line { grid-column: 1 / -1; font-size: clamp(1.75rem, 3.4vw, 3rem); max-width: 20ch; color: var(--paper); }
+.stage .partner { border-top-color: var(--s-line-strong); }
+.stage .partner-name { font-size: clamp(1.5rem, 2.2vw, 2rem); }
+.stage .bio-lead { color: var(--paper); }
+@media (max-width: 999px) {
+  .stage .who-stage .window { grid-column: 4 / -1; }
+  .stage .who-stage h2 { grid-column: 1 / -1; }
+  .stage .who-body .lead, .stage .who-body .partners { grid-column: 1 / -1; }
+}
+@media (max-width: 620px) {
+  .stage .who-stage { display: block; }
+  .stage .who-stage .window { width: 82%; margin: 0 0 -18vw auto; }
+}
+
+/* 02 What we do: eight lines of giant italic; open one and it tells you more */
+.stage .what-sec { padding-block: var(--sp-l); }
+.stage .services { margin-top: var(--sp-m); border-top: 1px solid var(--s-line-strong); }
+.stage .svc-btn {
+  grid-template-columns: 3rem minmax(0, 1fr) auto 44px; grid-template-areas: "num title cat icon";
+  align-items: baseline; column-gap: clamp(12px, 2vw, 28px); padding: clamp(18px, 2vw, 28px) 0;
+}
+.stage .svc-title {
+  font-size: clamp(1.625rem, 3.6vw, 3.75rem); line-height: 1.02; letter-spacing: -0.025em; font-weight: 500;
+  color: var(--paper-dim); transition: color .4s var(--ease), transform .6s var(--ease-out);
+}
+.stage .svc-cat { text-align: right; max-width: 16ch; align-self: center; }
+.stage .plus { align-self: center; }
+.stage .num { align-self: center; padding-top: 0; }
+.stage .svc-btn:hover .svc-title, .stage .svc-btn:focus-visible .svc-title, .stage .svc-btn[aria-expanded="true"] .svc-title { color: var(--paper); transform: translateX(14px); }
+.stage .services:hover .svc-btn:not(:hover) .svc-title { color: rgba(246, 245, 240, .38); }
+.stage .svc-body p { padding: 0 0 30px calc(3rem + clamp(12px, 2vw, 28px) + 14px); max-width: 60ch; font-size: var(--fs-lead); line-height: 1.55; }
+.svc-stop { display: inline-block; }
+html.leap .svc-stop.dot-here { visibility: hidden; }
+@media (max-width: 760px) {
+  .stage .svc-btn { grid-template-columns: 2.25rem minmax(0, 1fr) 40px; grid-template-areas: "num cat icon" "num title icon"; row-gap: 6px; }
+  .stage .svc-cat { text-align: left; max-width: none; }
+  .stage .svc-body p { padding-left: calc(2.25rem + 12px); font-size: var(--fs-body); }
+}
+
+/* The letter: the one ivory sheet on the stage */
+.letter-sec { padding-block: var(--sp-m); }
+.letter-link {
+  appearance: none; width: 100%; margin: 0; padding: 0; background: none; border: 0; cursor: pointer; color: var(--foil); text-align: left;
+  display: grid; gap: clamp(12px, 2vw, 24px);
+}
+.ll-meta { display: flex; justify-content: space-between; gap: 16px; padding-top: 0; }
+.letter-sec .ll-title {
+  font-family: var(--serif); font-style: italic; font-weight: 600; font-variation-settings: "opsz" 60;
+  font-size: clamp(5rem, 19vw, 18rem); line-height: .9; letter-spacing: -0.04em; max-width: none;
+  background: none; -webkit-text-fill-color: currentColor; filter: none; color: var(--foil);
+  transition: transform .8s var(--ease-out);
+}
+.letter-link:hover .ll-title { transform: translateX(1.2vw); }
+.ll-foot { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding-top: 18px; border-top: 1px solid var(--s-line-strong); }
+.ll-sub { font-family: var(--serif); font-style: italic; font-weight: 600; font-size: var(--fs-h3); line-height: 1.15; }
+.letter-sec .ll-icon { border-color: var(--s-line-strong); }
+.letter-link:hover .ll-icon, .letter-link[aria-expanded="true"] .ll-icon { background: var(--foil); color: var(--paper); border-color: transparent; }
+.letter-sec .letter-sheet { margin-top: var(--sp-s); padding: 0; box-shadow: none; background: none; }
+.letter-sec .letter-intro { padding-bottom: 12px; }
+
+/* 03 How we work */
+.stage .how-sec { padding-block: var(--sp-l); }
+.how-head { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: clamp(28px, 3.4vw, 48px); }
+.how-head .sec-index { margin-bottom: 0; }
+.stage .steps-wrap { margin-top: var(--sp-m); }
+.stage .steps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.stage .steps::before { display: none; }
+.stage .step { padding-top: 22px; border-top: 1px solid var(--s-line-strong); }
+.stage .step-n { font-size: clamp(3.5rem, 6vw, 6rem); line-height: .9; letter-spacing: -0.04em; color: var(--paper); margin-bottom: 18px; }
+.stage .step-text { color: var(--paper-dim); }
+@media (max-width: 999px) and (min-width: 621px) { .stage .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 48px; } }
+@media (max-width: 620px) { .stage .step { border: 1px solid var(--s-line-strong); border-radius: 20px; padding: 22px; } }
+
+/* 04 Contact: the details are the design */
+.stage .contact-sec { padding-block: var(--sp-l) var(--sp-m); }
+.people { margin-top: var(--sp-m); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-s) var(--gap); }
+.person { display: grid; gap: 14px; align-content: start; padding-top: 22px; border-top: 1px solid var(--s-line-strong); min-width: 0; }
+.big-mail {
+  font-family: var(--serif); font-style: italic; font-weight: 600; font-variation-settings: "opsz" 60;
+  font-size: clamp(1.5rem, 3.1vw, 3.25rem); line-height: 1.05; letter-spacing: -0.02em;
+  color: var(--paper); text-decoration: none; overflow-wrap: anywhere;
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 2px no-repeat; padding-bottom: 4px;
+  transition: background-size .6s var(--ease-out);
+}
+.big-mail:hover, .big-mail:focus-visible { background-size: 100% 2px; }
+.person-lines { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 24px; font-size: var(--fs-small); color: var(--paper-dim); }
+.person-lines .ulink { color: var(--paper-dim); }
+.person-lines .ulink:hover { color: var(--paper); }
+.stage .copy { min-height: 32px; padding: 0 14px; font-size: .625rem; color: var(--graphite); border-color: var(--s-line); }
+.stage .copy:hover, .stage .copy.done { background: var(--paper); color: var(--foil); border-color: var(--paper); }
+.contact-cta { margin-top: var(--sp-m); }
+@media (max-width: 760px) { .people { grid-template-columns: 1fr; } }
+
+/* Footer: the word, as big as the page */
+.closing { padding: var(--sp-m) 0 calc(22px + env(safe-area-inset-bottom, 0px)); overflow: hidden; }
+.foot-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 28px 48px; align-items: end; padding-bottom: 28px; border-bottom: 1px solid var(--s-line); }
+.closing .foot-say { grid-column: auto; justify-self: start; text-align: left; font-size: clamp(1.5rem, 2.6vw, 2.5rem); max-width: 18ch; padding: 0; color: var(--paper); }
+.foot-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px 28px; border: 0; padding: 0; }
+.foot-links .foot-link { font-size: var(--fs-small); }
+.foot-giant {
+  display: flex; justify-content: center; align-items: baseline;
+  font-size: 37vw; line-height: .8; margin: 2vw 0 -5vw; text-decoration: none;
+}
+.closing .foot-bottom { margin: 0; padding-top: 18px; border-top: 1px solid var(--s-line); position: relative; z-index: 1; background: inherit; }
+@media (max-width: 760px) { .foot-row { grid-template-columns: 1fr; } .foot-links { justify-content: flex-start; } }
+
+/* The travelling dot */
+#leap-dot {
+  position: absolute; left: 0; top: 0; z-index: 30; width: 100px; height: 100px; border-radius: 50%;
+  pointer-events: none; transform-origin: 0 0; will-change: transform;
+  background: radial-gradient(circle at 64% 68%, rgba(255, 60, 40, .22), transparent 55%), radial-gradient(circle at 30% 26%, rgba(0, 0, 0, .35), transparent 60%), var(--tex-red) center / 160px, var(--red);
+  box-shadow: inset 7px 9px 9px rgba(0, 0, 0, .6), inset 2px 2px 0 rgba(0, 0, 0, .45);
+}
+html.leap [data-dot] { visibility: hidden; }
+html.leap .wordmark--hero [data-dot] { visibility: hidden; }
+/* A service's full stop: an ivory point the red dot can land on */
+.svc-stop { width: .2em; height: .2em; margin-left: .06em; border-radius: 50%; background: currentColor; color: inherit; overflow: hidden; vertical-align: baseline; line-height: 0; font-size: inherit; text-indent: -9em; }
+@media (max-width: 620px) {
+  .stage .who-stage .window { margin: 0 0 28px auto; width: 86%; }
+  .stage .who-stage h2 { mix-blend-mode: normal; }
+}
+/* Buttons may wrap rather than push the page wider */
+.btn { max-width: 100%; white-space: normal; text-align: center; line-height: 1.25; padding-block: 10px; }

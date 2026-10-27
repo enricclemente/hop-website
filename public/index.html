@@ -61,51 +61,42 @@
 </div>
 <!--/HEADER-->
 
-<main id="main">
+<main id="main" class="stage">
 
   <!-- COVER -->
   <section class="hero carbon" id="top" aria-label="HOP." data-surface="carbon" data-run="">
     <div class="hero-inner">
-      <h1 class="wordmark wordmark--press wordmark--hero" data-anchor><span class="wm-word" aria-hidden="true">hop</span><span class="wm-dot" aria-hidden="true"></span><span class="sr-only">HOP.</span></h1>
-      <p class="hero-tag">Brand strategy for businesses ready to leap</p>
+      <h1 class="wordmark wordmark--press wordmark--hero" data-anchor><span class="wm-word" aria-hidden="true">hop</span><span class="wm-dot" data-dot aria-hidden="true"></span><span class="sr-only">HOP.</span></h1>
     </div>
     <div class="hero-foot wrap">
-      <p class="label" data-notr>Poznań · 2026</p>
+      <p class="hero-tag">Brand strategy for businesses ready to leap</p>
       <a class="scroll-cue label" href="#intro"><span>Scroll</span><span class="cue" aria-hidden="true"><i></i></span></a>
+      <p class="label hero-clock" data-notr>Poznań <time id="clock"></time></p>
     </div>
   </section>
 
   <!-- PROPOSITION -->
-  <section class="intro paper" id="intro" data-surface="paper" data-run="">
+  <section class="intro carbon" id="intro" data-surface="carbon" data-run="">
     <div class="wrap">
-      <h2 class="statement" data-reveal><span class="ln">Hop! is what Poles shout as they leap.</span> <span class="ln">We help businesses take theirs<span class="stop">.</span></span></h2>
+      <h2 class="statement" id="statement">Hop! is what Poles shout as they leap. We help businesses take theirs<span class="stop" data-dot>.</span></h2>
       <ol class="pillars">
-        <li class="pillar" data-reveal>
-          <p class="label">What we see</p>
-          <p class="pillar-text">Polish excellence everywhere. Brands that haven’t caught up.</p>
-        </li>
-        <li class="pillar" data-reveal>
-          <p class="label">What we do</p>
-          <p class="pillar-text">A new brand story for the next leap.</p>
-        </li>
-        <li class="pillar pillar--promise" data-reveal>
-          <p class="label">The promise</p>
-          <p class="promise">The business is ready. Now the brand.</p>
-        </li>
+        <li class="pillar" data-reveal><p class="label">What we see</p><p class="pillar-text">Polish excellence everywhere. Brands that haven’t caught up.</p></li>
+        <li class="pillar" data-reveal><p class="label">What we do</p><p class="pillar-text">A new brand story for the next leap.</p></li>
+        <li class="pillar pillar--promise" data-reveal><p class="label">The promise</p><p class="promise">The business is ready. Now the brand.</p></li>
       </ol>
     </div>
   </section>
 
   <!-- 01 WHO WE ARE -->
-  <section class="who paper" id="who" data-surface="paper" data-run="01 Who we are">
-    <div class="wrap who-grid">
-      <header class="sec-head who-head" data-reveal>
-        <p class="label eyebrow"><span class="enum">01</span>Who we are</p>
-        <h2 class="lines"><span class="ln">Two senior partners.</span> <span class="ln">Forty years of leaps.</span> <span class="ln">Twelve together<span class="stop">.</span></span></h2>
-      </header>
-      <figure class="window" data-reveal="circle">
-        <img src="assets/partners.jpg" alt="Philip Jacobson and David Anson on a cobbled street in Poznań" width="912" height="912" loading="lazy" decoding="async">
-      </figure>
+  <section class="who carbon" id="who" data-surface="carbon" data-run="01 Who we are">
+    <div class="wrap">
+      <p class="label sec-index" data-reveal><span class="enum">01</span>Who we are</p>
+      <div class="who-stage">
+        <figure class="window" data-reveal="circle">
+          <img src="assets/partners.jpg" alt="Philip Jacobson and David Anson on a cobbled street in Poznań" width="912" height="912" loading="lazy" decoding="async">
+        </figure>
+        <h2 class="big lines"><span class="ln">Two senior partners.</span> <span class="ln">Forty years of leaps.</span> <span class="ln">Twelve together<span class="stop" data-dot>.</span></span></h2>
+      </div>
       <div class="who-body">
         <p class="lead" data-reveal>We both married into Poland, and stayed for what we found: world-class products, and almost no one telling the story.</p>
         <div class="partners">
@@ -131,68 +122,59 @@
 
   <!-- 02 WHAT WE DO -->
   <section class="carbon what-sec" id="what" data-surface="carbon" data-run="02 What we do">
-    <div class="wrap rail-grid">
-      <header class="sec-head rail" data-reveal>
-        <p class="label eyebrow"><span class="enum">02</span>What we do</p>
-        <h2 class="lines"><span class="ln">Everything the leap needs.</span> <span class="ln">One partner<span class="stop">.</span></span></h2>
-        <p class="label rail-note" data-notr>08 services</p>
-      </header>
-
+    <div class="wrap">
+      <p class="label sec-index" data-reveal><span class="enum">02</span>What we do</p>
+      <h2 class="big lines"><span class="ln">Everything the leap needs.</span> <span class="ln">One partner<span class="stop" data-dot>.</span></span></h2>
       <ol class="services" id="services">
-        <li class="service" data-reveal>
-          <h3 class="svc-h"><button class="svc-btn" type="button" aria-expanded="true" aria-controls="svc-1"><span class="num" data-notr>01</span><span class="svc-cat label">Brand audit</span><span class="svc-title">Know what you stand for.</span><span class="plus" aria-hidden="true"></span></button></h3>
-          <div class="svc-body open" id="svc-1"><div><p>Find out what everyone thinks of your brand, from leadership to entry-level employees to customers. Finding the gaps and redefining it from the inside out first is non-negotiable. It makes everything else work.</p></div></div>
+        <li class="service">
+          <h3 class="svc-h"><button class="svc-btn" type="button" aria-expanded="false" aria-controls="svc-1"><span class="num" data-notr>01</span><span class="svc-title">Know what you stand for<span class="svc-stop" aria-hidden="true">.</span></span><span class="svc-cat label">Brand audit</span><span class="plus" aria-hidden="true"></span></button></h3>
+          <div class="svc-body" id="svc-1"><div><p>Find out what everyone thinks of your brand, from leadership to entry-level employees to customers. Finding the gaps and redefining it from the inside out first is non-negotiable. It makes everything else work.</p></div></div>
         </li>
-        <li class="service" data-reveal>
-          <h3 class="svc-h"><button class="svc-btn" type="button" aria-expanded="false" aria-controls="svc-2"><span class="num" data-notr>02</span><span class="svc-cat label">Audience &amp; segmentation research</span><span class="svc-title">Know who you’re for. Give them a reason.</span><span class="plus" aria-hidden="true"></span></button></h3>
+        <li class="service">
+          <h3 class="svc-h"><button class="svc-btn" type="button" aria-expanded="false" aria-controls="svc-2"><span class="num" data-notr>02</span><span class="svc-title">Know who you’re for. Give them a reason<span class="svc-stop" aria-hidden="true">.</span></span><span class="svc-cat label">Audience &amp; segmentation research</span><span class="plus" aria-hidden="true"></span></button></h3>
           <div class="svc-body" id="svc-2"><div><p>Anchor your brand strategy in the customer: understand their needs deeply and solve their problems better than anyone else.</p></div></div>
         </li>
-        <li class="service" data-reveal>
-          <h3 class="svc-h"><button class="svc-btn" type="button" aria-expanded="false" aria-controls="svc-3"><span class="num" data-notr>03</span><span class="svc-cat label">Brand positioning</span><span class="svc-title">Be the best solution.</span><span class="plus" aria-hidden="true"></span></button></h3>
+        <li class="service">
+          <h3 class="svc-h"><button class="svc-btn" type="button" aria-expanded="false" aria-controls="svc-3"><span class="num" data-notr>03</span><span class="svc-title">Be the best solution<span class="svc-stop" aria-hidden="true">.</span></span><span class="svc-cat label">Brand positioning</span><span class="plus" aria-hidden="true"></span></button></h3>
           <div class="svc-body" id="svc-3"><div><p>A clear customer value proposition that makes you the only choice in your market.</p></div></div>
         </li>
-        <li class="service" data-reveal>
-          <h3 class="svc-h"><button class="svc-btn" type="button" aria-expanded="false" aria-controls="svc-4"><span class="num" data-notr>04</span><span class="svc-cat label">Brand internationalisation</span><span class="svc-title">Built to travel.</span><span class="plus" aria-hidden="true"></span></button></h3>
+        <li class="service">
+          <h3 class="svc-h"><button class="svc-btn" type="button" aria-expanded="false" aria-controls="svc-4"><span class="num" data-notr>04</span><span class="svc-title">Built to travel<span class="svc-stop" aria-hidden="true">.</span></span><span class="svc-cat label">Brand internationalisation</span><span class="plus" aria-hidden="true"></span></button></h3>
           <div class="svc-body" id="svc-4"><div><p>A strategy for localising and globalising who you are, so you can win new markets and recruit new audiences.</p></div></div>
         </li>
-        <li class="service" data-reveal>
-          <h3 class="svc-h"><button class="svc-btn" type="button" aria-expanded="false" aria-controls="svc-5"><span class="num" data-notr>05</span><span class="svc-cat label">Brand creative platform</span><span class="svc-title">One big idea. Everything behind it.</span><span class="plus" aria-hidden="true"></span></button></h3>
+        <li class="service">
+          <h3 class="svc-h"><button class="svc-btn" type="button" aria-expanded="false" aria-controls="svc-5"><span class="num" data-notr>05</span><span class="svc-title">One big idea. Everything behind it<span class="svc-stop" aria-hidden="true">.</span></span><span class="svc-cat label">Brand creative platform</span><span class="plus" aria-hidden="true"></span></button></h3>
           <div class="svc-body" id="svc-5"><div><p>A single, memorable idea, expressed across every touchpoint, that becomes your identity and drives growth.</p></div></div>
         </li>
-        <li class="service" data-reveal>
-          <h3 class="svc-h"><button class="svc-btn" type="button" aria-expanded="false" aria-controls="svc-6"><span class="num" data-notr>06</span><span class="svc-cat label">Brand identity &amp; messaging</span><span class="svc-title">An identity that matches your ambition. Words that sell it.</span><span class="plus" aria-hidden="true"></span></button></h3>
+        <li class="service">
+          <h3 class="svc-h"><button class="svc-btn" type="button" aria-expanded="false" aria-controls="svc-6"><span class="num" data-notr>06</span><span class="svc-title">An identity that matches your ambition. Words that sell it<span class="svc-stop" aria-hidden="true">.</span></span><span class="svc-cat label">Brand identity &amp; messaging</span><span class="plus" aria-hidden="true"></span></button></h3>
           <div class="svc-body" id="svc-6"><div><p>Every message and experience, aligned to one consistent voice that builds coherence and trust.</p></div></div>
         </li>
-        <li class="service" data-reveal>
-          <h3 class="svc-h"><button class="svc-btn" type="button" aria-expanded="false" aria-controls="svc-7"><span class="num" data-notr>07</span><span class="svc-cat label">Brand strategy</span><span class="svc-title">Who you are. Where you’re going.</span><span class="plus" aria-hidden="true"></span></button></h3>
+        <li class="service">
+          <h3 class="svc-h"><button class="svc-btn" type="button" aria-expanded="false" aria-controls="svc-7"><span class="num" data-notr>07</span><span class="svc-title">Who you are. Where you’re going<span class="svc-stop" aria-hidden="true">.</span></span><span class="svc-cat label">Brand strategy</span><span class="plus" aria-hidden="true"></span></button></h3>
           <div class="svc-body" id="svc-7"><div><p>A framework that directs your effort and energy, focusing every action on what delivers competitive advantage and galvanises your team.</p></div></div>
         </li>
-        <li class="service" data-reveal>
-          <h3 class="svc-h"><button class="svc-btn" type="button" aria-expanded="false" aria-controls="svc-8"><span class="num" data-notr>08</span><span class="svc-cat label">Performance &amp; optimisation</span><span class="svc-title">Know what works. Spend on that.</span><span class="plus" aria-hidden="true"></span></button></h3>
+        <li class="service">
+          <h3 class="svc-h"><button class="svc-btn" type="button" aria-expanded="false" aria-controls="svc-8"><span class="num" data-notr>08</span><span class="svc-title">Know what works. Spend on that<span class="svc-stop" aria-hidden="true">.</span></span><span class="svc-cat label">Performance &amp; optimisation</span><span class="plus" aria-hidden="true"></span></button></h3>
           <div class="svc-body" id="svc-8"><div><p>Brand and performance optimised in real time, cutting inefficient spend and maximising effectiveness.</p></div></div>
         </li>
       </ol>
     </div>
+  </section>
 
-    <!-- House of Poland: the letter, as a content moment -->
-    <div class="wrap letter-block">
-      <button class="letter-link rail-grid" id="letter-toggle" type="button" aria-expanded="false" aria-controls="letter-panel" data-reveal>
-        <span class="ll-meta rail">
-          <span class="label">House of Poland</span>
-          <span class="label ll-num" data-notr>No. 01 · <span data-readtime-article="say-hop"></span></span>
-        </span>
-        <span class="ll-main">
-          <span class="ll-title">Read our letter to Poland’s best companies</span>
-          <span class="ll-icon" aria-hidden="true"><span>→</span></span>
-        </span>
+  <!-- HOUSE OF POLAND: the letter, the one ivory sheet on the page -->
+  <section class="letter-sec paper" id="letter" data-surface="paper" data-run="House of Poland · No. 01">
+    <div class="wrap">
+      <button class="letter-link" id="letter-toggle" type="button" aria-expanded="false" aria-controls="letter-panel">
+        <span class="ll-meta"><span class="label">House of Poland · No. 01</span><span class="label" data-notr><span data-readtime-article="say-hop"></span></span></span>
+        <span class="ll-title">Say Hop<span class="stop" data-dot>.</span></span>
+        <span class="ll-foot"><span class="ll-sub">Read our letter to Poland’s best companies</span><span class="ll-icon" aria-hidden="true"><span>→</span></span></span>
       </button>
       <div class="letter-panel" id="letter-panel" aria-hidden="true">
         <div>
-          <div class="letter-sheet paper">
+          <div class="letter-sheet">
             <div class="letter-intro">
-              <div class="letter-meta"><span class="label">House of Poland · Article 01</span><span class="label readtime" data-readtime-for="letter-body"></span></div>
-              <h2 class="article-title">Say Hop<span class="stop">.</span></h2>
-              <p class="article-sub">A letter to Poland’s best companies</p>
+              <div class="letter-meta"><span class="label">A letter to Poland’s best companies</span><span class="label readtime" data-readtime-for="letter-body"></span></div>
             </div>
             <div class="prose" id="letter-body" data-a="body"></div>
             <div class="actions">
@@ -206,19 +188,19 @@
   </section>
 
   <!-- 03 HOW WE WORK  ·  PLACEHOLDER COPY: replace before launch -->
-  <section class="paper how-sec" id="how" data-surface="paper" data-run="03 How we work">
-    <div class="wrap rail-grid">
-      <header class="sec-head rail" data-reveal>
-        <p class="label eyebrow"><span class="enum">03</span>How we work</p>
-        <h2>Lorem ipsum dolor sit amet<span class="stop">.</span></h2>
+  <section class="carbon how-sec" id="how" data-surface="carbon" data-run="03 How we work">
+    <div class="wrap">
+      <div class="how-head">
+        <p class="label sec-index" data-reveal><span class="enum">03</span>How we work</p>
         <p class="tag-draft" data-notr>Placeholder copy</p>
-      </header>
+      </div>
+      <h2 class="big">Lorem ipsum dolor sit amet<span class="stop" data-dot>.</span></h2>
       <div class="steps-wrap">
         <ol class="steps" id="steps">
-          <li class="step" data-reveal><span class="node" aria-hidden="true"></span><p class="step-n" data-notr>01</p><p class="label">Weeks 1–2</p><h3>Lorem ipsum.</h3><p class="step-text">Duis aute irure dolor in reprehenderit.</p></li>
-          <li class="step" data-reveal><span class="node" aria-hidden="true"></span><p class="step-n" data-notr>02</p><p class="label">Weeks 3–5</p><h3>Dolor sit amet.</h3><p class="step-text">Excepteur sint occaecat cupidatat.</p></li>
-          <li class="step" data-reveal><span class="node" aria-hidden="true"></span><p class="step-n" data-notr>03</p><p class="label">Weeks 6–8</p><h3>Consectetur elit.</h3><p class="step-text">Curabitur pretium tincidunt lacus.</p></li>
-          <li class="step" data-reveal><span class="node" aria-hidden="true"></span><p class="step-n" data-notr>04</p><p class="label">Ongoing</p><h3>Sed do eiusmod.</h3><p class="step-text">Pharetra est eros bibendum elit.</p></li>
+          <li class="step" data-reveal><p class="step-n" data-notr>01</p><p class="label">Weeks 1–2</p><h3>Lorem ipsum.</h3><p class="step-text">Duis aute irure dolor in reprehenderit.</p></li>
+          <li class="step" data-reveal><p class="step-n" data-notr>02</p><p class="label">Weeks 3–5</p><h3>Dolor sit amet.</h3><p class="step-text">Excepteur sint occaecat cupidatat.</p></li>
+          <li class="step" data-reveal><p class="step-n" data-notr>03</p><p class="label">Weeks 6–8</p><h3>Consectetur elit.</h3><p class="step-text">Curabitur pretium tincidunt lacus.</p></li>
+          <li class="step" data-reveal><p class="step-n" data-notr>04</p><p class="label">Ongoing</p><h3>Sed do eiusmod.</h3><p class="step-text">Pharetra est eros bibendum elit.</p></li>
         </ol>
         <div class="pager" role="tablist" aria-label="Steps" data-notr>
           <span class="pager-count label"><span class="cur">01</span> / <span class="tot">04</span></span>
@@ -232,38 +214,32 @@
     </div>
   </section>
 
-  <!-- 04 CONTACT -->
+  <!-- 04 CONTACT: the details, set large -->
   <section class="carbon contact-sec" id="contact" data-surface="carbon" data-run="04 Contact">
-    <div class="wrap rail-grid">
-      <header class="sec-head rail contact-head" data-reveal>
-        <p class="label eyebrow"><span class="enum">04</span>Contact</p>
-        <h2>One card. Two names<span class="stop">.</span></h2>
-        <a class="btn" href="contact.html">Send us a message <span class="btn-arrow" aria-hidden="true">→</span></a>
-      </header>
-      <div class="cards" data-reveal>
-        <article class="bcard paper">
-          <div class="bcard-head">
-            <h3 data-notr>Philip Jacobson</h3>
-            <p class="label">Senior partner</p>
+    <div class="wrap">
+      <p class="label sec-index" data-reveal><span class="enum">04</span>Contact</p>
+      <h2 class="big">One card. Two names<span class="stop" data-dot>.</span></h2>
+      <div class="people">
+        <div class="person" data-reveal>
+          <p class="label" data-notr>Philip Jacobson · Senior partner</p>
+          <a class="big-mail" href="mailto:philip@hoppartners.com" data-notr>philip@hoppartners.com</a>
+          <div class="person-lines" data-notr>
+            <a class="ulink" href="tel:+48571357205">+48 571 357 205</a>
+            <a class="ulink" href="#" rel="noopener">LinkedIn ↗</a>
+            <button class="copy" type="button" data-copy="philip@hoppartners.com" aria-label="Copy Philip’s email">Copy email</button>
           </div>
-          <ul class="rows" data-notr>
-            <li class="row"><a href="mailto:philip@hoppartners.com"><span class="k label">E</span><span class="v">philip@hoppartners.com</span></a><button class="copy" type="button" data-copy="philip@hoppartners.com" aria-label="Copy Philip’s email">Copy</button></li>
-            <li class="row"><a href="tel:+48571357205"><span class="k label">T</span><span class="v">+48 571 357 205</span></a><button class="copy" type="button" data-copy="+48 571 357 205" aria-label="Copy Philip’s phone number">Copy</button></li>
-            <li class="row"><a href="#" rel="noopener"><span class="k label">In</span><span class="v">LinkedIn <span aria-hidden="true">↗</span></span></a></li>
-          </ul>
-        </article>
-        <article class="bcard paper">
-          <div class="bcard-head">
-            <h3 data-notr>David Anson</h3>
-            <p class="label">Senior partner</p>
+        </div>
+        <div class="person" data-reveal>
+          <p class="label" data-notr>David Anson · Senior partner</p>
+          <a class="big-mail" href="mailto:david@hoppartners.com" data-notr>david@hoppartners.com</a>
+          <div class="person-lines" data-notr>
+            <a class="ulink" href="tel:+48602638219">+48 602 638 219</a>
+            <a class="ulink" href="#" rel="noopener">LinkedIn ↗</a>
+            <button class="copy" type="button" data-copy="david@hoppartners.com" aria-label="Copy David’s email">Copy email</button>
           </div>
-          <ul class="rows" data-notr>
-            <li class="row"><a href="mailto:david@hoppartners.com"><span class="k label">E</span><span class="v">david@hoppartners.com</span></a><button class="copy" type="button" data-copy="david@hoppartners.com" aria-label="Copy David’s email">Copy</button></li>
-            <li class="row"><a href="tel:+48602638219"><span class="k label">T</span><span class="v">+48 602 638 219</span></a><button class="copy" type="button" data-copy="+48 602 638 219" aria-label="Copy David’s phone number">Copy</button></li>
-            <li class="row"><a href="#" rel="noopener"><span class="k label">In</span><span class="v">LinkedIn <span aria-hidden="true">↗</span></span></a></li>
-          </ul>
-        </article>
+        </div>
       </div>
+      <a class="btn btn--big contact-cta" href="contact.html">Or send us a message <span class="btn-arrow" aria-hidden="true">→</span></a>
     </div>
   </section>
 
@@ -274,37 +250,23 @@
 <!--FOOTER-->
 <footer class="site-foot closing" data-surface="carbon" data-run="">
   <div class="wrap">
-    <div class="foot-top">
-      <a class="wordmark wordmark--press foot-logo" href="index.html" aria-label="HOP. Home" data-anchor><span class="wm-word" aria-hidden="true">HOP</span><span class="wm-dot" aria-hidden="true"></span></a>
+    <div class="foot-row">
       <p class="foot-say">Say it early. Say it loud. Then jump.</p>
-    </div>
-    <nav class="foot-cols" aria-label="Footer">
-      <div class="foot-col">
-        <p class="label">Explore</p>
+      <nav class="foot-links" aria-label="Footer">
         <a class="foot-link" href="index.html#who">Who we are</a>
         <a class="foot-link" href="index.html#what">What we do</a>
-        <a class="foot-link" href="index.html#how">How we work</a>
         <a class="foot-link" href="index.html#contact">Contact</a>
-      </div>
-      <div class="foot-col">
-        <p class="label">House of Poland</p>
-        <a class="foot-link" href="house-of-poland.html">Overview</a>
+        <a class="foot-link" href="house-of-poland.html">House of Poland</a>
         <a class="foot-link" href="articles.html">All articles</a>
-        <a class="foot-link" href="article.html#say-hop">Say Hop.</a>
-      </div>
-      <div class="foot-col">
-        <p class="label">Write to us</p>
-        <a class="foot-link" href="mailto:philip@hoppartners.com" data-notr>philip@hoppartners.com</a>
-        <a class="foot-link" href="mailto:david@hoppartners.com" data-notr>david@hoppartners.com</a>
-        <a class="foot-link" href="contact.html">Contact form</a>
         <a class="foot-link" href="#" data-notr>LinkedIn ↗</a>
-      </div>
-    </nav>
-    <div class="foot-bottom">
-      <p class="label" data-notr>Philip Jacobson · David Anson · Poznań</p>
-      <p class="label"><a href="privacy.html">Privacy</a> · <span data-notr>© 2026 HOP.</span></p>
-      <button class="to-top label" type="button" data-totop>Back to top <span class="tt-dot" aria-hidden="true"></span></button>
+      </nav>
     </div>
+  </div>
+  <a class="foot-giant wordmark wordmark--press wordmark--hero" href="index.html" aria-label="HOP. Home"><span class="wm-word" aria-hidden="true">hop</span><span class="wm-dot" data-dot aria-hidden="true"></span></a>
+  <div class="wrap foot-bottom">
+    <p class="label" data-notr>Philip Jacobson · David Anson · Poznań</p>
+    <p class="label"><a href="privacy.html">Privacy</a> · <span data-notr>© 2026 HOP.</span></p>
+    <button class="to-top label" type="button" data-totop>Back to top <span class="tt-dot" aria-hidden="true"></span></button>
   </div>
 </footer>
 <!--/FOOTER-->

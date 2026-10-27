@@ -1330,7 +1330,7 @@
 
   /* The cover lifts away a little as you leave it */
   var heroInner = document.querySelector(".hero-inner");
-  if (heroInner && !reduceMotion) {
+  if (heroInner && !reduceMotion && !document.querySelector(".stage")) {
     var heroTick = false;
     var heroMove = function () {
       heroTick = false;
@@ -1340,6 +1340,146 @@
       heroInner.style.setProperty("--hero-o", Math.max(0, 1 - y / (h * 0.75)).toFixed(3));
     };
     window.addEventListener("scroll", function () { if (!heroTick) { heroTick = true; requestAnimationFrame(heroMove); } }, { passive: true });
+  }
+
+  /* ==================================================================
+     THE STAGE: Poznań clock, the statement lit word by word, and one red
+     dot that leaps from the logo to the full stop of each headline.
+     ================================================================== */
+  var stageEl = document.querySelector(".stage");
+
+  var clockEl = document.getElementById("clock");
+  if (clockEl) {
+    var tick = function () {
+      try { clockEl.textContent = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "Europe/Warsaw" }).format(new Date()); }
+      catch (e) { clockEl.textContent = ""; }
+    };
+    tick(); setInterval(tick, 20000);
+  }
+
+  var statement = document.getElementById("statement");
+  if (statement && !reduceMotion) {
+    Array.prototype.slice.call(statement.childNodes).forEach(function (node) {
+      if (node.nodeType !== 3) return;
+      var frag = document.createDocumentFragment();
+      node.nodeValue.split(/(\s+)/).forEach(function (part) {
+        if (!part) return;
+        if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+        var w = document.createElement("span"); w.className = "w"; w.textContent = part; frag.appendChild(w);
+      });
+      statement.replaceChild(frag, node);
+    });
+    var words = statement.querySelectorAll(".w");
+    var lightUp = function () {
+      var r = statement.getBoundingClientRect(), vh = window.innerHeight;
+      var p = (vh * 0.86 - r.top) / (r.height + vh * 0.3);
+      var n = Math.round(Math.max(0, Math.min(1, p)) * words.length * 1.1);
+      for (var i = 0; i < words.length; i++) words[i].classList.toggle("lit", i < n);
+    };
+    window.addEventListener("scroll", function () { requestAnimationFrame(lightUp); }, { passive: true });
+    window.addEventListener("resize", lightUp);
+    lightUp();
+  }
+
+  if (stageEl && !reduceMotion && window.Element && Element.prototype.animate) {
+    var BASE = 100;
+    var dotEl = document.createElement("div");
+    dotEl.id = "leap-dot"; dotEl.setAttribute("aria-hidden", "true");
+    document.body.appendChild(dotEl);
+    doc.classList.add("leap");
+    var current = null, override = null, flight = null, ready = false;
+
+    var visibleTargets = function () {
+      return Array.prototype.filter.call(document.querySelectorAll("[data-dot]"), function (n) { return n.getClientRects().length > 0; });
+    };
+    var geom = function (t) {
+      var r = t.getBoundingClientRect();
+      return { x: r.left + window.scrollX, y: r.top + window.scrollY, s: Math.max(r.width, 1) / BASE };
+    };
+    var tf = function (x, y, s, kx, ky) {
+      kx = kx || 1; ky = ky || 1;
+      return "translate(" + (x - (kx - 1) * s * BASE / 2).toFixed(2) + "px," + (y + (1 - ky) * s * BASE).toFixed(2) + "px) scale(" + (s * kx).toFixed(4) + "," + (s * ky).toFixed(4) + ")";
+    };
+    var readPos = function () {
+      var m = new DOMMatrixReadOnly(getComputedStyle(dotEl).transform);
+      return { x: m.e, y: m.f, s: m.a || 0.0001 };
+    };
+    var settle = function (g) {
+      if (flight) { flight.cancel(); flight = null; }
+      dotEl.style.transform = tf(g.x, g.y, g.s);
+    };
+    var leapTo = function (t, opts) {
+      opts = opts || {};
+      var to = geom(t);
+      var from = opts.from || readPos();
+      if (flight) { dotEl.style.transform = getComputedStyle(dotEl).transform; flight.cancel(); flight = null; }
+      var dx = to.x - from.x, dy = to.y - from.y, dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 1 && Math.abs(to.s - from.s) < 0.001) { settle(to); return; }
+      var lift = opts.fall ? 0 : Math.max(60, Math.min(dist * 0.32, 420));
+      var frames = [], N = 18;
+      for (var i = 0; i <= N; i++) {
+        var u = i / N;
+        var e = u < .5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2;   /* ease in-out along the path */
+        var x = from.x + dx * e, y = from.y + dy * (opts.fall ? u * u : e) - 4 * lift * e * (1 - e);
+        var sc = from.s + (to.s - from.s) * e;
+        frames.push({ transform: tf(x, y, sc), offset: u * 0.82 });
+      }
+      /* landing: squash wide and short, one small bounce, settle */
+      frames.push({ transform: tf(to.x, to.y, to.s, 1.16, 0.82), offset: 0.88 });
+      frames.push({ transform: tf(to.x, to.y - to.s * BASE * 0.08, to.s, 0.97, 1.04), offset: 0.94 });
+      frames.push({ transform: tf(to.x, to.y, to.s), offset: 1 });
+      var dur = opts.fall ? 900 : Math.max(620, Math.min(1150, 560 + dist * 0.35));
+      flight = dotEl.animate(frames, { duration: dur, easing: "linear", fill: "forwards" });
+      flight.onfinish = function () { settle(geom(t)); };
+    };
+    var choose = function () {
+      if (override) return override;
+      var vh = window.innerHeight, best = null, bestD = Infinity, lastAbove = null;
+      visibleTargets().forEach(function (t) {
+        var r = t.getBoundingClientRect();
+        if (r.top >= -10 && r.top <= vh * 0.92) {
+          var d = Math.abs(r.top - vh * 0.42);
+          if (d < bestD) { bestD = d; best = t; }
+        } else if (r.top < 0) lastAbove = t;
+      });
+      return best || lastAbove || visibleTargets()[0];
+    };
+    var update = function () {
+      if (!ready) return;
+      var t = choose();
+      if (!t || t === current) return;
+      if (current) current.classList.remove("dot-here");
+      current = t; t.classList.add("dot-here");
+      leapTo(t);
+    };
+    var start = function () {
+      var home = document.querySelector(".hero [data-dot]") || visibleTargets()[0];
+      if (!home) return;
+      current = home; home.classList.add("dot-here");
+      var g = geom(home);
+      leapTo(home, { fall: true, from: { x: g.x, y: g.y - window.innerHeight * 0.7, s: g.s } });
+      ready = true;
+      setTimeout(update, 950);
+    };
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { setTimeout(start, 350); }); else window.addEventListener("load", start);
+
+    var sTick = false;
+    window.addEventListener("scroll", function () { if (!sTick) { sTick = true; requestAnimationFrame(function () { sTick = false; update(); }); } }, { passive: true });
+    /* Layout changes (letter opening, resizing): keep the dot on its spot */
+    var relayout = function () { if (ready && current && !flight) settle(geom(current)); };
+    window.addEventListener("resize", relayout);
+    if ("ResizeObserver" in window) new ResizeObserver(relayout).observe(document.body);
+    document.addEventListener("transitionend", relayout);
+
+    /* Point at a service and the dot hops onto that line */
+    var fine = window.matchMedia("(hover: hover) and (pointer: fine)");
+    document.querySelectorAll(".svc-btn").forEach(function (b) {
+      var spot = b.querySelector(".svc-stop");
+      if (!spot) return;
+      b.addEventListener("mouseenter", function () { if (fine.matches) { override = spot; update(); } });
+    });
+    var svcList = document.getElementById("services");
+    if (svcList) svcList.addEventListener("mouseleave", function () { override = null; update(); });
   }
 
   /* Start */
