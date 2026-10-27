@@ -1709,3 +1709,16 @@ html.wf .hole { background: transparent; }
 .hero { margin-top: calc(-1 * var(--header-h)); padding-top: var(--header-h); }
 html[lang="pl"] .hero { margin-top: 0; padding-top: 0; }
 .site-head.at-cover { background: transparent; box-shadow: none; }
+
+/* No holes. The red dot is the only circle that carries the brand. */
+.hole, .field { display: none !important; }
+.feature-num, html.wf .feature-num { background: none; box-shadow: none; border: 0; border-radius: 0; width: auto; aspect-ratio: auto; place-content: end; justify-items: end; color: var(--s-fg); }
+.feature-num .n { font-size: clamp(5rem, 11vw, 9rem); }
+.spot { background: none; box-shadow: none; border-radius: 0; width: auto; aspect-ratio: auto; justify-items: end; }
+.spot .n { font-size: clamp(5rem, 11vw, 9rem); }
+@media (max-width: 760px) { .feature-num { justify-items: start; } .spot { justify-items: start; } }
+.closing-stage { min-height: clamp(280px, 46vh, 460px); }
+/* Letter row (wireframe logic): on carbon, an off-white chip arrow */
+.what-sec .letter-toggle { margin-top: clamp(64px, 8vw, 112px); }
+.what-sec .letter-sheet { margin-top: 28px; }
+.carbon .letter-toggle:hover .lt-icon, .carbon .letter-toggle[aria-expanded="true"] .lt-icon { background: var(--paper); color: var(--foil); }

@@ -698,11 +698,19 @@
 
   /* The cover plays the opener on load. The closing (footer) plays it again
      the first time it comes into view, as in a presentation (p.15). */
-  var fields = Array.prototype.slice.call(document.querySelectorAll(".hero, .closing")).filter(function (n) { return n.querySelector(".field"); });
+  var fields = Array.prototype.slice.call(document.querySelectorAll(".hero, .closing")).filter(function (n) { return n.querySelector("[data-anchor]"); });
   function play(root) {
     root.classList.remove("opening");
     void root.offsetWidth;
     buildField(root, !reduceMotion);
+    if (!root.querySelector(".field")) {
+      /* No field: the dot alone drops onto the baseline */
+      var dot = root.querySelector("[data-anchor] .wm-dot");
+      if (dot) {
+        root.style.setProperty("--drop-at", ".35s");
+        root.style.setProperty("--drop-from", -(dot.getBoundingClientRect().bottom - root.getBoundingClientRect().top + dot.offsetHeight) + "px");
+      }
+    }
     if (!reduceMotion) root.classList.add("opening");
   }
   if (fields.length) {
