@@ -707,7 +707,7 @@
       /* No field: the dot alone drops onto the baseline */
       var dot = root.querySelector("[data-anchor] .wm-dot");
       if (dot) {
-        root.style.setProperty("--drop-at", ".35s");
+        root.style.setProperty("--drop-at", ".7s");
         root.style.setProperty("--drop-from", -(dot.getBoundingClientRect().bottom - root.getBoundingClientRect().top + dot.offsetHeight) + "px");
       }
     }
@@ -928,31 +928,17 @@
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { if (activeLink) placeNavDot(activeLink); });
   }
 
-  /* --- Services: accordion on phones, open grid elsewhere --- */
+  /* --- Services: an accordion at every width --- */
   var svcBtns = Array.prototype.slice.call(document.querySelectorAll(".svc-btn"));
   function svcBody(b) { return document.getElementById(b.getAttribute("aria-controls")); }
-  function setupServices() {
-    svcBtns.forEach(function (b) {
-      if (mqPhone.matches) {
-        b.removeAttribute("tabindex");
-        svcBody(b).classList.toggle("open", b.getAttribute("aria-expanded") === "true");
-      } else {
-        b.setAttribute("tabindex", "-1");
-      }
+  svcBtns.forEach(function (b) {
+    svcBody(b).classList.toggle("open", b.getAttribute("aria-expanded") === "true");
+    b.addEventListener("click", function () {
+      var open = b.getAttribute("aria-expanded") !== "true";
+      b.setAttribute("aria-expanded", String(open));
+      svcBody(b).classList.toggle("open", open);
     });
-  }
-  if (svcBtns.length) {
-    svcBtns.forEach(function (b) {
-      b.addEventListener("click", function () {
-        if (!mqPhone.matches) return;
-        var open = b.getAttribute("aria-expanded") !== "true";
-        b.setAttribute("aria-expanded", String(open));
-        svcBody(b).classList.toggle("open", open);
-      });
-    });
-    setupServices();
-    mqPhone.addEventListener && mqPhone.addEventListener("change", setupServices);
-  }
+  });
 
   /* --- Partner bios: Read more on phones --- */
   document.querySelectorAll(".more").forEach(function (b) {
@@ -1053,6 +1039,14 @@
     head.classList.toggle("has-progress", r.top < vh && r.bottom > 0);
   }
   function updateReadTimes() {
+    /* Reading time straight from the article data, for links to an article */
+    document.querySelectorAll("[data-readtime-article]").forEach(function (n) {
+      var a = ARTICLES.filter(function (x) { return x.slug === n.dataset.readtimeArticle; })[0];
+      if (!a) return;
+      var blocks = Array.isArray(a.body) ? a.body : (a.body && a.body.en) || [];
+      var words = JSON.stringify(blocks).replace(/"[a-z]+":/g, " ").split(/\s+/).filter(Boolean).length;
+      n.textContent = Math.max(1, Math.round(words / 230)) + tr("read");
+    });
     document.querySelectorAll("[data-readtime-for]").forEach(function (n) {
       var tgt = document.getElementById(n.dataset.readtimeFor);
       if (!tgt) return;
@@ -1300,6 +1294,52 @@
     sentinel.style.height = "1px";
     filtersEl.parentNode.insertBefore(sentinel, filtersEl);
     new IntersectionObserver(function (en) { filtersEl.classList.toggle("stuck", !en[0].isIntersecting); }, { rootMargin: "-140px 0px 0px 0px" }).observe(sentinel);
+  }
+
+  /* ==================================================================
+     Motion: entrances, held back only for what starts below the fold
+     ================================================================== */
+  var revealEls = Array.prototype.slice.call(document.querySelectorAll("[data-reveal]"));
+  if (revealEls.length && "IntersectionObserver" in window && !reduceMotion) {
+    var vh0 = window.innerHeight;
+    revealEls.forEach(function (n) {
+      var rc = n.getBoundingClientRect();
+      /* Leave alone anything that starts off to the side (swipe rows) */
+      if (rc.left >= window.innerWidth || rc.right <= 0) return;
+      if (rc.top > vh0 * 0.92) n.classList.add("pre");
+      else if (n.dataset.reveal === "circle") n.classList.add("in");
+    });
+    /* Siblings arrive in a short sequence */
+    revealEls.forEach(function (n) {
+      var sibs = Array.prototype.filter.call(n.parentNode.children, function (c) { return c.hasAttribute("data-reveal"); });
+      var i = sibs.indexOf(n);
+      if (i > 0) n.style.setProperty("--d", Math.min(i, 6) * 0.08 + "s");
+    });
+    var rio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        en.target.classList.remove("pre");
+        if (en.target.dataset.reveal === "circle") en.target.classList.add("in");
+        rio.unobserve(en.target);
+      });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+    revealEls.forEach(function (n) { if (n.classList.contains("pre")) rio.observe(n); });
+  } else {
+    revealEls.forEach(function (n) { if (n.dataset.reveal === "circle") n.classList.add("in"); });
+  }
+
+  /* The cover lifts away a little as you leave it */
+  var heroInner = document.querySelector(".hero-inner");
+  if (heroInner && !reduceMotion) {
+    var heroTick = false;
+    var heroMove = function () {
+      heroTick = false;
+      var y = window.scrollY, h = window.innerHeight;
+      if (y > h) return;
+      heroInner.style.setProperty("--hero-y", (y * -0.18).toFixed(1) + "px");
+      heroInner.style.setProperty("--hero-o", Math.max(0, 1 - y / (h * 0.75)).toFixed(3));
+    };
+    window.addEventListener("scroll", function () { if (!heroTick) { heroTick = true; requestAnimationFrame(heroMove); } }, { passive: true });
   }
 
   /* Start */
