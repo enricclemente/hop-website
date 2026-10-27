@@ -10,10 +10,10 @@
    component works on every surface and in both modes. */
 
 @font-face {
-  font-family: "Source Serif 4";
-  src: url("fonts/SourceSerif4-Italic.woff") format("woff");
+  font-family: "Newsreader";
+  src: url("fonts/Newsreader-Italic.woff") format("woff");
   font-style: italic;
-  font-weight: 400 600;
+  font-weight: 400 700;
   font-display: swap;
 }
 @font-face {
@@ -40,7 +40,7 @@
   --ink-mute: #6B6B70;
 
   /* Type */
-  --serif: "Source Serif 4", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --serif: "Newsreader", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   --sans: "Manrope", "Segoe UI", system-ui, -apple-system, sans-serif;
   --t-h1: clamp(2.375rem, 5.6vw, 4.75rem);
   --t-h2: clamp(1.875rem, 3.8vw, 3.25rem);
@@ -1722,3 +1722,22 @@ html[lang="pl"] .hero { margin-top: 0; padding-top: 0; }
 .what-sec .letter-toggle { margin-top: clamp(64px, 8vw, 112px); }
 .what-sec .letter-sheet { margin-top: 28px; }
 .carbon .letter-toggle:hover .lt-icon, .carbon .letter-toggle[aria-expanded="true"] .lt-icon { background: var(--paper); color: var(--foil); }
+
+/* =====================================================================
+   TYPE: Newsreader Italic, as in the hop. reference. Lowercase wordmark,
+   the dot sits on the baseline at about half the x-height.
+   ===================================================================== */
+h1, h2, h3, .serif, .wordmark, .promise, .closing-line, .lt-title, .svc-title, .mtxt,
+.article-title, .feature-title, .prose .lede, .prose .pull, .prose .closer, .prose li strong,
+.empty-title, .month-h, .pn .t, .feature-num .n, .spot .n, .avatar, .reveal-title {
+  font-variation-settings: "opsz" 72;
+}
+h1, h2, .wordmark, .article-title, .feature-title, .thesis { font-weight: 600; letter-spacing: -0.02em; }
+.wordmark { letter-spacing: -0.025em; }
+.wm-dot { width: .25em; height: .25em; margin-left: .035em; }
+.site-head .wordmark { font-size: 44px; }
+.hero .wordmark { font-size: clamp(6rem, 26vw, 19rem); }
+.closing .wordmark { font-size: clamp(5rem, 17vw, 13rem); }
+.prose .sign .wordmark { font-size: 3.25rem; }
+.prose p, .article-sub, .reveal-sub, .feature-sub { font-variation-settings: "opsz" 20; }
+.article-sub, .feature-sub { font-weight: 400; }

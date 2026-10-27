@@ -200,7 +200,7 @@
     });
     /* Every article closes with the signature */
     var sign = el("div", "sign");
-    sign.innerHTML = '<span class="wordmark" aria-label="Hop."><span aria-hidden="true">Hop</span><span class="wm-dot" aria-hidden="true"></span></span>';
+    sign.innerHTML = '<span class="wordmark" aria-label="Hop."><span class="wm-word" aria-hidden="true">hop</span><span class="wm-dot" aria-hidden="true"></span></span>';
     var who = el("p", null, article.authors || "");
     who.setAttribute("data-notr", "");
     sign.appendChild(who);
