@@ -10,7 +10,7 @@ public/            the website (HTML, CSS, JS, fonts)
   article.html       article reading page (article.html#slug)
   contact.html       contact page with the form
   assets/articles.js sample articles, used until Sanity is connected
-api/contact.js     Vercel function: emails form messages via Resend
+api/contact.js     Vercel function: saves form messages to the Sanity Inbox (and emails them, optionally)
 studio/            Sanity Studio: where you write and publish articles
 scripts/build.mjs  Vercel build: copies public/ to dist/ and pulls articles from Sanity
 vercel.json        Vercel settings
@@ -44,14 +44,22 @@ Publishing in Sanity now rebuilds the site in about a minute.
 
 5. Settings → Domains: add `hoppartners.com` and `www.hoppartners.com`, then add the DNS records Vercel shows. Keep your existing email (MX) records.
 
-## 3. Contact form email (one time)
+## 3. Contact form inbox (one time, 5 minutes)
 
-1. Create a free account at resend.com and verify the domain `hoppartners.com` (it gives you DNS records to add).
-2. In Vercel, add environment variables:
-   - `RESEND_API_KEY`: from Resend
-   - `CONTACT_TO`: `philip@hoppartners.com,david@hoppartners.com`
-   - `CONTACT_FROM`: `HOP. Website <website@hoppartners.com>`
-3. Redeploy. Messages arrive with the visitor as Reply-To. If they choose Philip or David, that person is listed first.
+Messages are saved in Sanity, in a private dataset, and appear under **Inbox** in the editor.
+
+1. In sanity.io/manage → your project → **Datasets**: create a dataset named `inbox`, visibility **Private**.
+2. **API → Tokens**: add a token named "Website form" with **Editor** rights. Copy it.
+3. In Vercel → Settings → Environment Variables, add:
+   - `SANITY_PROJECT_ID`: your project ID (already there if you did step 2 above)
+   - `SANITY_WRITE_TOKEN`: the token. Never put it in the code.
+4. Redeploy. Messages now arrive in the Inbox with status New. Mark them Replied or Archived.
+
+### Optional: email each message too
+
+Needs the domain owner to add Resend's DNS records. Create an account at resend.com, verify `hoppartners.com`, then add in Vercel:
+`RESEND_API_KEY`, `CONTACT_TO` (`philip@hoppartners.com,david@hoppartners.com`) and `CONTACT_FROM` (`HOP. Website <website@hoppartners.com>`).
+Messages are then saved in the Inbox and emailed, with the visitor as Reply-To.
 
 Spam protection: a hidden honeypot field, a minimum time on the page, and a rate limit.
 

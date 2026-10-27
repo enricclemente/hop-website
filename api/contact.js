@@ -1,11 +1,16 @@
-/* Contact form → email, as a Vercel serverless function.
+/* Contact form, as a Vercel serverless function.
 
-   Environment variables (Vercel → Project → Settings → Environment Variables):
-     RESEND_API_KEY  API key from resend.com (free plan: 3,000 emails a month)
-     CONTACT_TO      where messages go, e.g. "philip@hoppartners.com,david@hoppartners.com"
-     CONTACT_FROM    sender on your verified domain, e.g. "HOP. Website <website@hoppartners.com>"
+   1. Saves every message to the private "inbox" dataset in Sanity (the Inbox in the editor).
+      SANITY_PROJECT_ID   your Sanity project ID
+      SANITY_WRITE_TOKEN  a token with Editor rights (sanity.io/manage → API → Tokens)
 
-   The visitor's address is set as Reply-To, so you can answer straight from your inbox. */
+   2. Optionally also emails it, once Resend is set up:
+      RESEND_API_KEY  API key from resend.com
+      CONTACT_TO      e.g. "philip@hoppartners.com,david@hoppartners.com"
+      CONTACT_FROM    sender on your verified domain, e.g. "HOP. Website <website@hoppartners.com>"
+      The visitor's address is set as Reply-To.
+
+   The visitor sees success if at least one of the two worked. */
 
 const MAX = { name: 120, email: 200, company: 160, phone: 40, message: 2000 }
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
@@ -54,11 +59,49 @@ export default async function handler(req, res) {
   if (body.consent !== true) errors.push('consent')
   if (errors.length) return res.status(400).json({ ok: false, error: 'invalid', fields: errors })
 
-  const { RESEND_API_KEY, CONTACT_TO, CONTACT_FROM } = process.env
-  if (!RESEND_API_KEY || !CONTACT_TO || !CONTACT_FROM) {
-    console.error('Contact form: RESEND_API_KEY, CONTACT_TO or CONTACT_FROM is not set')
+  const results = await Promise.all([saveToSanity(d), sendEmail(d)])
+  const saved = results.filter((r) => r === true).length
+  const configured = results.filter((r) => r !== null).length
+  if (!configured) {
+    console.error('Contact form: neither Sanity (SANITY_PROJECT_ID, SANITY_WRITE_TOKEN) nor Resend is configured')
     return res.status(503).json({ ok: false, error: 'not-configured' })
   }
+  if (!saved) return res.status(502).json({ ok: false, error: 'send' })
+  return res.status(200).json({ ok: true })
+}
+
+/* Returns true on success, false on failure, null when not configured */
+async function saveToSanity(d) {
+  const { SANITY_PROJECT_ID, SANITY_WRITE_TOKEN } = process.env
+  if (!SANITY_PROJECT_ID || !SANITY_WRITE_TOKEN) return null
+  const dataset = process.env.SANITY_INBOX_DATASET || 'inbox'
+  try {
+    const r = await fetch(`https://${SANITY_PROJECT_ID}.api.sanity.io/v2025-02-19/data/mutate/${dataset}`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${SANITY_WRITE_TOKEN}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        mutations: [{
+          create: {
+            _type: 'message',
+            status: 'New',
+            receivedAt: new Date().toISOString(),
+            name: d.name, email: d.email, company: d.company, phone: d.phone,
+            partner: d.partner, interests: d.interests, message: d.message, lang: d.lang,
+          },
+        }],
+      }),
+    })
+    if (!r.ok) { console.error('Sanity error', r.status, await r.text()); return false }
+    return true
+  } catch (e) {
+    console.error('Sanity failed', e)
+    return false
+  }
+}
+
+async function sendEmail(d) {
+  const { RESEND_API_KEY, CONTACT_TO, CONTACT_FROM } = process.env
+  if (!RESEND_API_KEY || !CONTACT_TO || !CONTACT_FROM) return null
 
   const rows = [
     ['Name', d.name], ['Email', d.email], ['Company', d.company], ['Phone', d.phone],
@@ -74,27 +117,20 @@ export default async function handler(req, res) {
     const pick = to.find((a) => a.toLowerCase().startsWith(d.partner.toLowerCase()))
     if (pick) to = [pick, ...to.filter((a) => a !== pick)]
   }
-
   try {
     const r = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: { Authorization: `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        from: CONTACT_FROM,
-        to,
-        reply_to: d.email,
+        from: CONTACT_FROM, to, reply_to: d.email,
         subject: `Website: ${d.name}${d.company ? ` (${d.company})` : ''}`,
-        text,
-        html,
+        text, html,
       }),
     })
-    if (!r.ok) {
-      console.error('Resend error', r.status, await r.text())
-      return res.status(502).json({ ok: false, error: 'send' })
-    }
-    return res.status(200).json({ ok: true })
+    if (!r.ok) { console.error('Resend error', r.status, await r.text()); return false }
+    return true
   } catch (e) {
-    console.error('Contact form failed', e)
-    return res.status(502).json({ ok: false, error: 'send' })
+    console.error('Resend failed', e)
+    return false
   }
 }
