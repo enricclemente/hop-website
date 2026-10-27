@@ -1,15 +1,16 @@
 <!doctype html>
-<html lang="en" class="wf">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>House of Poland · HOP.</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="An article from House of Poland, the research and publishing arm of HOP.">
-<meta name="theme-color" content="#FFFFFF">
+<meta name="theme-color" content="#2C2C2F">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="assets/fonts/SourceSerif4-Italic.woff" as="font" type="font/woff" crossorigin>
 <link rel="preload" href="assets/fonts/Manrope.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="assets/tex/carbon.jpg" as="image">
 <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
@@ -18,7 +19,10 @@
 <!--HEADER-->
 <header class="site-head" id="site-head">
   <div class="wrap head-row">
-    <a class="wordmark wordmark--cut" href="index.html" aria-label="HOP. Home"><span class="wm-word" aria-hidden="true">HOP</span><span class="wm-dot" aria-hidden="true"></span></a>
+    <div class="head-brand">
+      <a class="wordmark wordmark--cut" href="index.html" aria-label="HOP. Home"><span class="wm-word" aria-hidden="true">HOP</span><span class="wm-dot" aria-hidden="true"></span></a>
+      <span class="runhead label" aria-hidden="true"><span class="rh-cur"></span></span>
+    </div>
 
     <nav class="nav" aria-label="Main">
       <ul class="nav-links">
@@ -67,7 +71,7 @@
 </div>
 <!--/HEADER-->
 
-<main id="main">
+<main id="main" data-surface="paper" data-run="House of Poland">
 
   <article id="article" class="paper">
     <div class="wrap">
@@ -100,34 +104,22 @@
 
 
 <!--FOOTER-->
-<footer class="site-foot carbon">
-  <div class="wrap">
-    <div class="foot-top">
-      <a class="wordmark wordmark--cut" href="index.html" aria-label="HOP. Home"><span class="wm-word" aria-hidden="true">HOP</span><span class="wm-dot" aria-hidden="true"></span></a>
-      <p class="foot-say">Say it early. Then jump.</p>
-    </div>
-    <div class="foot-grid">
-      <div class="stack-s">
-        <p class="label">Talk to us</p>
-        <a class="foot-link" href="mailto:philip@hoppartners.com" data-notr>philip@hoppartners.com</a>
-        <a class="foot-link" href="mailto:david@hoppartners.com" data-notr>david@hoppartners.com</a>
-        <a class="foot-link" href="contact.html">Contact form</a>
-      </div>
-      <div class="stack-s">
-        <p class="label">Read</p>
-        <a class="foot-link" href="house-of-poland.html">House of Poland</a>
-        <a class="foot-link" href="articles.html">All articles</a>
-        <a class="foot-link" href="article.html#say-hop">Say Hop. A letter</a>
-      </div>
-      <div class="stack-s">
-        <p class="label">Follow</p>
-        <a class="foot-link" href="#" data-notr>LinkedIn</a>
-      </div>
-      <button class="to-top" type="button" data-totop><span class="label">Back to top</span><span class="tt-dot" aria-hidden="true"></span></button>
-    </div>
-    <div class="foot-bottom">
-      <p class="label" data-notr>Poznań</p>
-      <p class="label"><a href="privacy.html">Privacy</a> · <span data-notr>© 2026 HOP.</span></p>
+<footer class="site-foot carbon closing" data-surface="carbon" data-run="">
+  <div class="field" aria-hidden="true"></div>
+  <div class="closing-stage">
+    <a class="wordmark wordmark--press" href="index.html" aria-label="HOP. Home" data-anchor><span class="wm-word" aria-hidden="true">HOP</span><span class="wm-dot" aria-hidden="true"></span></a>
+  </div>
+  <div class="wrap closing-bar">
+    <nav class="foot-links" aria-label="Footer" data-keepout>
+      <a class="label" href="contact.html">Contact</a>
+      <a class="label" href="house-of-poland.html">House of Poland</a>
+      <a class="label" href="articles.html">All articles</a>
+      <a class="label" href="#" data-notr>LinkedIn</a>
+      <a class="label" href="privacy.html">Privacy</a>
+    </nav>
+    <div class="foot-bottom" data-keepout>
+      <p class="label" data-notr>Philip Jacobson · David Anson · Poznań</p>
+      <p class="label">Say it early. Say it loud. Then jump.</p>
     </div>
   </div>
 </footer>

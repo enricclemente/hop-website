@@ -1,15 +1,16 @@
 <!doctype html>
-<html lang="en" class="wf">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>HOP. Brand strategy for businesses ready to leap</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="HOP. is a brand strategy company in Poland. We build brands for Polish challengers whose brand hasn’t caught up with their product.">
-<meta name="theme-color" content="#FFFFFF">
+<meta name="theme-color" content="#2C2C2F">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="assets/fonts/SourceSerif4-Italic.woff" as="font" type="font/woff" crossorigin>
 <link rel="preload" href="assets/fonts/Manrope.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="assets/tex/carbon.jpg" as="image">
 <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
@@ -18,7 +19,10 @@
 <!--HEADER-->
 <header class="site-head" id="site-head">
   <div class="wrap head-row">
-    <a class="wordmark wordmark--cut" href="index.html" aria-label="HOP. Home"><span class="wm-word" aria-hidden="true">HOP</span><span class="wm-dot" aria-hidden="true"></span></a>
+    <div class="head-brand">
+      <a class="wordmark wordmark--cut" href="index.html" aria-label="HOP. Home"><span class="wm-word" aria-hidden="true">HOP</span><span class="wm-dot" aria-hidden="true"></span></a>
+      <span class="runhead label" aria-hidden="true"><span class="rh-cur"></span></span>
+    </div>
 
     <nav class="nav" aria-label="Main">
       <ul class="nav-links">
@@ -69,23 +73,23 @@
 
 <main id="main">
 
-  <!-- HERO: the field and the opener -->
-  <section class="hero carbon" id="top" aria-label="HOP.">
+  <!-- COVER (Brand Book p.1): foil on carbon, the field, the opener -->
+  <section class="hero carbon" id="top" aria-label="HOP." data-surface="carbon" data-run="">
     <div class="field" aria-hidden="true"></div>
     <div class="hero-inner">
-      <h1 class="wordmark wordmark--cut"><span class="wm-word" aria-hidden="true">HOP</span><span class="wm-dot" aria-hidden="true"></span><span class="sr-only">HOP.</span></h1>
+      <h1 class="wordmark wordmark--press" data-anchor><span class="wm-word" aria-hidden="true">HOP</span><span class="wm-dot" aria-hidden="true"></span><span class="sr-only">HOP.</span></h1>
       <p class="label tagline" data-keepout>Brand strategy for businesses ready to leap</p>
     </div>
     <div class="hero-foot">
       <div class="wrap">
-        <p class="label" data-keepout data-notr>Poznań</p>
+        <p class="label" data-keepout data-notr>Poznań · 2026</p>
         <a class="scroll-cue label" href="#intro" data-keepout><span>Scroll</span><span class="cue" aria-hidden="true"><i></i></span></a>
       </div>
     </div>
   </section>
 
-  <!-- THE THESIS -->
-  <section class="intro paper section" id="intro">
+  <!-- THESIS (p.4) -->
+  <section class="intro paper section" id="intro" data-surface="paper" data-run="">
     <div class="wrap">
       <h2 class="thesis">Hop! is what Poles shout as they leap. We help businesses take theirs<span class="stop">.</span></h2>
       <div class="cols">
@@ -105,8 +109,8 @@
     </div>
   </section>
 
-  <!-- WHO WE ARE -->
-  <section class="who paper section" id="who">
+  <!-- WHO WE ARE (p.5) -->
+  <section class="who paper section" id="who" data-surface="paper" data-run="01 Who we are">
     <div class="wrap">
       <div class="who-grid">
         <div class="who-text">
@@ -116,11 +120,8 @@
           <div class="partners">
             <article class="partner">
               <div class="partner-head">
-                <span class="avatar" aria-hidden="true" data-notr>PJ</span>
-                <div>
-                  <h3 data-notr>Philip Jacobson</h3>
-                  <p class="label">Senior partner</p>
-                </div>
+                <h3 data-notr>Philip Jacobson</h3>
+                <p class="label">Senior partner</p>
               </div>
               <div class="bio" id="bio-philip">
                 <p>Philip was Chief Brand Officer at PE-backed Vimergy. For the last five years he has driven brand-led growth at scale-ups across categories, including Tylko, Autry and Chilly’s. Before that, he spent a decade leading brand communication for Nike EMEA and was Global Head of Brand Creative at Maserati.</p>
@@ -129,11 +130,8 @@
             </article>
             <article class="partner">
               <div class="partner-head">
-                <span class="avatar" aria-hidden="true" data-notr>DA</span>
-                <div>
-                  <h3 data-notr>David Anson</h3>
-                  <p class="label">Senior partner</p>
-                </div>
+                <h3 data-notr>David Anson</h3>
+                <p class="label">Senior partner</p>
               </div>
               <div class="bio" id="bio-david">
                 <p>David was a Brand Creative Lead at Nike and Head of Business Leadership and Client Service at BBH Singapore. Across BBH Singapore, Wieden+Kennedy Amsterdam and Saatchi &amp; Saatchi London, he has led the Nike, Samsung, Meta, Netflix and HSBC business.</p>
@@ -144,77 +142,54 @@
           <p class="closing-line">Now they bring that standard to Poland.</p>
         </div>
         <figure class="window">
-          <!-- Replace with: <img src="assets/partners.jpg" alt="Philip Jacobson and David Anson" width="1200" height="1200"> -->
-          <div class="placeholder">
-            <span class="label">Photo</span>
-            <span>Philip and David together</span>
-          </div>
+          <img src="assets/partners.jpg" alt="Philip Jacobson and David Anson on a cobbled street in Poznań" width="912" height="912" loading="lazy" decoding="async">
         </figure>
       </div>
     </div>
   </section>
 
-  <!-- CONTACT -->
-  <section class="holeband section" id="contact">
+  <!-- CONTACT (p.18): two business cards on carbon -->
+  <section class="carbon section contact-sec" id="contact" data-surface="carbon" data-run="02 Contact">
     <div class="wrap contact-grid">
       <div class="sec-head">
         <p class="label eyebrow"><span class="enum">02</span>Contact</p>
-        <h2>Lorem ipsum dolor sit amet<span class="stop">.</span></h2>
-        <a class="btn btn--invert" href="contact.html" style="justify-self:start;margin-top:8px">Send us a message <span aria-hidden="true">→</span></a>
+        <h2>One card. Two names<span class="stop">.</span></h2>
+        <a class="btn" href="contact.html" style="justify-self:start;margin-top:10px">Send us a message <span aria-hidden="true">→</span></a>
       </div>
       <div class="cards">
-        <div class="card">
-          <div class="card-head">
+        <article class="bcard paper">
+          <div class="bcard-head">
             <h3 data-notr>Philip Jacobson</h3>
             <p class="label">Senior partner</p>
           </div>
           <ul class="rows" data-notr>
-            <li class="row">
-              <a href="mailto:philip@hoppartners.com"><span class="k label">Email</span><span class="v">philip@hoppartners.com</span></a>
-              <button class="copy" type="button" data-copy="philip@hoppartners.com" aria-label="Copy Philip’s email">Copy</button>
-            </li>
-            <li class="row">
-              <a href="tel:+48571357205"><span class="k label">Phone</span><span class="v">+48 571 357 205</span></a>
-              <button class="copy" type="button" data-copy="+48 571 357 205" aria-label="Copy Philip’s phone number">Copy</button>
-            </li>
-            <li class="row">
-              <a href="#" rel="noopener"><span class="k label">LinkedIn</span><span class="v">Philip Jacobson</span></a>
-              <span class="ext" aria-hidden="true">↗</span>
-            </li>
+            <li class="row"><a href="mailto:philip@hoppartners.com"><span class="v">philip@hoppartners.com</span></a><button class="copy" type="button" data-copy="philip@hoppartners.com" aria-label="Copy Philip’s email">Copy</button></li>
+            <li class="row"><a href="tel:+48571357205"><span class="v">+48 571 357 205</span></a><button class="copy" type="button" data-copy="+48 571 357 205" aria-label="Copy Philip’s phone number">Copy</button></li>
+            <li class="row"><a href="#" rel="noopener"><span class="v">LinkedIn</span></a><span class="ext" aria-hidden="true">↗</span></li>
           </ul>
-        </div>
-        <div class="card">
-          <div class="card-head">
+        </article>
+        <article class="bcard paper">
+          <div class="bcard-head">
             <h3 data-notr>David Anson</h3>
             <p class="label">Senior partner</p>
           </div>
           <ul class="rows" data-notr>
-            <li class="row">
-              <a href="mailto:david@hoppartners.com"><span class="k label">Email</span><span class="v">david@hoppartners.com</span></a>
-              <button class="copy" type="button" data-copy="david@hoppartners.com" aria-label="Copy David’s email">Copy</button>
-            </li>
-            <li class="row">
-              <a href="tel:+48602638219"><span class="k label">Phone</span><span class="v">+48 602 638 219</span></a>
-              <button class="copy" type="button" data-copy="+48 602 638 219" aria-label="Copy David’s phone number">Copy</button>
-            </li>
-            <li class="row">
-              <a href="#" rel="noopener"><span class="k label">LinkedIn</span><span class="v">David Anson</span></a>
-              <span class="ext" aria-hidden="true">↗</span>
-            </li>
+            <li class="row"><a href="mailto:david@hoppartners.com"><span class="v">david@hoppartners.com</span></a><button class="copy" type="button" data-copy="david@hoppartners.com" aria-label="Copy David’s email">Copy</button></li>
+            <li class="row"><a href="tel:+48602638219"><span class="v">+48 602 638 219</span></a><button class="copy" type="button" data-copy="+48 602 638 219" aria-label="Copy David’s phone number">Copy</button></li>
+            <li class="row"><a href="#" rel="noopener"><span class="v">LinkedIn</span></a><span class="ext" aria-hidden="true">↗</span></li>
           </ul>
-        </div>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- WHAT WE DO -->
-  <section class="carbon section" id="what">
+  <!-- WHAT WE DO (p.7) -->
+  <section class="carbon section what-sec" id="what" data-surface="carbon" data-run="03 What we do">
+    <span class="hole hole-pair" aria-hidden="true"></span><span class="hole hole-pair hole-pair--b" aria-hidden="true"></span>
     <div class="wrap">
-      <div class="sec-head sec-head--split">
-        <div class="stack">
-          <p class="label eyebrow"><span class="enum">03</span>What we do</p>
-          <h2>Everything the leap needs. One partner<span class="stop">.</span></h2>
-        </div>
+      <div class="sec-head">
+        <p class="label eyebrow"><span class="enum">03</span>What we do</p>
+        <h2>Everything the leap needs. One partner<span class="stop">.</span></h2>
       </div>
 
       <ol class="services" id="services">
@@ -252,21 +227,29 @@
         </li>
       </ol>
 
-      <button class="letter-toggle" id="letter-toggle" type="button" aria-expanded="false" aria-controls="letter-panel">
-        <span class="lt-text">
+      <!-- THE REVEAL (p.16): holes punch through to the letter beneath -->
+      <button class="reveal" id="letter-toggle" type="button" aria-expanded="false" aria-controls="letter-panel">
+        <span class="reveal-sheet" aria-hidden="true">
+          <span class="reveal-title">Say Hop<span class="stop">.</span></span>
+          <span class="reveal-sub">A letter to Poland’s best companies</span>
+        </span>
+        <span class="reveal-shade rs-1" aria-hidden="true"></span>
+        <span class="reveal-shade rs-2" aria-hidden="true"></span>
+        <span class="reveal-shade rs-3" aria-hidden="true"></span>
+        <span class="reveal-cta">
           <span class="label">House of Poland · No. 01</span>
           <span class="lt-title">Read our letter to Poland’s best companies</span>
+          <span class="lt-icon" aria-hidden="true"><span>→</span></span>
         </span>
-        <span class="lt-icon" aria-hidden="true"><span>→</span></span>
       </button>
       <div class="letter-panel" id="letter-panel" aria-hidden="true">
         <div>
           <div class="letter-sheet paper">
             <div class="wrap">
               <div class="letter-intro">
+                <div class="letter-meta"><span class="label">House of Poland · Article 01</span><span class="label readtime" data-readtime-for="letter-body"></span></div>
                 <h2 class="article-title">Say Hop<span class="stop">.</span></h2>
                 <p class="article-sub">A letter to Poland’s best companies</p>
-                <p class="label readtime" data-readtime-for="letter-body"></p>
               </div>
               <div class="prose" id="letter-body" data-a="body"></div>
               <div class="actions">
@@ -281,40 +264,18 @@
   </section>
 
   <!-- HOW WE WORK (placeholder copy) -->
-  <section class="paper section" id="how">
+  <section class="paper section" id="how" data-surface="paper" data-run="04 How we work">
     <div class="wrap">
-      <div class="sec-head sec-head--split">
-        <div class="stack">
-          <p class="label eyebrow"><span class="enum">04</span>How we work</p>
-          <h2 style="max-width:20ch">Lorem ipsum dolor sit amet<span class="stop">.</span></h2>
-        </div>
+      <div class="sec-head">
+        <p class="label eyebrow"><span class="enum">04</span>How we work</p>
+        <h2 style="max-width:20ch">Lorem ipsum dolor sit amet<span class="stop">.</span></h2>
       </div>
       <div class="steps-wrap">
         <ol class="steps" id="steps">
-          <li class="step">
-            <span class="node" aria-hidden="true"></span>
-            <p class="label">Step 01 · Weeks 1–2</p>
-            <h3>Lorem ipsum.</h3>
-            <p>Duis aute irure dolor in reprehenderit.</p>
-          </li>
-          <li class="step">
-            <span class="node" aria-hidden="true"></span>
-            <p class="label">Step 02 · Weeks 3–5</p>
-            <h3>Dolor sit amet.</h3>
-            <p>Excepteur sint occaecat cupidatat.</p>
-          </li>
-          <li class="step">
-            <span class="node" aria-hidden="true"></span>
-            <p class="label">Step 03 · Weeks 6–8</p>
-            <h3>Consectetur elit.</h3>
-            <p>Curabitur pretium tincidunt lacus.</p>
-          </li>
-          <li class="step">
-            <span class="node" aria-hidden="true"></span>
-            <p class="label">Step 04 · Ongoing</p>
-            <h3>Sed do eiusmod.</h3>
-            <p>Pharetra est eros bibendum elit.</p>
-          </li>
+          <li class="step"><span class="node" aria-hidden="true"></span><p class="label">Step 01 · Weeks 1–2</p><h3>Lorem ipsum.</h3><p>Duis aute irure dolor in reprehenderit.</p></li>
+          <li class="step"><span class="node" aria-hidden="true"></span><p class="label">Step 02 · Weeks 3–5</p><h3>Dolor sit amet.</h3><p>Excepteur sint occaecat cupidatat.</p></li>
+          <li class="step"><span class="node" aria-hidden="true"></span><p class="label">Step 03 · Weeks 6–8</p><h3>Consectetur elit.</h3><p>Curabitur pretium tincidunt lacus.</p></li>
+          <li class="step"><span class="node" aria-hidden="true"></span><p class="label">Step 04 · Ongoing</p><h3>Sed do eiusmod.</h3><p>Pharetra est eros bibendum elit.</p></li>
         </ol>
         <div class="pager" role="tablist" aria-label="Steps" data-notr>
           <span class="pager-count label"><span class="cur">01</span> / <span class="tot">04</span></span>
@@ -333,34 +294,22 @@
 <a class="cta-float" href="contact.html" aria-hidden="true" tabindex="-1">Talk to us <span class="cta-dot" aria-hidden="true"></span></a>
 
 <!--FOOTER-->
-<footer class="site-foot carbon">
-  <div class="wrap">
-    <div class="foot-top">
-      <a class="wordmark wordmark--cut" href="index.html" aria-label="HOP. Home"><span class="wm-word" aria-hidden="true">HOP</span><span class="wm-dot" aria-hidden="true"></span></a>
-      <p class="foot-say">Say it early. Then jump.</p>
-    </div>
-    <div class="foot-grid">
-      <div class="stack-s">
-        <p class="label">Talk to us</p>
-        <a class="foot-link" href="mailto:philip@hoppartners.com" data-notr>philip@hoppartners.com</a>
-        <a class="foot-link" href="mailto:david@hoppartners.com" data-notr>david@hoppartners.com</a>
-        <a class="foot-link" href="contact.html">Contact form</a>
-      </div>
-      <div class="stack-s">
-        <p class="label">Read</p>
-        <a class="foot-link" href="house-of-poland.html">House of Poland</a>
-        <a class="foot-link" href="articles.html">All articles</a>
-        <a class="foot-link" href="article.html#say-hop">Say Hop. A letter</a>
-      </div>
-      <div class="stack-s">
-        <p class="label">Follow</p>
-        <a class="foot-link" href="#" data-notr>LinkedIn</a>
-      </div>
-      <button class="to-top" type="button" data-totop><span class="label">Back to top</span><span class="tt-dot" aria-hidden="true"></span></button>
-    </div>
-    <div class="foot-bottom">
-      <p class="label" data-notr>Poznań</p>
-      <p class="label"><a href="privacy.html">Privacy</a> · <span data-notr>© 2026 HOP.</span></p>
+<footer class="site-foot carbon closing" data-surface="carbon" data-run="">
+  <div class="field" aria-hidden="true"></div>
+  <div class="closing-stage">
+    <a class="wordmark wordmark--press" href="index.html" aria-label="HOP. Home" data-anchor><span class="wm-word" aria-hidden="true">HOP</span><span class="wm-dot" aria-hidden="true"></span></a>
+  </div>
+  <div class="wrap closing-bar">
+    <nav class="foot-links" aria-label="Footer" data-keepout>
+      <a class="label" href="contact.html">Contact</a>
+      <a class="label" href="house-of-poland.html">House of Poland</a>
+      <a class="label" href="articles.html">All articles</a>
+      <a class="label" href="#" data-notr>LinkedIn</a>
+      <a class="label" href="privacy.html">Privacy</a>
+    </nav>
+    <div class="foot-bottom" data-keepout>
+      <p class="label" data-notr>Philip Jacobson · David Anson · Poznań</p>
+      <p class="label">Say it early. Say it loud. Then jump.</p>
     </div>
   </div>
 </footer>

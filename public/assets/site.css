@@ -491,9 +491,9 @@ html.wf .hole { background: transparent; border: 1px dashed var(--s-fg); box-sha
 }
 
 /* Opener (Brand Book p.15) */
-.is-opening .hole { visibility: hidden; animation: punch 1ms steps(1, end) forwards; }
+.opening .hole { visibility: hidden; animation: punch 1ms steps(1, end) forwards; }
 @keyframes punch { to { visibility: visible; } }
-.is-opening .hero .wm-dot {
+.opening [data-anchor] .wm-dot {
   animation:
     drop 0.46s cubic-bezier(.55, 0, 1, .45) var(--drop-at, 2.3s) both,
     land 0.7s cubic-bezier(.2, .7, .3, 1) calc(var(--drop-at, 2.3s) + 0.46s) both;
@@ -508,8 +508,8 @@ html.wf .hole { background: transparent; border: 1px dashed var(--s-fg); box-sha
   100% { transform: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .is-opening .hole { visibility: visible; animation: none; }
-  .is-opening .hero .wm-dot, .cue i { animation: none; }
+  .opening .hole { visibility: visible; animation: none; }
+  .opening [data-anchor] .wm-dot, .cue i { animation: none; }
 }
 
 /* ===================================================================
@@ -1322,3 +1322,390 @@ mark { background: var(--s-fg); color: var(--s-bg); padding: 0 .08em; border-rad
   .month .article-row .summary { display: none; }
   .feature-sum { display: none; }
 }
+
+/* =====================================================================
+   HIGH FIDELITY (Brand Book, Edition 01)
+   Carbon for moments, off-white for reading. One red dot per view.
+   ===================================================================== */
+:root {
+  /* Board and paper. Carbon: fine speckle. Off-white: soft fibre plus grain. */
+  --grain-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 .1 0 0 0 -.02'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='1' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .18 0 0 0 -.04'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --grain-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.006 .02' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .52 0 0 0 0 .46 .05 0 0 0 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .28 0 0 0 0 .24 .06 0 0 0 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --dot-cut: radial-gradient(circle at 60% 64%, #F0120C 0%, #E60001 46%, #C80001 78%, #9E0001 100%);
+  --label-track: 0.2em;
+  --header-h: 68px;
+}
+.label { letter-spacing: var(--label-track); }
+
+/* --- The dot, die-cut to a red core (p.9): light from the top left --- */
+.wm-dot { background: var(--dot-cut); }
+.wordmark--cut .wm-dot, .wordmark--foil .wm-dot {
+  box-shadow: inset 0.04em 0.05em 0.07em rgba(0, 0, 0, .55), inset 0.012em 0.016em 0 rgba(0, 0, 0, .35);
+}
+.stop { background: var(--dot-cut); }
+
+/* --- Wordmark versions (p.10) --- */
+/* Ink on off-white and screen on carbon come from the surface colour. */
+/* Foil on carbon: gloss black foil, barely lifting off the board. */
+.wordmark--foil .wm-word {
+  color: var(--foil);
+  background: linear-gradient(176deg, #26262A 0%, #0B0B0D 38%, #050506 62%, #1A1A1D 100%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 1px 0 rgba(255, 255, 255, .045)) drop-shadow(0 -1px 0 rgba(0, 0, 0, .35));
+}
+html.wf .wordmark--foil .wm-word { -webkit-text-fill-color: currentColor; background: none; filter: none; color: var(--s-fg); }
+
+/* --- Holes: cut, never drawn (p.12) --- */
+.hole {
+  background:
+    radial-gradient(circle at 62% 66%, #151517 0%, #121213 55%, #0D0D0E 100%);
+  box-shadow:
+    inset calc(var(--d) * .055) calc(var(--d) * .07) calc(var(--d) * .07) rgba(0, 0, 0, .9),
+    inset calc(var(--d) * .014) calc(var(--d) * .018) 0 rgba(0, 0, 0, .55),
+    calc(var(--d) * -.006) calc(var(--d) * -.008) 0 0 rgba(0, 0, 0, .25),
+    calc(var(--d) * .004) calc(var(--d) * .006) 0 0 rgba(255, 255, 255, .035);
+}
+
+/* --- Header: takes the surface beneath it, with a running head (p.2) --- */
+.site-head {
+  --s-bg: var(--paper); --s-fg: var(--foil); --s-dim: var(--ink-soft); --s-mute: var(--ink-mute);
+  --s-line: rgba(8, 8, 10, .1); --s-line-strong: rgba(8, 8, 10, .9); --s-hover: rgba(8, 8, 10, .045);
+  --s-inv-bg: var(--foil); --s-inv-fg: var(--paper); --s-grain: var(--grain-dark);
+  transition: transform .4s var(--ease-out), background-color .35s var(--ease), color .35s var(--ease), border-color .35s;
+}
+.site-head.on-carbon {
+  --s-bg: var(--carbon); --s-fg: var(--paper); --s-dim: var(--paper-dim); --s-mute: var(--graphite);
+  --s-line: rgba(246, 245, 240, .1); --s-line-strong: rgba(246, 245, 240, .85); --s-hover: rgba(246, 245, 240, .06);
+  --s-inv-bg: var(--paper); --s-inv-fg: var(--foil); --s-grain: var(--grain-light);
+}
+.site-head.at-cover { border-bottom-color: transparent; }
+body::before { transition: background-color .35s; }
+html.head-carbon body::before { background: var(--carbon); }
+html:not(.head-carbon) body::before { background: var(--paper); }
+.site-head .wordmark { font-size: 36px; }   /* cap height 24px: the screen minimum (p.9) */
+.head-brand { display: flex; align-items: center; gap: 18px; min-width: 0; }
+.runhead { display: inline-grid; overflow: hidden; height: 1.5em; white-space: nowrap; }
+.runhead > span { grid-area: 1 / 1; transition: transform .45s var(--ease-out), opacity .3s; }
+.runhead .rh-out { transform: translateY(-110%); opacity: 0; }
+.runhead .rh-in { animation: rh-in .45s var(--ease-out); }
+@keyframes rh-in { from { transform: translateY(110%); opacity: 0; } to { transform: none; opacity: 1; } }
+@media (max-width: 520px) { .runhead { display: none; } }
+
+/* --- Cover --- */
+.hero { min-height: clamp(520px, 92svh, 940px); }
+.hero .wordmark { font-size: clamp(5.5rem, 21vw, 16.5rem); }
+.hero .tagline { color: var(--graphite); }
+.hero-foot .label { color: var(--graphite); }
+
+/* --- Who we are (p.5): the photo through a window that bleeds off the page --- */
+.who .lead { color: var(--ink-soft); }
+.partner-head { display: grid; gap: 4px; }
+.window { background: var(--hole); }
+.window img { filter: grayscale(1) contrast(1.04); }
+.window::after { box-shadow: inset 18px 22px 34px rgba(0, 0, 0, .45), inset 3px 4px 0 rgba(0, 0, 0, .3); }
+@media (min-width: 961px) {
+  .who-grid { grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); }
+  .window { width: calc(100% + clamp(40px, 8vw, 140px)); margin-right: calc(-1 * clamp(40px, 8vw, 140px)); justify-self: start; }
+  .who { padding-block: clamp(96px, 10vw, 152px); }
+}
+
+/* --- Contact (p.18): business cards, off-white backs on carbon --- */
+.contact-sec .contact-grid { align-items: center; }
+.contact-sec .sec-head h2 { max-width: 12ch; }
+.cards { perspective: 1400px; }
+.bcard {
+  position: relative;
+  display: grid; align-content: space-between; gap: 40px;
+  min-height: clamp(250px, 22vw, 300px);
+  padding: clamp(24px, 2.4vw, 34px);
+  border-radius: 3px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .25), 0 10px 18px rgba(0, 0, 0, .22), 0 34px 60px -12px rgba(0, 0, 0, .55);
+  transition: transform .5s var(--ease-out), box-shadow .5s var(--ease-out);
+}
+.bcard:hover { transform: translateY(-6px) rotateX(2deg); box-shadow: 0 1px 1px rgba(0, 0, 0, .25), 0 16px 26px rgba(0, 0, 0, .24), 0 46px 70px -12px rgba(0, 0, 0, .6); }
+.bcard-head { display: grid; gap: 6px; }
+.bcard h3 { font-size: clamp(1.5rem, 2.2vw, 1.875rem); }
+.bcard .rows { border-top: 0; }
+.bcard .row { border-bottom: 0; gap: 10px; }
+.bcard .row > a { padding-block: 3px; }
+.bcard .row .v { font-size: .9375rem; }
+.bcard .copy { min-height: 28px; padding: 0 10px; font-size: .625rem; opacity: 0; transition: opacity .2s, background-color .2s, color .2s; }
+.bcard:hover .copy, .bcard .copy:focus-visible, .bcard .copy.done { opacity: 1; }
+@media (hover: none) { .bcard .copy { opacity: 1; } }
+.bcard .ext { width: 28px; }
+@media (min-width: 621px) { .cards .bcard:nth-child(2) { margin-top: 40px; } }
+
+/* --- What we do (p.7): hairline grid on carbon; the description comes on hover --- */
+.what-sec { position: relative; overflow: hidden; }
+.hole-pair { --d: clamp(150px, 15vw, 230px); position: absolute; right: calc(var(--d) * -.32); top: calc(var(--d) * -.46); margin: 0; }
+.hole-pair--b { right: calc(var(--d) * .2); top: calc(var(--d) * -.02); }
+@media (max-width: 760px) { .hole-pair { --d: 120px; } }
+.services { background: none; border: 0; gap: clamp(40px, 4vw, 56px) clamp(20px, 2.4vw, 32px); }
+.service { background: none; border-top: 1px solid var(--s-line); min-width: 0; }
+.service:hover { background: none; }
+.svc-btn { padding: 18px 0 0; }
+.svc-body p { padding: 10px 0 0; }
+@media (hover: hover) and (min-width: 621px) {
+  .service { min-height: 0; position: static; }
+  .service:hover { --s-bg: inherit; --s-fg: inherit; --s-dim: inherit; --s-mute: inherit; background: none; color: inherit; }
+  .svc-body { position: static; display: block; pointer-events: auto; }
+  .svc-body p { padding: 12px 0 0; opacity: .0; transform: translateY(6px); }
+  .service:hover .svc-title, .service:focus-within .svc-title, .service:hover .svc-meta, .service:focus-within .svc-meta { opacity: 1; transform: none; }
+  .service:hover .svc-body p, .service:focus-within .svc-body p { opacity: 1; transform: none; }
+  .services:hover .service:not(:hover) .svc-title { opacity: .45; }
+  .service .svc-meta .num { transition: color .3s; }
+}
+@media (max-width: 620px) {
+  .service { border-top: 0; }
+  .services { gap: 0; border-top: 1px solid var(--s-line); }
+  .service { border-bottom: 1px solid var(--s-line); }
+}
+
+/* --- The reveal (p.16): holes punch through the carbon to the letter beneath --- */
+@property --r { syntax: '<length>'; inherits: true; initial-value: 0px; }
+.reveal {
+  --r: clamp(64px, 9vw, 132px);
+  appearance: none; border: 0; padding: 0; margin: clamp(72px, 9vw, 128px) 0 0; width: 100%;
+  position: relative; display: block; cursor: pointer; text-align: left;
+  min-height: clamp(360px, 38vw, 520px);
+  background: transparent; color: var(--s-fg);
+  transition: --r 1s var(--ease-out);
+}
+.reveal-sheet {
+  position: absolute; inset: 0;
+  display: grid; align-content: center; padding-left: clamp(8px, 6vw, 96px);
+  background-color: var(--paper); background-image: var(--grain-dark); color: var(--foil);
+  --m1: radial-gradient(circle var(--r) at 14% 46%, #000 calc(100% - .5px), transparent 100%);
+  --m2: radial-gradient(circle var(--r) at calc(14% + var(--r) * 1.15) calc(46% - var(--r) * .4), #000 calc(100% - .5px), transparent 100%);
+  --m3: radial-gradient(circle var(--r) at 63% 52%, #000 calc(100% - .5px), transparent 100%);
+  -webkit-mask-image: var(--m1), var(--m2), var(--m3); mask-image: var(--m1), var(--m2), var(--m3);
+}
+.reveal-title { font-family: var(--serif); font-style: italic; font-weight: 600; font-variation-settings: "opsz" 60; font-size: clamp(5rem, 15vw, 13rem); line-height: .95; letter-spacing: -0.02em; white-space: nowrap; }
+.reveal-sub { font-family: var(--serif); font-style: italic; font-size: clamp(1.25rem, 2.2vw, 1.75rem); color: var(--ink-mute); margin-top: 10px; padding-left: .2em; }
+/* The cut edge throws its shadow inside each hole */
+.reveal-shade { position: absolute; inset: 0; pointer-events: none; }
+.rs-1 { --cx: 14%; --cy: 46%; }
+.rs-2 { --cx: calc(14% + var(--r) * 1.15); --cy: calc(46% - var(--r) * .4); }
+.rs-3 { --cx: 63%; --cy: 52%; }
+.reveal-shade {
+  background: radial-gradient(circle var(--r) at calc(var(--cx) + var(--r) * .06) calc(var(--cy) + var(--r) * .08), transparent 92%, rgba(0, 0, 0, .55) 100%);
+  -webkit-mask-image: radial-gradient(circle var(--r) at var(--cx) var(--cy), #000 calc(100% - .5px), transparent 100%);
+          mask-image: radial-gradient(circle var(--r) at var(--cx) var(--cy), #000 calc(100% - .5px), transparent 100%);
+}
+.reveal-cta {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 6px 20px;
+  padding-top: 22px; border-top: 1px solid var(--s-line);
+}
+.reveal-cta .label { grid-column: 1; }
+.reveal-cta .lt-title { grid-column: 1; }
+.reveal-cta .lt-icon { grid-column: 2; grid-row: 1 / span 2; }
+.reveal:hover { --r: clamp(78px, 11vw, 160px); }
+.reveal:hover .lt-icon { background: var(--s-fg); color: var(--s-bg); }
+.reveal:hover .lt-icon span { transform: translateX(3px); }
+.reveal[aria-expanded="true"] { --r: 140vw; }
+.reveal[aria-expanded="true"] .lt-icon span { transform: rotate(90deg); }
+.reveal[aria-expanded="true"] .reveal-cta { opacity: 0; }
+.reveal-cta { transition: opacity .3s; }
+.reveal { min-height: 0; aspect-ratio: auto; height: clamp(360px, 40vw, 540px); }
+@media (max-width: 620px) {
+  .reveal { --r: 84px; height: 380px; }
+  .reveal:hover { --r: 92px; }
+  .reveal-sheet { padding-left: 4px; }
+  .reveal-sheet { --m3: radial-gradient(circle var(--r) at 72% 30%, #000 calc(100% - .5px), transparent 100%); }
+  .rs-3 { --cx: 72%; --cy: 30%; }
+}
+@media (prefers-reduced-motion: reduce) { .reveal { transition: none; } }
+.letter-sheet { margin-top: 0; }
+.letter-meta { display: flex; justify-content: space-between; gap: 16px; }
+html.wf .reveal-sheet { background: #fff; }
+
+/* --- How we work: the timeline nodes are small holes on paper --- */
+.node { border-color: var(--s-fg); }
+
+/* --- Menu: a moment, so carbon --- */
+.menu {
+  --s-bg: var(--carbon); --s-fg: var(--paper); --s-dim: var(--paper-dim); --s-mute: var(--graphite);
+  --s-line: rgba(246, 245, 240, .12); --s-line-strong: rgba(246, 245, 240, .85); --s-hover: rgba(246, 245, 240, .06);
+  background-color: var(--carbon); background-image: var(--grain-light);
+}
+.menu::after { content: ""; position: absolute; --d: clamp(180px, 22vw, 320px); width: var(--d); height: var(--d); left: calc(var(--d) * -.38); bottom: calc(var(--d) * -.42); border-radius: 50%; background: var(--hole); box-shadow: inset calc(var(--d) * .055) calc(var(--d) * .07) calc(var(--d) * .07) rgba(0, 0, 0, .9); pointer-events: none; }
+html.wf .menu { --s-bg: #fff; --s-fg: #000; --s-mute: #6a6a6a; --s-line: rgba(0,0,0,.14); --s-line-strong: #000; background: #fff; }
+html.wf .menu::after { display: none; }
+html.menu-open .site-head { --s-bg: var(--carbon); --s-fg: var(--paper); --s-mute: var(--graphite); --s-line: rgba(246,245,240,.1); --s-line-strong: rgba(246,245,240,.85); --s-grain: var(--grain-light); }
+html.wf.menu-open .site-head { --s-bg: #fff; --s-fg: #000; --s-mute: #6a6a6a; --s-line: rgba(0,0,0,.14); --s-line-strong: #000; }
+
+/* --- Closing (p.22): the footer is the last slide --- */
+.closing { padding: 0 0 calc(24px + env(safe-area-inset-bottom, 0px)); position: relative; overflow: hidden; isolation: isolate; }
+.closing .field { position: absolute; inset: 0; z-index: 0; }
+.closing-stage { position: relative; z-index: 1; display: grid; place-items: center; min-height: clamp(380px, 62vh, 620px); padding: 64px max(var(--gutter), env(safe-area-inset-right, 0px)) 24px max(var(--gutter), env(safe-area-inset-left, 0px)); }
+.closing .wordmark { font-size: clamp(4.5rem, 14vw, 11rem); }
+.closing-bar { position: relative; z-index: 1; display: grid; gap: 22px; }
+.foot-links { display: flex; flex-wrap: wrap; gap: 10px 28px; padding-bottom: 20px; border-bottom: 1px solid var(--s-line); }
+.foot-links a { text-decoration: none; color: var(--paper-dim); transition: color .2s; padding-block: 6px; }
+.foot-links a:hover { color: var(--paper); }
+.closing .foot-bottom { margin: 0; padding: 0; border: 0; }
+.closing .foot-bottom .label { color: var(--graphite); }
+html.wf .closing .foot-links a { color: #fff; }
+
+/* --- House of Poland: the latest number sits in a hole --- */
+.feature-num {
+  border: 0; position: relative;
+  background: radial-gradient(circle at 62% 66%, #333337 0%, var(--carbon) 60%, #232326 100%);
+  color: var(--paper);
+  box-shadow: inset 10px 14px 22px rgba(0, 0, 0, .55), inset 2px 3px 0 rgba(0, 0, 0, .35);
+}
+.feature-num .label { color: var(--graphite); }
+.feature { border-color: var(--s-line); }
+html.wf .feature-num { background: transparent; color: #000; border: 1px dashed #000; box-shadow: none; }
+
+/* The Index: one circle of light; everything else in the dark (p.16, Spotlight) */
+.index-tease { position: relative; }
+.spot {
+  justify-self: end;
+  width: clamp(200px, 26vw, 340px); aspect-ratio: 1; border-radius: 50%;
+  display: grid; place-content: center; text-align: center; gap: 4px;
+  background: radial-gradient(circle at 45% 40%, #3A3A3E 0%, var(--carbon) 70%);
+  box-shadow: inset 12px 16px 28px rgba(0, 0, 0, .6), inset 2px 3px 0 rgba(0, 0, 0, .4), 0 0 0 1px rgba(0,0,0,.3);
+}
+.spot .n { font-family: var(--serif); font-style: italic; font-weight: 600; font-variation-settings: "opsz" 60; font-size: clamp(3.25rem, 6vw, 5rem); line-height: 1; color: var(--paper); }
+@media (max-width: 760px) { .spot { justify-self: start; } }
+
+/* --- Contact page aside: carbon card --- */
+.aside-card { background-color: var(--carbon); }
+
+/* Floating pill and toast in brand colours */
+.cta-float { background: var(--foil); }
+.cta-dot { background: var(--dot-cut); }
+
+/* Focus ring follows the surface */
+:focus-visible { outline-color: currentColor; }
+
+/* Business cards: landscape 85 × 55, stacked with an offset, as on the desk */
+.contact-sec .contact-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); }
+.contact-sec .cards { grid-template-columns: 1fr; gap: 0; max-width: 470px; width: 100%; justify-self: end; }
+.contact-sec .bcard { aspect-ratio: 85 / 55; min-height: 0; gap: 16px; }
+.contact-sec .cards .bcard:nth-child(2) { margin: -36px 0 0 clamp(24px, 5vw, 64px); }
+.contact-sec .cards .bcard:nth-child(1) { margin-right: clamp(24px, 5vw, 64px); z-index: 1; }
+.contact-sec .bcard:hover { z-index: 2; }
+@media (max-width: 960px) { .contact-sec .cards { justify-self: start; } }
+@media (max-width: 520px) {
+  .contact-sec .bcard { aspect-ratio: auto; min-height: 210px; }
+  .contact-sec .cards .bcard:nth-child(2) { margin: 16px 0 0; }
+  .contact-sec .cards .bcard:nth-child(1) { margin: 0; }
+}
+
+/* On the cover the big wordmark is the logo; the header's small one waits */
+.head-brand .wordmark { transition: opacity .35s var(--ease), transform .45s var(--ease-out); }
+.site-head.at-cover .head-brand .wordmark { opacity: 0; transform: translateY(-6px); pointer-events: none; }
+html.menu-open .site-head.at-cover .head-brand .wordmark { opacity: 1; transform: none; pointer-events: auto; }
+
+/* Reveal: once open, the sleeve is off. No edge shading, and the letter's own
+   title is the one already on screen. */
+.reveal-shade { transition: opacity .4s var(--ease); }
+.reveal[aria-expanded="true"] .reveal-shade { opacity: 0; }
+.reveal[aria-expanded="true"] + .letter-panel .article-title,
+.reveal[aria-expanded="true"] + .letter-panel .article-sub { display: none; }
+.reveal[aria-expanded="true"] + .letter-panel .letter-sheet { padding-top: 8px; }
+
+/* Menu: restraint. No decorative hole. */
+.menu::after { display: none; }
+
+/* =====================================================================
+   MATERIAL: heavy board, off-white paper, type pressed in, a dot cut
+   through to a red core. Textures are seamless 512px tiles.
+   ===================================================================== */
+:root {
+  --tex-carbon: url("tex/carbon.jpg");
+  --tex-hole: url("tex/hole.jpg");
+  --tex-paper: url("tex/paper.jpg");
+  --tex-red: url("tex/red.jpg");
+  --tex-size: 384px;
+}
+.carbon, .site-head.on-carbon, .site-foot, .menu, html.menu-open .site-head, .aside-card {
+  background-color: var(--carbon);
+  background-image: var(--tex-carbon);
+  background-size: var(--tex-size);
+}
+.paper, .site-head, .reveal-sheet {
+  background-color: var(--paper);
+  background-image: var(--tex-paper);
+  background-size: 512px;
+}
+.site-head.on-carbon, html.menu-open .site-head { background-image: var(--tex-carbon); background-size: var(--tex-size); }
+.holeband { background-color: var(--hole); background-image: var(--tex-hole); background-size: var(--tex-size); }
+html.head-carbon body::before { background: var(--carbon) var(--tex-carbon); background-size: var(--tex-size); }
+
+/* The dot: a real hole through the board to a red core */
+.wm-dot, .stop {
+  background:
+    radial-gradient(circle at 64% 68%, rgba(255, 60, 40, .22) 0%, transparent 55%),
+    radial-gradient(circle at 30% 26%, rgba(0, 0, 0, .35) 0%, transparent 60%),
+    var(--tex-red) center / 160px, #E60001;
+}
+.wm-dot {
+  box-shadow:
+    inset .07em .09em .09em rgba(0, 0, 0, .72),
+    inset .018em .024em 0 rgba(0, 0, 0, .55),
+    .008em .012em 0 rgba(255, 255, 255, .07);
+}
+.stop { box-shadow: inset .03em .04em .04em rgba(0, 0, 0, .55); }
+
+/* Holes: the board's own fibre, deeper in shadow */
+.hole {
+  background: radial-gradient(circle at 62% 66%, rgba(255, 255, 255, .025) 0%, transparent 60%), var(--tex-hole) center / 256px, #121213;
+  box-shadow:
+    inset calc(var(--d) * .07) calc(var(--d) * .09) calc(var(--d) * .09) rgba(0, 0, 0, .92),
+    inset calc(var(--d) * .016) calc(var(--d) * .021) 0 rgba(0, 0, 0, .6),
+    calc(var(--d) * .005) calc(var(--d) * .007) 0 0 rgba(255, 255, 255, .05);
+}
+
+/* Off-white type pressed into the board: paper in the letters, lit from the
+   top left, its shadow falling down and right onto the board. */
+.wordmark--press .wm-word,
+.carbon h1, .carbon h2, .carbon .lt-title, .carbon .svc-title,
+.site-foot .wordmark .wm-word, .menu .mtxt, .holeband h2, .spot .n {
+  color: var(--paper);
+  background: var(--tex-paper) 0 0 / 360px, var(--paper);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter:
+    drop-shadow(-.5px -.5px 0 rgba(255, 255, 255, .18))
+    drop-shadow(.06em .07em .02em rgba(0, 0, 0, .0))
+    drop-shadow(1px 1.5px .5px rgba(0, 0, 0, .55))
+    drop-shadow(2px 4px 5px rgba(0, 0, 0, .35));
+}
+.wordmark--press .wm-word { filter: drop-shadow(-1px -1px 0 rgba(255, 255, 255, .2)) drop-shadow(2px 3px 1px rgba(0, 0, 0, .6)) drop-shadow(5px 10px 14px rgba(0, 0, 0, .4)); }
+/* Small type on carbon stays flat and crisp */
+.carbon .svc-title { filter: drop-shadow(.5px 1px .5px rgba(0, 0, 0, .55)); }
+/* Ink on paper: a whisper of letterpress */
+.paper h1, .paper h2, .paper h3, .paper .promise, .paper .closing-line { text-shadow: 0 1px 0 rgba(255, 255, 255, .7); }
+
+/* Buttons on board: an off-white chip of paper */
+.carbon .btn, .menu .btn, .site-head.on-carbon .menu-btn[aria-expanded="true"] {
+  background: var(--tex-paper) 0 0 / 300px, var(--paper);
+  color: var(--foil); border-color: transparent;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .15) inset, 0 2px 3px rgba(0, 0, 0, .45), 0 8px 18px rgba(0, 0, 0, .3);
+}
+.carbon .btn:hover, .menu .btn:hover { background: var(--paper); color: var(--foil); transform: translateY(-1px); }
+
+/* Business cards: thick off-white stock */
+.bcard { background-image: var(--tex-paper); background-size: 512px; }
+
+/* Wireframe mode keeps everything flat */
+html.wf .carbon, html.wf .paper, html.wf .site-head, html.wf .site-foot, html.wf .menu, html.wf .holeband, html.wf .reveal-sheet, html.wf .aside-card { background-image: none; }
+html.wf .wordmark--press .wm-word, html.wf .carbon h1, html.wf .carbon h2, html.wf .carbon .lt-title, html.wf .carbon .svc-title, html.wf .site-foot .wordmark .wm-word, html.wf .menu .mtxt, html.wf .holeband h2, html.wf .spot .n { -webkit-text-fill-color: currentColor; background: none; filter: none; }
+html.wf .wm-dot, html.wf .stop { background: var(--s-dot); box-shadow: none; }
+html.wf .hole { background: transparent; }
+@media (prefers-reduced-transparency: reduce) { .carbon h2 { filter: none; } }
+/* Paper inside a carbon section keeps ink type; the logo heading defers to its word */
+.carbon .paper h1, .carbon .paper h2, .carbon .paper h3,
+.carbon h1.wordmark, .site-foot a.wordmark {
+  background: none; -webkit-text-fill-color: currentColor; filter: none;
+}
+.carbon .paper h1, .carbon .paper h2, .carbon .paper h3 { color: var(--foil); }
+/* The cover runs up under a transparent header, so the field bleeds off the top */
+.hero { margin-top: calc(-1 * var(--header-h)); padding-top: var(--header-h); }
+html[lang="pl"] .hero { margin-top: 0; padding-top: 0; }
+.site-head.at-cover { background: transparent; box-shadow: none; }

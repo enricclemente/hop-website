@@ -582,7 +582,7 @@
 
   function buildField(hero, animate) {
     var field = hero.querySelector(".field");
-    var mark = hero.querySelector(".wordmark");
+    var mark = hero.querySelector("[data-anchor]") || hero.querySelector(".wordmark");
     var dot = hero.querySelector(".wm-dot");
     var word = mark && mark.querySelector(".wm-word");
     if (!field || !mark || !dot || !word) return;
@@ -696,26 +696,77 @@
     }
   }
 
-  var hero = document.querySelector(".hero");
-  if (hero) {
-    var lastW = 0;
-    var run = function () {
-      lastW = window.innerWidth;
-      buildField(hero, !reduceMotion);
-      if (!reduceMotion) doc.classList.add("is-opening");
+  /* The cover plays the opener on load. The closing (footer) plays it again
+     the first time it comes into view, as in a presentation (p.15). */
+  var fields = Array.prototype.slice.call(document.querySelectorAll(".hero, .closing")).filter(function (n) { return n.querySelector(".field"); });
+  function play(root) {
+    root.classList.remove("opening");
+    void root.offsetWidth;
+    buildField(root, !reduceMotion);
+    if (!reduceMotion) root.classList.add("opening");
+  }
+  if (fields.length) {
+    var lastW = window.innerWidth;
+    var start = function () {
+      fields.forEach(function (root) {
+        if (root.classList.contains("hero")) play(root);
+        else buildField(root, false);
+      });
+      var closing = document.querySelector(".closing");
+      if (closing && !reduceMotion && "IntersectionObserver" in window) {
+        var once = new IntersectionObserver(function (en) {
+          if (en[0].isIntersecting) { once.disconnect(); play(closing); }
+        }, { threshold: 0.45 });
+        once.observe(closing);
+      }
     };
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(run); else window.addEventListener("load", run);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else window.addEventListener("load", start);
 
-    var t;
+    var rt;
     window.addEventListener("resize", function () {
-      clearTimeout(t);
-      t = setTimeout(function () {
+      clearTimeout(rt);
+      rt = setTimeout(function () {
         if (Math.abs(window.innerWidth - lastW) < 40) return; /* ignore mobile toolbar resizes */
         lastW = window.innerWidth;
-        doc.classList.remove("is-opening");
-        buildField(hero, false);
+        fields.forEach(function (root) { root.classList.remove("opening"); buildField(root, false); });
       }, 200);
     });
+  }
+
+  /* Header takes the surface beneath it and names the section, like the
+     running head in the brand book (p.2). */
+  var surfaces = Array.prototype.slice.call(document.querySelectorAll("[data-surface]"));
+  var headEl = document.getElementById("site-head");
+  var runCur = headEl && headEl.querySelector(".runhead");
+  var lastRun = null;
+  function setRun(text) {
+    if (!runCur || text === lastRun) return;
+    lastRun = text;
+    var old = runCur.querySelector(".rh-cur");
+    var nu = document.createElement("span");
+    nu.className = "rh-cur rh-in";
+    nu.textContent = text ? (currentLang === "pl" && text !== "HOP." ? pseudoPolish(text) : text) : "";
+    if (old) { old.className = "rh-out"; setTimeout(function () { old.remove(); }, 450); }
+    runCur.appendChild(nu);
+  }
+  function syncHead() {
+    if (!headEl) return;
+    var y = headEl.offsetHeight + 1;
+    var cur = null;
+    surfaces.forEach(function (sec) { var r = sec.getBoundingClientRect(); if (r.top <= y && r.bottom > y) cur = sec; });
+    var dark = cur ? cur.dataset.surface === "carbon" : false;
+    headEl.classList.toggle("on-carbon", dark);
+    doc.classList.toggle("head-carbon", dark);
+    headEl.classList.toggle("at-cover", !!(cur && cur.classList.contains("hero")));
+    if (cur) setRun(cur.dataset.run || "");
+  }
+  if (surfaces.length) {
+    syncHead();
+    window.addEventListener("scroll", function () { requestAnimationFrame(syncHead); }, { passive: true });
+    window.addEventListener("resize", syncHead);
+  } else if (headEl) {
+    /* Pages without marked sections: header stays on paper */
+    headEl.classList.remove("on-carbon");
   }
 
   /* ==================================================================
