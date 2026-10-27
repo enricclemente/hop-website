@@ -1375,3 +1375,6 @@ html.leap .wordmark--hero [data-dot] { visibility: hidden; }
 .paper .statement, .paper .big { text-shadow: none; }
 .stage .letter-sec { border-top: 1px solid var(--s-line); }
 .stage .how-sec { border-top: 1px solid rgba(8, 8, 10, .1); }
+/* Small utilities (replace inline styles, so the security policy can forbid them) */
+.u-mw52 { max-width: 52ch; } .u-mw40 { max-width: 40ch; } .u-pt0 { padding-top: 0 !important; }
+.u-mb24 { margin-bottom: 24px !important; } .u-pb0 { padding-block: 0 !important; } .u-mt20 { margin-top: 20px; }

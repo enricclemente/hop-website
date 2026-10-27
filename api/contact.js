@@ -29,6 +29,14 @@ export default async function handler(req, res) {
     return res.status(405).json({ ok: false, error: 'method' })
   }
 
+  // Only accept JSON posted from this site's own pages
+  const type = String(req.headers['content-type'] || '')
+  if (!type.startsWith('application/json')) return res.status(415).json({ ok: false, error: 'type' })
+  const origin = req.headers.origin
+  const host = req.headers['x-forwarded-host'] || req.headers.host
+  if (origin && host && new URL(origin).host !== host) return res.status(403).json({ ok: false, error: 'origin' })
+  if (Number(req.headers['content-length'] || 0) > 16 * 1024) return res.status(413).json({ ok: false, error: 'size' })
+
   let body = req.body
   if (typeof body === 'string') { try { body = JSON.parse(body) } catch { body = {} } }
   body = body || {}
