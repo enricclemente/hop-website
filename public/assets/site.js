@@ -770,7 +770,8 @@
   }
   if (surfaces.length) {
     syncHead();
-    window.addEventListener("scroll", function () { requestAnimationFrame(syncHead); }, { passive: true });
+    var hTick = false;
+    window.addEventListener("scroll", function () { if (!hTick) { hTick = true; requestAnimationFrame(function () { hTick = false; syncHead(); }); } }, { passive: true });
     window.addEventListener("resize", syncHead);
   } else if (headEl) {
     /* Pages without marked sections: header stays on paper */
@@ -990,7 +991,8 @@
       arrows[1].disabled = best === items.length - 1;
     };
     arrows.forEach(function (a) { a.addEventListener("click", function () { goStep(stepIdx + Number(a.dataset.dir)); }); });
-    stepsEl.addEventListener("scroll", function () { requestAnimationFrame(stepsSync); }, { passive: true });
+    var stTick = false;
+    stepsEl.addEventListener("scroll", function () { if (!stTick) { stTick = true; requestAnimationFrame(function () { stTick = false; stepsSync(); }); } }, { passive: true });
     stepsSync();
   }
 
@@ -1370,13 +1372,16 @@
       statement.replaceChild(frag, node);
     });
     var words = statement.querySelectorAll(".w");
+    var lTick = false, lastN = -1;
     var lightUp = function () {
       var r = statement.getBoundingClientRect(), vh = window.innerHeight;
       var p = (vh * 0.86 - r.top) / (r.height + vh * 0.3);
-      var n = Math.round(Math.max(0, Math.min(1, p)) * words.length * 1.1);
+      var n = Math.min(words.length, Math.round(Math.max(0, Math.min(1, p)) * words.length * 1.1));
+      if (n === lastN) return;
+      lastN = n;
       for (var i = 0; i < words.length; i++) words[i].classList.toggle("lit", i < n);
     };
-    window.addEventListener("scroll", function () { requestAnimationFrame(lightUp); }, { passive: true });
+    window.addEventListener("scroll", function () { if (!lTick) { lTick = true; requestAnimationFrame(function () { lTick = false; lightUp(); }); } }, { passive: true });
     window.addEventListener("resize", lightUp);
     lightUp();
   }

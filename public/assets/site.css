@@ -41,10 +41,10 @@
   --ink-mute: #66666B;
 
   /* Material */
-  --tex-carbon: url("tex/carbon.jpg");
-  --tex-paper: url("tex/paper.jpg");
-  --tex-red: url("tex/red.jpg");
-  --tex-hole: url("tex/hole.jpg");
+  --tex-carbon: url("tex/carbon.webp");
+  --tex-paper: url("tex/paper.webp");
+  --tex-red: url("tex/red.webp");
+  --tex-hole: url("tex/hole.webp");
 
   /* Type */
   --serif: "Source Serif 4", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
@@ -252,13 +252,11 @@ mark { background: var(--s-fg); color: var(--s-bg); padding: 0 .08em; border-rad
 
 /* Off-white type pressed into the board: paper in the letters, lit from the
    top left, its shadow falling onto the board. Large type only. */
-.wordmark--press .wm-word,
-.carbon .sec-head h2, .menu .mtxt, .holeband h2, .hop-hero h1, .ll-title {
+.wordmark--press .wm-word {
   background: var(--tex-paper) 0 0 / 360px, var(--paper);
   -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-  filter: drop-shadow(-.5px -.5px 0 rgba(255, 255, 255, .16)) drop-shadow(1px 1.5px .5px rgba(0, 0, 0, .55)) drop-shadow(2px 4px 6px rgba(0, 0, 0, .32));
 }
-.wordmark--press .wm-word { filter: drop-shadow(-1px -1px 0 rgba(255, 255, 255, .2)) drop-shadow(2px 3px 1px rgba(0, 0, 0, .6)) drop-shadow(5px 10px 14px rgba(0, 0, 0, .4)); }
+.carbon .sec-head h2, .menu .mtxt, .holeband h2, .hop-hero h1, .carbon .ll-title { color: var(--paper); }
 /* Ink on paper: a whisper of letterpress */
 .paper h1, .paper h2, .paper .statement, .paper .promise, .paper .closing-line { text-shadow: 0 1px 0 rgba(255, 255, 255, .7); }
 
@@ -1206,11 +1204,7 @@ html[lang="pl"] .hero { margin-top: 0; padding-top: 0; min-height: max(520px, ca
   font-size: var(--fs-big); line-height: .98; letter-spacing: -0.03em; font-weight: 600;
   max-width: none; text-wrap: balance;
 }
-.stage .carbon .big, .stage .carbon .statement {
-  background: var(--tex-paper) 0 0 / 360px, var(--paper);
-  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-  filter: drop-shadow(1px 2px .5px rgba(0, 0, 0, .5)) drop-shadow(3px 6px 10px rgba(0, 0, 0, .3));
-}
+.stage .big, .stage .statement { color: var(--s-fg); background: none; -webkit-text-fill-color: currentColor; filter: none; text-shadow: none; }
 @media (min-width: 621px) { .stage .big.lines .ln { display: block; } }
 
 /* Cover: the word alone in the middle, three quiet facts along the bottom */
@@ -1230,31 +1224,30 @@ html[lang="pl"] .hero { margin-top: 0; padding-top: 0; min-height: max(520px, ca
 /* Proposition: the statement lights up word by word as you read it */
 .stage .intro { padding-block: var(--sp-l) var(--sp-l); }
 .stage .statement { font-size: clamp(2.5rem, 6.4vw, 7rem); line-height: 1; letter-spacing: -0.028em; max-width: 15ch; }
-.stage .statement .w { transition: opacity .25s linear; opacity: var(--wo, 1); -webkit-text-fill-color: transparent; }
+.stage .statement .w { transition: opacity .3s linear; opacity: var(--wo, 1); }
 .js .stage .statement .w { --wo: .14; }
 .js .stage .statement .w.lit { --wo: 1; }
 .stage .pillars { margin-top: var(--sp-l); }
 .stage .pillar { border-top-color: var(--s-line); }
-.stage .pillar-text { color: var(--paper-dim); }
+.stage .pillar-text { color: var(--s-dim); }
 .stage .pillar--promise { border-top-color: var(--s-line-strong); }
-.stage .promise { color: var(--paper); }
+.stage .promise { color: var(--s-fg); }
 
 /* 01 Who we are: the headline crosses the photo, inverting where it overlaps */
 .stage .who { padding-block: var(--sp-l); overflow: hidden; }
 .stage .who-stage { position: relative; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); align-items: center; }
-.stage .who-stage .window { grid-column: 6 / -1; grid-row: 1; width: calc(100% + var(--gutter)); align-self: center; }
+.stage .who-stage .window { grid-column: 8 / -1; grid-row: 1; width: calc(100% + var(--gutter)); align-self: center; }
 .stage .who-stage h2 {
-  grid-column: 1 / span 9; grid-row: 1; position: relative; z-index: 2;
-  background: none; -webkit-text-fill-color: currentColor; filter: none; color: var(--paper);
-  mix-blend-mode: difference;
+  grid-column: 1 / span 7; grid-row: 1; position: relative; z-index: 2; font-size: clamp(2.5rem, 5.2vw, 5.75rem);
+  background: none; -webkit-text-fill-color: currentColor; filter: none; color: var(--s-fg);
 }
 .stage .who-body { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); row-gap: var(--sp-s); margin-top: var(--sp-m); }
-.stage .who-body .lead { grid-column: 1 / span 5; color: var(--paper-dim); font-size: var(--fs-lead); }
+.stage .who-body .lead { grid-column: 1 / span 5; color: var(--s-dim); font-size: var(--fs-lead); }
 .stage .who-body .partners { grid-column: 7 / -1; }
-.stage .who-body .closing-line { grid-column: 1 / -1; font-size: clamp(1.75rem, 3.4vw, 3rem); max-width: 20ch; color: var(--paper); }
+.stage .who-body .closing-line { grid-column: 1 / -1; font-size: clamp(1.75rem, 3.4vw, 3rem); max-width: 20ch; color: var(--s-fg); }
 .stage .partner { border-top-color: var(--s-line-strong); }
 .stage .partner-name { font-size: clamp(1.5rem, 2.2vw, 2rem); }
-.stage .bio-lead { color: var(--paper); }
+.stage .bio-lead { color: var(--s-fg); }
 @media (max-width: 999px) {
   .stage .who-stage .window { grid-column: 4 / -1; }
   .stage .who-stage h2 { grid-column: 1 / -1; }
@@ -1319,8 +1312,8 @@ html.leap .svc-stop.dot-here { visibility: hidden; }
 .stage .steps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .stage .steps::before { display: none; }
 .stage .step { padding-top: 22px; border-top: 1px solid var(--s-line-strong); }
-.stage .step-n { font-size: clamp(3.5rem, 6vw, 6rem); line-height: .9; letter-spacing: -0.04em; color: var(--paper); margin-bottom: 18px; }
-.stage .step-text { color: var(--paper-dim); }
+.stage .step-n { font-size: clamp(3.5rem, 6vw, 6rem); line-height: .9; letter-spacing: -0.04em; color: var(--s-fg); margin-bottom: 18px; }
+.stage .step-text { color: var(--s-dim); }
 @media (max-width: 999px) and (min-width: 621px) { .stage .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 48px; } }
 @media (max-width: 620px) { .stage .step { border: 1px solid var(--s-line-strong); border-radius: 20px; padding: 22px; } }
 
@@ -1374,3 +1367,11 @@ html.leap .wordmark--hero [data-dot] { visibility: hidden; }
 }
 /* Buttons may wrap rather than push the page wider */
 .btn { max-width: 100%; white-space: normal; text-align: center; line-height: 1.25; padding-block: 10px; }
+
+/* Performance: big type is painted once and never filtered; the relief
+   effect stays only on the two static logos, with a single shadow. */
+.wordmark--press .wm-word { filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, .45)); }
+.stage .what-sec .big, .stage .contact-sec .big { color: var(--paper); }
+.paper .statement, .paper .big { text-shadow: none; }
+.stage .letter-sec { border-top: 1px solid var(--s-line); }
+.stage .how-sec { border-top: 1px solid rgba(8, 8, 10, .1); }
