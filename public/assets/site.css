@@ -10,6 +10,14 @@
    component works on every surface and in both modes. */
 
 @font-face {
+  font-family: "Source Serif 4";
+  src: url("fonts/SourceSerif4-Italic.woff") format("woff");
+  font-style: italic;
+  font-weight: 400 600;
+  font-display: swap;
+}
+/* Only the cover wordmark uses Newsreader; the browser loads it only there */
+@font-face {
   font-family: "Newsreader";
   src: url("fonts/Newsreader-Italic.woff") format("woff");
   font-style: italic;
@@ -40,7 +48,7 @@
   --ink-mute: #6B6B70;
 
   /* Type */
-  --serif: "Newsreader", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --serif: "Source Serif 4", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   --sans: "Manrope", "Segoe UI", system-ui, -apple-system, sans-serif;
   --t-h1: clamp(2.375rem, 5.6vw, 4.75rem);
   --t-h2: clamp(1.875rem, 3.8vw, 3.25rem);
@@ -1724,20 +1732,14 @@ html[lang="pl"] .hero { margin-top: 0; padding-top: 0; }
 .carbon .letter-toggle:hover .lt-icon, .carbon .letter-toggle[aria-expanded="true"] .lt-icon { background: var(--paper); color: var(--foil); }
 
 /* =====================================================================
-   TYPE: Newsreader Italic, as in the hop. reference. Lowercase wordmark,
-   the dot sits on the baseline at about half the x-height.
+   COVER WORDMARK: lowercase hop. in Newsreader Italic, as in the reference.
+   Everything else stays in Source Serif 4.
    ===================================================================== */
-h1, h2, h3, .serif, .wordmark, .promise, .closing-line, .lt-title, .svc-title, .mtxt,
-.article-title, .feature-title, .prose .lede, .prose .pull, .prose .closer, .prose li strong,
-.empty-title, .month-h, .pn .t, .feature-num .n, .spot .n, .avatar, .reveal-title {
+.wordmark--hero {
+  font-family: "Newsreader", var(--serif);
+  font-weight: 600;
   font-variation-settings: "opsz" 72;
+  letter-spacing: -0.025em;
 }
-h1, h2, .wordmark, .article-title, .feature-title, .thesis { font-weight: 600; letter-spacing: -0.02em; }
-.wordmark { letter-spacing: -0.025em; }
-.wm-dot { width: .25em; height: .25em; margin-left: .035em; }
-.site-head .wordmark { font-size: 44px; }
-.hero .wordmark { font-size: clamp(6rem, 26vw, 19rem); }
-.closing .wordmark { font-size: clamp(5rem, 17vw, 13rem); }
-.prose .sign .wordmark { font-size: 3.25rem; }
-.prose p, .article-sub, .reveal-sub, .feature-sub { font-variation-settings: "opsz" 20; }
-.article-sub, .feature-sub { font-weight: 400; }
+.hero .wordmark--hero { font-size: clamp(6rem, 26vw, 19rem); }
+.wordmark--hero .wm-dot { width: .25em; height: .25em; margin-left: .035em; }
