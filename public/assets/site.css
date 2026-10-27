@@ -101,6 +101,8 @@
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 24px); }
 html.menu-open { overflow: hidden; }
+/* No double-tap zoom on phones (taps act instantly); scrolling and pinch-to-zoom still work */
+*, *::before, *::after { touch-action: manipulation; }
 body {
   margin: 0;
   background: var(--paper);
