@@ -718,7 +718,7 @@
         else buildField(root, false);
       });
       var closing = document.querySelector(".closing");
-      if (closing && !reduceMotion && "IntersectionObserver" in window) {
+      if (closing && closing.querySelector("[data-anchor]") && !reduceMotion && "IntersectionObserver" in window) {
         var once = new IntersectionObserver(function (en) {
           if (en[0].isIntersecting) { once.disconnect(); play(closing); }
         }, { threshold: 0.45 });
