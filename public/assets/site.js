@@ -1168,6 +1168,8 @@
       };
     }
     function saveDraft() {
+      /* Drafts are optional storage: only with "Preferences" consent */
+      if (!(window.HOPConsent && window.HOPConsent.allowed("preferences"))) return;
       var d = data();
       delete d.website; delete d.elapsed; delete d.consent;
       store(DRAFT, JSON.stringify(d));
@@ -1176,6 +1178,7 @@
     form.addEventListener("input", function () { clearTimeout(dt); dt = setTimeout(saveDraft, 300); });
     form.addEventListener("change", saveDraft);
     function restoreDraft() {
+      if (!(window.HOPConsent && window.HOPConsent.allowed("preferences"))) return;
       var raw = store(DRAFT);
       if (!raw) return;
       try {

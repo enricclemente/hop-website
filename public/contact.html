@@ -231,14 +231,50 @@
       </div>
     </div>
     <div class="foot-bottom">
-      <p class="label"><span data-notr>© 2026 HOP.</span> · <a href="/privacy">Privacy</a></p>
+      <p class="label"><span data-notr>© 2026 HOP.</span> · <a href="/privacy">Privacy</a> · <button class="linkbtn foot-cookies" type="button" data-consent="settings">Cookie settings</button></p>
       <button class="to-top label" type="button" data-totop>Back to top <span class="tt-dot" aria-hidden="true"></span></button>
     </div>
   </div>
 </footer>
+<section class="consent-bar carbon" id="consent-bar" aria-label="Cookie choices" hidden>
+  <p class="cb-title">Your choice<span class="stop">.</span></p>
+  <p class="cb-text">No ads, no tracking. We only store what the site needs to work. You decide on the rest.</p>
+  <div class="cb-actions">
+    <button class="btn btn--small" type="button" data-consent="reject">Reject all</button>
+    <button class="btn btn--small" type="button" data-consent="accept">Accept all</button>
+    <button class="linkbtn ulink cb-more" type="button" data-consent="settings">Settings</button>
+  </div>
+</section>
+
+<dialog class="consent-dialog paper" id="consent-dialog" aria-labelledby="cd-title">
+  <form method="dialog" class="cd-inner">
+    <h2 id="cd-title" tabindex="-1" autofocus>Cookie settings<span class="stop">.</span></h2>
+    <p class="cd-intro">We don’t use advertising or tracking cookies. Choose what we may store in your browser. <a href="/privacy#cookies">Details</a></p>
+    <ul class="cd-list">
+      <li class="cd-row">
+        <div><p class="cd-name">Necessary</p><p class="cd-desc">Remembers your language and this choice. Always on.</p></div>
+        <span class="toggle"><input type="checkbox" checked disabled aria-label="Necessary, always on"><span aria-hidden="true"></span></span>
+      </li>
+      <li class="cd-row">
+        <div><p class="cd-name">Preferences</p><p class="cd-desc">Keeps an unsent contact form, so you don’t lose it.</p></div>
+        <span class="toggle"><input type="checkbox" name="preferences" aria-label="Preferences"><span aria-hidden="true"></span></span>
+      </li>
+      <li class="cd-row">
+        <div><p class="cd-name">Statistics</p><p class="cd-desc">Anonymous visit counts to improve the site. Not in use yet.</p></div>
+        <span class="toggle"><input type="checkbox" name="analytics" aria-label="Statistics"><span aria-hidden="true"></span></span>
+      </li>
+    </ul>
+    <div class="cd-actions">
+      <button class="btn btn--small btn--ghost" type="button" data-consent="reject">Reject all</button>
+      <button class="btn btn--small btn--ghost" type="button" data-consent="accept">Accept all</button>
+      <button class="btn btn--small" type="button" data-consent="save">Save choices</button>
+    </div>
+  </form>
+</dialog>
 <!--/FOOTER-->
 
 <div class="toast" role="status" aria-live="polite"></div>
+<script src="/assets/consent.js"></script>
 <script src="/assets/articles.js"></script>
 <script src="/assets/site.js"></script>
 </body>
