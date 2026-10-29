@@ -83,3 +83,13 @@ The build writes one page per article at `/house-of-poland/<slug>`, plus canonic
 
 Until launch every page is marked `noindex`, so the vercel.app copy with placeholder text stays out of Google.
 **At launch:** in Vercel → Settings → Environment Variables add `SITE_URL` = `https://hoppartners.pl` (the final address, no trailing slash) and redeploy. That turns indexing on and points every canonical and the sitemap at the real domain. Then submit `https://hoppartners.pl/sitemap.xml` in Google Search Console.
+
+## Private preview password
+
+`middleware.js` puts a branded password page in front of the whole site (every domain, including the vercel.app link).
+
+- **Turn on:** Vercel → hop-website → Settings → Environment Variables → add `SITE_PASSWORD` (Production and Preview), then Deployments → ⋯ → Redeploy.
+- **Change it:** edit the value and redeploy. Everyone has to enter the new one.
+- **Turn off for launch:** delete `SITE_PASSWORD` and redeploy.
+
+A correct password is remembered in that browser for 30 days (HttpOnly cookie).

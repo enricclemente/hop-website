@@ -1497,3 +1497,23 @@ html.consent-pending .cta-float { display: none; }
 .store-table th { font-size: .6875rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; color: var(--s-dim); }
 .store-table code { font-size: .8125rem; }
 .cd-inner h2:focus { outline: none; }
+
+/* ---------- Private-preview password page (served by middleware.js) ---------- */
+.gate-body { margin: 0; background: var(--carbon); }
+.gate { min-height: 100vh; min-height: 100dvh; display: grid; grid-template-rows: 1fr auto; justify-items: center; padding: 24px 16px calc(20px + env(safe-area-inset-bottom, 0px)); }
+.gate-card { align-self: center; width: min(420px, 100%); display: grid; justify-items: center; text-align: center; gap: 14px; }
+.gate-mark { font-size: clamp(6rem, 30vw, 10rem); line-height: .9; margin: 0 0 8px; }
+.gate-title { font-family: var(--serif); font-style: italic; font-weight: 600; font-size: clamp(1.75rem, 6vw, 2.25rem); line-height: 1.05; color: var(--paper); }
+.gate-text { font-size: .9375rem; line-height: 1.5; color: var(--s-dim); max-width: 32ch; }
+.gate-form { width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; margin-top: 10px; }
+.gate-input {
+  min-height: 52px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--s-line-strong);
+  background: transparent; color: var(--paper); font: 500 1rem/1 var(--sans); -webkit-appearance: none; appearance: none;
+}
+.gate-input::placeholder { color: var(--s-mute); }
+.gate-input:focus { outline: none; box-shadow: 0 0 0 3px var(--s-line); border-color: var(--paper); }
+.gate-input[aria-invalid="true"] { border-width: 2px; }
+.gate-btn { min-height: 52px; }
+.gate-err { grid-column: 1 / -1; font-size: .8125rem; font-weight: 600; color: var(--paper); text-align: left; padding-left: 18px; }
+.gate-foot { color: var(--s-mute); }
+@media (max-width: 420px) { .gate-form { grid-template-columns: 1fr; } }
