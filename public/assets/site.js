@@ -1159,10 +1159,11 @@
     function data() {
       var interests = Array.prototype.slice.call(form.querySelectorAll('input[name="interests"]:checked')).map(function (c) { return c.value; });
       var partner = (form.querySelector('input[name="partner"]:checked') || {}).value || "Either";
+      var platform = (form.querySelector('input[name="platform"]:checked') || {}).value || "";
       return {
         name: input("name").value.trim(), email: input("email").value.trim(),
         company: input("company").value.trim(), phone: input("phone").value.trim(),
-        interests: interests, message: msg.value.trim(), partner: partner,
+        interests: interests, message: msg.value.trim(), partner: partner, platform: platform,
         consent: input("consent").checked, website: input("website").value,
         lang: currentLang, page: location.pathname, elapsed: Date.now() - startedAt
       };
@@ -1192,9 +1193,20 @@
         });
         var r = form.querySelector('input[name="partner"][value="' + String(d.partner || "Either").replace(/"/g, "") + '"]');
         if (r) r.checked = true;
+        var pf = d.platform && form.querySelector('input[name="platform"][value="' + String(d.platform).replace(/"/g, "") + '"]');
+        if (pf) pf.checked = true;
         if (any) document.getElementById("draft-note").hidden = false;
       } catch (e) {}
       grow();
+    }
+    /* Arriving from "Let's make the leap" in the burning-platform list: preselect it */
+    function platformFromUrl() {
+      try {
+        var slug = new URLSearchParams(location.search).get("platform");
+        if (!slug || !/^[a-z-]{2,40}$/.test(slug)) return;
+        var pf = form.querySelector('input[name="platform"][data-slug="' + slug + '"]');
+        if (pf) pf.checked = true;
+      } catch (e) {}
     }
     function clearDraft() { try { localStorage.removeItem(DRAFT); } catch (e) {} }
     document.getElementById("draft-clear").addEventListener("click", function () {
@@ -1286,6 +1298,7 @@
     });
 
     restoreDraft();
+    platformFromUrl();
     grow();
   }
 

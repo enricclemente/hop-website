@@ -156,7 +156,7 @@
   if (!reduce && window.scrollY < 40) {
     doc.classList.add("intro");
     requestAnimationFrame(function () { requestAnimationFrame(function () { doc.classList.add("intro-run"); }); });
-    setTimeout(function () { doc.classList.remove("intro", "intro-run"); }, 2600);
+    /* The classes stay: the end state is the normal layout, and removing them would re-lay the headline */
   }
   var heroDot = $(".hero-dot");
   document.addEventListener("click", function (e) {
@@ -236,6 +236,9 @@
      ------------------------------------------------------------------ */
   var cases = $("#cases");
   if (cases) {
+    /* Only the phone carousel is a scrollable, focusable region */
+    var setTab = function () { if (mqArc.matches) cases.removeAttribute("tabindex"); else cases.setAttribute("tabindex", "0"); };
+    setTab(); mqArc.addEventListener("change", setTab);
     var cards = $$(".case", cases), bars = $$(".pager-bars i"), cur = $(".pager-cur");
     var setPage = function (n) { bars.forEach(function (b, i) { b.classList.toggle("on", i === n); }); if (cur) cur.textContent = "0" + (n + 1); };
     var pageNow = function () { var x = cases.scrollLeft, best = 0, d = Infinity; cards.forEach(function (c, i) { var dd = Math.abs(c.offsetLeft - cards[0].offsetLeft - x); if (dd < d) { d = dd; best = i; } }); return best; };
@@ -296,7 +299,7 @@
     /* Lengths at take-off, apex and landing, found by sampling */
     var tk = 0, ap = 0, ld = total, best = Infinity, bestL = Infinity;
     var target = arc ? { tk: [360, 720], ap: [720, 260], ld: [980, 530] } : { tk: [8, 200], ap: [56, 330], ld: [8, 460] };
-    for (var s = 0; s <= total; s += total / 600) {
+    for (var s = 0; s <= total; s += total / 160) {
       var pt = p.getPointAtLength(s);
       if (Math.abs(pt.x - target.tk[0]) + Math.abs(pt.y - target.tk[1]) < 2 && !tk) tk = s;
       var da = Math.abs(pt.x - target.ap[0]) + Math.abs(pt.y - target.ap[1]); if (da < best) { best = da; ap = s; }
@@ -321,7 +324,7 @@
     dot.style.setProperty("--dx", (pt.x * geo.sx).toFixed(1) + "px");
     dot.style.setProperty("--dy", (pt.y * geo.sy).toFixed(1) + "px");
     geo.solid.style.setProperty("--draw", (1 - L / geo.total).toFixed(4));
-    var atApex = t >= 0.62;
+    var atApex = t >= 0.645;
     if (atApex && !haloDone) { haloDone = true; halo.classList.add("is-pulse"); }
     if (!atApex && t < 0.5) { haloDone = false; halo.classList.remove("is-pulse"); }
     wps.forEach(function (w, i) { var at = [0, geo.tk, geo.ld][i]; w.classList.toggle("is-past", L >= at - 0.5); });
@@ -346,7 +349,7 @@
       var pin = $(".pin", problem), r = pin.getBoundingClientRect(), t = clamp(-r.top / (pin.offsetHeight - vh), 0, 1);
       problem.dataset.step = t < 0.12 ? 0 : t < 0.45 ? 1 : t < 0.7 ? 2 : 3;
     }
-    if (active.has(leap)) leapAt(reduce ? 1 : leapProgress());
+    if (active.has(leap)) { if (!geo) measure(); leapAt(reduce ? 1 : leapProgress()); }
     if (active.has(modelImg) && mqArc.matches && !reduce) modelImg.style.setProperty("--par", (-12 + 12 * prog(modelImg, 1, 0)).toFixed(2) + "%");
   }
   function onScroll() { if (!ticking && active.size) { ticking = true; requestAnimationFrame(frame); } }
@@ -358,15 +361,17 @@
     [hero, moment, problem, leap, modelImg].forEach(function (el) { if (el) io.observe(el); });
   }
   window.addEventListener("scroll", onScroll, { passive: true });
-  var rt; window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(function () { measure(); frame(); }, 120); });
-  measure();
-  if (reduce || !("IntersectionObserver" in window)) { if (problem) problem.dataset.step = 3; leapAt(1); if (halo) halo.classList.add("is-on"); }
-  else leapAt(0);
-  mqArc.addEventListener("change", function () { measure(); frame(); });
+  var rt; window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(function () { vh = window.innerHeight; if (geo) measure(); frame(); }, 120); });
+  /* The leap's geometry is measured the first time it comes near the screen */
+  if (reduce || !("IntersectionObserver" in window)) { if (problem) problem.dataset.step = 3; if (halo) halo.classList.add("is-on"); window.requestIdleCallback ? requestIdleCallback(function () { measure(); leapAt(1); }) : setTimeout(function () { measure(); leapAt(1); }, 200); }
+  mqArc.addEventListener("change", function () { if (geo) measure(); frame(); });
+
+  if (!reduce) { phases.forEach(function (ph, i) { ph.dataset.state = i === 0 ? "active" : "next"; }); steps.forEach(function (st, i) { st.dataset.state = i === 0 ? "active" : "next"; }); }
 
   /* Stepper / phase taps jump to that part of the leap */
   $$("[data-jump]").forEach(function (b) {
     b.addEventListener("click", function () {
+      if (!geo) measure();
       var i = +b.dataset.jump, target = [0.15, 0.62, 0.95][i];
       if (geo && geo.arc && doc.classList.contains("can-pin")) {
         var top = leap.getBoundingClientRect().top + window.scrollY + target * (leap.offsetHeight - vh);

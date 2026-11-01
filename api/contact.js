@@ -23,6 +23,8 @@ function esc(s) {
   return s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c])
 }
 
+const PLATFORMS = ['A shrinking core', 'Commodity creep', 'An exit ahead', 'Stuck at home', 'Someone else’s name', 'A launch with no story']
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST')
@@ -57,6 +59,7 @@ export default async function handler(req, res) {
     phone: clean(body.phone, MAX.phone),
     message: clean(body.message, MAX.message),
     partner: ['Either', 'Philip', 'David'].includes(body.partner) ? body.partner : 'Either',
+    platform: PLATFORMS.includes(body.platform) ? body.platform : '',
     interests: Array.isArray(body.interests) ? body.interests.slice(0, 12).map((x) => clean(x, 60)) : [],
     lang: body.lang === 'pl' ? 'pl' : 'en',
   }
@@ -94,7 +97,7 @@ async function saveToSanity(d) {
             status: 'New',
             receivedAt: new Date().toISOString(),
             name: d.name, email: d.email, company: d.company, phone: d.phone,
-            partner: d.partner, interests: d.interests, message: d.message, lang: d.lang,
+            partner: d.partner, platform: d.platform, interests: d.interests, message: d.message, lang: d.lang,
           },
         }],
       }),
@@ -113,7 +116,7 @@ async function sendEmail(d) {
 
   const rows = [
     ['Name', d.name], ['Email', d.email], ['Company', d.company], ['Phone', d.phone],
-    ['Wants to talk to', d.partner], ['Interested in', d.interests.join(', ')], ['Language', d.lang.toUpperCase()],
+    ['Wants to talk to', d.partner], ['Burning platform', d.platform], ['Interested in', d.interests.join(', ')], ['Language', d.lang.toUpperCase()],
   ].filter(([, v]) => v)
   const text = rows.map(([k, v]) => `${k}: ${v}`).join('\n') + `\n\n${d.message}\n`
   const html = `<table cellpadding="6" style="font:14px/1.5 sans-serif">${rows
