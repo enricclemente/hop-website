@@ -1264,7 +1264,7 @@
         if (!navigator.onLine) { p.textContent = m("offline"); }
         else {
           p.appendChild(document.createTextNode(m("fail")));
-          var who = payload.partner === "David" ? "david@hoppartners.com" : "philip@hoppartners.com";
+          var who = payload.partner === "David" ? "david@hoppartners.pl" : "philip@hoppartners.pl";
           var a = el("a", null, who); a.href = "mailto:" + who;
           p.appendChild(a); p.appendChild(document.createTextNode("."));
         }

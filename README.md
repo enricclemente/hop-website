@@ -42,7 +42,7 @@ Writing an article: title without a full stop (the site adds the red dot), one p
 
 Publishing in Sanity now rebuilds the site in about a minute.
 
-5. Settings → Domains: add `hoppartners.com` and `www.hoppartners.com`, then add the DNS records Vercel shows. Keep your existing email (MX) records.
+5. Settings → Domains: add `hoppartners.pl` and `www.hoppartners.pl`, then add the DNS records Vercel shows. Keep your existing email (MX) records.
 
 ## 3. Contact form inbox (one time, 5 minutes)
 
@@ -57,8 +57,8 @@ Messages are saved in Sanity, in a private dataset, and appear under **Inbox** i
 
 ### Optional: email each message too
 
-Needs the domain owner to add Resend's DNS records. Create an account at resend.com, verify `hoppartners.com`, then add in Vercel:
-`RESEND_API_KEY`, `CONTACT_TO` (`philip@hoppartners.com,david@hoppartners.com`) and `CONTACT_FROM` (`HOP. Website <website@hoppartners.com>`).
+Needs the domain owner to add Resend's DNS records. Create an account at resend.com, verify `hoppartners.pl`, then add in Vercel:
+`RESEND_API_KEY`, `CONTACT_TO` (`philip@hoppartners.pl,david@hoppartners.pl`) and `CONTACT_FROM` (`HOP. Website <website@hoppartners.pl>`).
 Messages are then saved in the Inbox and emailed, with the visitor as Reply-To.
 
 Spam protection: a hidden honeypot field, a minimum time on the page, and a rate limit.

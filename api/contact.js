@@ -6,8 +6,8 @@
 
    2. Optionally also emails it, once Resend is set up:
       RESEND_API_KEY  API key from resend.com
-      CONTACT_TO      e.g. "philip@hoppartners.com,david@hoppartners.com"
-      CONTACT_FROM    sender on your verified domain, e.g. "HOP. Website <website@hoppartners.com>"
+      CONTACT_TO      e.g. "philip@hoppartners.pl,david@hoppartners.pl"
+      CONTACT_FROM    sender on your verified domain, e.g. "HOP. Website <website@hoppartners.pl>"
       The visitor's address is set as Reply-To.
 
    The visitor sees success if at least one of the two worked. */

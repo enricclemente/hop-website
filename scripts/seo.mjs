@@ -14,10 +14,10 @@ import {join} from 'node:path'
 const NAME = 'HOP.'
 const LOGO = '/assets/icon-512.png'
 const OG = {src: '/assets/og.jpg', w: 1200, h: 630, alt: 'hop. — HOP. wordmark on a textured black board'}
-const ORG_DESC = 'HOP. is a brand strategy company in Poland. We build brands for Polish challengers whose brand hasn’t caught up with their product.'
+const ORG_DESC = 'HOP is Poland’s first global brand partner. Brand strategy for businesses ready to leap.'
 const PEOPLE = [
-  {name: 'Philip Jacobson', email: 'philip@hoppartners.com'},
-  {name: 'David Anson', email: 'david@hoppartners.com'},
+  {name: 'Philip Jacobson', email: 'philip@hoppartners.pl'},
+  {name: 'David Anson', email: 'david@hoppartners.pl'},
 ]
 
 const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
