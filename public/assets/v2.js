@@ -58,6 +58,7 @@
     $$(".lang button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.lang === l)); });
     translate(document.body, l);
     if (langNote) langNote.hidden = l !== "pl";
+    try { document.dispatchEvent(new CustomEvent("hop:lang", { detail: l })); } catch (e) {}
   }
   document.addEventListener("click", function (e) {
     var b = e.target.closest(".lang button"); if (!b) return;
@@ -67,6 +68,8 @@
     if (next !== lang) applyLang(next);
   });
   if (lang === "pl") applyLang("pl");
+
+  window.HOPv2 = { lang: function () { return lang; }, translate: function (root) { translate(root, lang); }, store: store, reduce: reduce, say: function (m) { say(m); } };
 
   /* ------------------------------------------------------------------
      Toast and copy-to-clipboard
@@ -78,7 +81,7 @@
     var text = b.getAttribute("data-copy");
     function fallback() {
       /* Select the address so the visitor can copy it themselves */
-      var a = b.parentElement.querySelector(".person-e");
+      var a = b.parentElement.querySelector(".person-e, a");
       if (a) { var r = document.createRange(); r.selectNodeContents(a); var s = getSelection(); s.removeAllRanges(); s.addRange(r); }
       say(lang === "pl" ? "Zaznaczono" : "Selected. Press Ctrl+C or ⌘C");
     }
@@ -100,12 +103,15 @@
     if (on) sticky.removeAttribute("inert"); else sticky.setAttribute("inert", "");
     var a = sticky.querySelector("a"); if (a) a.tabIndex = on ? 0 : -1;
   }
+  /* The nav turns solid once the dark top of the page has scrolled away */
+  var navSentinel = $("[data-nav-sentinel]") || $(".hero-bar") || hero;
+  if (!navSentinel) nav.classList.add("is-scrolled");
   if ("IntersectionObserver" in window) {
-    new IntersectionObserver(function (es) {
+    if (navSentinel) new IntersectionObserver(function (es) {
       es.forEach(function (e) { heroGone = !e.isIntersecting; });
       nav.classList.toggle("is-scrolled", heroGone);
       updateSticky();
-    }, { rootMargin: "-80px 0px 0px 0px" }).observe($(".hero-bar") || hero);
+    }, { rootMargin: "-80px 0px 0px 0px" }).observe(navSentinel);
     if (contact) new IntersectionObserver(function (es) { es.forEach(function (e) { contactIn = e.isIntersecting; }); updateSticky(); }, { threshold: 0.05 }).observe(contact);
 
     /* Scroll-spy: the section crossing a line 35% down the screen is current */
