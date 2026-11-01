@@ -1745,3 +1745,89 @@ h1 em, h2 em, h3 em, .dk-h em, .dk-closer em, p em, blockquote em, dd em { font-
 .site-foot { border-top: 1px solid var(--s-line); }
 .dk-intro-line { max-width: 22ch; }
 @media (max-width: 899px) { .dk-intro .dk-split-text { min-height: 0; } .dk-intro-foot { margin-block-start: 48px; } }
+
+/* =====================================================================
+   Phones: the deck, re-set for a 360–430px screen
+   ===================================================================== */
+/* The floating button covered headlines; the menu and the closing section carry the call to action */
+.cta-float { display: none !important; }
+
+@media (max-width: 620px) {
+  /* Type sized for a phone, no forced balancing into short lines */
+  .dk-h { font-size: clamp(1.875rem, 8.2vw, 2.25rem); line-height: 1.1; max-width: none !important; text-wrap: pretty; }
+  .dk-closer { font-size: clamp(1.625rem, 7vw, 2rem); line-height: 1.14; max-width: none !important; text-wrap: pretty; margin-top: 36px; }
+  .dk-closer-sub { font-size: 1.125rem; }
+  .dk-hop { font-size: clamp(4.5rem, 22vw, 6rem); }
+  .dk-intro-line { font-size: clamp(1.625rem, 7vw, 2rem); max-width: none; }
+  .dk-sub { font-size: 1.375rem; }
+  .dk-rules--serif li { font-size: 1.125rem; }
+  .dk-rules li { padding: 11px 0; }
+  .dk-standfirst { font-size: 1.0625rem; }
+  .dk-list-label { margin-top: 32px; }
+  .dk-sec { padding-block: 64px; }
+  .dk-kicker { margin-bottom: 12px; }
+
+  /* Cover */
+  .dk-tagline { font-size: .6875rem; letter-spacing: .2em; line-height: 1.7; max-width: 26ch; }
+
+  /* Who we are: small portrait beside the name, bio full width underneath */
+  .dk-people { grid-template-columns: 1fr; gap: 28px; }
+  .dk-person { display: grid; grid-template-columns: 104px 1fr; column-gap: 16px; align-items: end; }
+  .dk-person picture { grid-row: 1 / span 2; }
+  .dk-person h3 { margin-top: 0; font-size: 1.375rem; align-self: end; }
+  .dk-person .label { align-self: start; }
+  .dk-bio { grid-column: 1 / -1; margin-top: 14px; }
+  .dk-brand-list { font-size: 1.0625rem; }
+
+  /* Globes: three in a row, small */
+  .dk-globes { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 32px; }
+  .dk-globes img { width: 100%; margin-bottom: 12px; }
+  .dk-globes .label { font-size: .5625rem; letter-spacing: .12em; }
+  .dk-clients { font-size: .75rem; line-height: 1.4; }
+  .dk-globe-foot { margin-top: 40px; }
+
+  /* Proof */
+  .dk-cases { gap: 40px; }
+  .dk-case-line { font-size: 1.375rem; }
+  .dk-stats dt { font-size: 1.875rem; }
+  .dk-nike li > div { grid-template-columns: 72px 1fr; }
+  .dk-num { font-size: 1.75rem; }
+
+  /* Burning platform: tighter rows, smaller disc */
+  .dk-platform-grid { gap: 0; margin-top: 32px; }
+  .dk-pains li { padding: 12px 0 14px; }
+  .dk-pains h3 { font-size: 1.375rem; margin-top: 6px; }
+  .dk-disc-wrap { padding-top: 36px; }
+  .dk-disc { width: min(200px, 55vw); }
+
+  /* Run-up, leap, land */
+  .dk-arc { row-gap: 36px; margin-top: 28px; }
+  .dk-phase-h { font-size: 2.75rem; }
+  .dk-phase-sub { font-size: 1.0625rem; margin-bottom: 12px; }
+
+  /* Team */
+  .dk-specialists { font-size: 1.25rem; }
+  .dk-principles { margin-top: 36px; }
+
+  /* Next */
+  .dk-next-mark { font-size: 4.5rem; margin-top: 32px; }
+  .dk-thanks { font-size: 1.25rem; }
+  .dk-step-h { font-size: 1.75rem; }
+  .dk-contacts { margin-top: 40px; gap: 28px; }
+  .dk-step .btn { width: 100%; }
+
+  /* Comfortable tap targets for every small link */
+  .dk-contact a, .fcol a, .foot-bottom a, .foot-cookies { display: inline-block; padding-block: 10px; }
+  .fcol ul { gap: 0; }
+  .dk-contact p:not(.label) { line-height: 1.2; }
+  .copy { min-height: 36px; padding: 0 14px; font-size: .6875rem; }
+  .site-foot .foot-brand .foot-logo { font-size: 2.5rem; }
+}
+@media (max-width: 620px) {
+  .dk-globes .label { font-size: .6875rem; letter-spacing: .06em; line-height: 1.4; }
+  .dk-clients { font-size: .8125rem; }
+  .dk-globes { gap: 8px; }
+  .dk-contact .copy, .copy { min-height: 40px !important; height: auto; padding: 0 16px; font-size: .6875rem; }
+  .to-top { min-height: 44px; }
+}
+@media (max-width: 620px) { .rows .k, .tag-sample, .row-by { font-size: .6875rem; } }
