@@ -31,8 +31,9 @@ function siteOrigin() {
   return raw.replace(/\/+$/, '')
 }
 
-function headBlock({origin, path, title, description, type = 'website', indexable, extra = '', published}) {
+function headBlock({origin, path, title, description, type = 'website', indexable, extra = '', published, og = OG}) {
   const url = origin + path
+  const OG_ = og
   return [
     `<link rel="canonical" href="${esc(url)}">`,
     indexable ? '<meta name="robots" content="index, follow, max-image-preview:large">' : '<meta name="robots" content="noindex, nofollow">',
@@ -41,10 +42,15 @@ function headBlock({origin, path, title, description, type = 'website', indexabl
     `<meta property="og:title" content="${esc(title)}">`,
     `<meta property="og:description" content="${esc(description)}">`,
     `<meta property="og:url" content="${esc(url)}">`,
-    `<meta property="og:image" content="${origin}${OG.src}">`,
-    `<meta property="og:image:width" content="${OG.w}">`,
-    `<meta property="og:image:height" content="${OG.h}">`,
-    `<meta property="og:image:alt" content="${esc(OG.alt)}">`,
+    `<meta property="og:image" content="${origin}${OG_.src}">`,
+    `<meta property="og:image:width" content="${OG_.w}">`,
+    `<meta property="og:image:height" content="${OG_.h}">`,
+    `<meta property="og:image:alt" content="${esc(OG_.alt)}">`,
+    `<meta name="twitter:image" content="${origin}${OG_.src}">`,
+    `<meta name="twitter:title" content="${esc(title)}">`,
+    `<meta name="twitter:description" content="${esc(description)}">`,
+    `<link rel="alternate" hreflang="en" href="${esc(url)}">`,
+    `<link rel="alternate" hreflang="x-default" href="${esc(url)}">`,
     '<meta property="og:locale" content="en_GB">',
     published ? `<meta property="article:published_time" content="${esc(published)}">` : '',
     '<meta name="twitter:card" content="summary_large_image">',
@@ -83,6 +89,22 @@ function bodyHTML(a) {
   })
   out.push(`<div class="sign"><span class="wordmark" aria-label="Hop."><span aria-hidden="true">Hop</span><span class="wm-dot" aria-hidden="true"></span></span><p data-notr>${esc(a.authors || '')}</p></div>`)
   return out.join('\n')
+}
+
+/* The Say Hop letter on the home page: same content, headings one level down */
+function letterHTML(a) {
+  const blocks = Array.isArray(a.body) ? a.body : a.body?.en || []
+  return blocks.map((b) => {
+    const nt = b.notr ? ' data-notr' : ''
+    if (b.lede) return `<p class="lede"${nt}>${esc(b.lede)}</p>`
+    if (b.p) return `<p${nt}>${esc(b.p)}</p>`
+    if (b.h) return `<h3${nt}>${esc(b.h)}</h3>`
+    if (b.pull) return `<blockquote class="pull"${nt}><p>${esc(b.pull)}</p></blockquote>`
+    if (b.strong) return `<p class="strong-line"${nt}>${esc(b.strong)}</p>`
+    if (b.closer) return `<p class="closer"${nt}>${esc(b.closer)}</p>`
+    if (b.ol) return `<ol${nt}>` + b.ol.map((i) => `<li><p><strong>${esc(i[0])}</strong>${i[1] ? esc(i[1]) : ''}</p></li>`).join('') + '</ol>'
+    return ''
+  }).join('\n')
 }
 
 function topicSlug(t) {
@@ -155,7 +177,7 @@ function articlePage(tpl, a, i, list, origin, indexable) {
 
 /* Static pages: path, and structured data where it helps */
 const PAGES = {
-  'index.html': {path: '/', data: (o) => ({'@context': 'https://schema.org', '@graph': [orgLd(o), {'@type': 'WebSite', '@id': o + '/#site', name: NAME, url: o + '/', publisher: {'@id': o + '/#org'}, inLanguage: 'en'}]})},
+  'index.html': {path: '/', og: {src: '/assets/og-partners.jpg', w: 1200, h: 630, alt: 'Philip Jacobson and David Anson, the two senior partners of HOP, on a street in Poznań'}, data: (o) => ({'@context': 'https://schema.org', '@graph': [orgLd(o), {'@type': 'WebSite', '@id': o + '/#site', name: NAME, url: o + '/', publisher: {'@id': o + '/#org'}, inLanguage: 'en'}]})},
   'house-of-poland.html': {path: '/house-of-poland'},
   'articles.html': {path: '/articles'},
   'contact.html': {path: '/contact'},
@@ -175,7 +197,11 @@ export function applySEO(dist, articles) {
     const p = join(dist, file)
     let html = readFileSync(p, 'utf8')
     const m = meta(html)
-    html = html.replace('<!--SEO-->', headBlock({origin, path: cfg.path, title: unesc(m.title), description: unesc(m.description), indexable, extra: cfg.data ? ld(cfg.data(origin)) : ''}))
+    html = html.replace('<!--SEO-->', headBlock({origin, path: cfg.path, title: unesc(m.title), description: unesc(m.description), indexable, og: cfg.og, extra: cfg.data ? ld(cfg.data(origin)) : ''}))
+    if (file === 'index.html') {
+      const letter = articles.find((a) => a.slug === 'say-hop')
+      if (letter) html = html.replace('<!--LETTER-BODY-->', letterHTML(letter))
+    }
     writeFileSync(p, html)
   }
 
