@@ -93,3 +93,12 @@ Until launch every page is marked `noindex`, so the vercel.app copy with placeho
 - **Turn off for launch:** delete `SITE_PASSWORD` and redeploy.
 
 A correct password is remembered in that browser for 30 days (HttpOnly cookie).
+
+## Home page V2
+
+The home page (`public/index.html`, `public/assets/v2.css`, `public/assets/v2.js`) is built from the Figma file "Homepage — V2". The other pages keep `site.css` / `site.js`.
+
+- Fonts: Newsreader (variable, weight 300–400 plus optical size) and Instrument Sans Regular, WOFF2, subset to Latin + Polish.
+- The Say Hop letter on the home page is written in at build time from the same article data as `/house-of-poland/say-hop` (`<!--LETTER-BODY-->`).
+- Polish: every home-page string still needs a translation. They're listed in `docs/i18n-pl-home-missing.json`. Put translations in `PL_COPY` in `v2.js`, keyed by the English text.
+- The "Let's make the leap" button in the burning-platform list links to `/contact?platform=<slug>`, which pre-selects the optional "Your burning platform" field on the contact form.
