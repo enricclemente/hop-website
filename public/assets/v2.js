@@ -216,6 +216,11 @@
      the dot becomes an iris that widens to the whole frame while the photo
      settles from a slight zoom. David's opens a beat after Philip's on desktop.
      ------------------------------------------------------------------ */
+  /* Touch screens have no hover: a tap on a portrait shows or hides the bio */
+  $$(".founder-img").forEach(function (el) {
+    el.addEventListener("click", function () { if (!window.matchMedia("(hover: hover)").matches) el.classList.toggle("is-open"); });
+    el.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); el.classList.toggle("is-open"); } });
+  });
   var irises = $$(".founder-img");
   if (irises.length && !reduce && "IntersectionObserver" in window) {
     doc.classList.add("can-iris");
