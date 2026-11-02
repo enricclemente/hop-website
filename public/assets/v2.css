@@ -466,7 +466,7 @@ html:not(.js) .plat-p > p { padding-bottom: 16px; }
   .leap-box { position: relative; }
   .stepper { position: absolute; top: 0; right: 0; z-index: 3; margin: 0; gap: 32px; font-size: 12px; }
   .stepper button { min-height: 24px; gap: 8px; }
-  .stage { container-type: inline-size; padding-left: 0; width: min(100%, calc((100svh - var(--nav-h) - 32px) * 1200 / 780)); margin-inline: auto; aspect-ratio: 1200 / 780; display: block; }
+  .stage { container-type: inline-size; padding-left: 0; width: min(100%, calc((100svh - var(--nav-h) - 160px) * 1200 / 780)); margin-inline: auto; aspect-ratio: 1200 / 780; display: block; }
   .stage-svg--m { display: none; }
   .stage-svg--d { display: block; width: 100%; height: calc(760 / 780 * 100%); }
   .wp[data-wp="0"] { left: 0; top: calc(720 / 780 * 100%); }
@@ -488,7 +488,7 @@ html:not(.js) .plat-p > p { padding-bottom: 16px; }
   .phase[data-phase="1"][data-state="active"] .ph-t { font-size: min(112px, 9.33cqw); font-weight: 400; }
   .footnote { grid-template-columns: 1fr auto; align-items: center; gap: 32px; }
   html.js.can-pin .leap { height: calc(100svh + 200svh); margin-top: 32px; }
-  html.js.can-pin .leap-sticky { position: sticky; top: 0; height: 100svh; display: flex; align-items: center; padding-top: var(--nav-h); }
+  html.js.can-pin .leap-sticky { position: sticky; top: 0; height: 100svh; display: flex; align-items: center; padding-top: calc(var(--nav-h) + 40px); padding-bottom: 40px; }
   html.js.can-pin .leap-wrap { width: var(--content); }
 }
 
