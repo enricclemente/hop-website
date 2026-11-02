@@ -144,7 +144,12 @@
       nav.classList.toggle("is-scrolled", heroGone);
       updateSticky();
     }, { rootMargin: "-80px 0px 0px 0px" }).observe(navSentinel);
-    if (contact) new IntersectionObserver(function (es) { es.forEach(function (e) { contactIn = e.isIntersecting; }); updateSticky(); }, { threshold: 0.05 }).observe(contact);
+    if (contact) {
+      /* Hide the sticky CTA while the closing headline or the sprint offer is on screen */
+      var closing = [contact, $("#contact-offer")].filter(Boolean), seen = new Map();
+      var cio = new IntersectionObserver(function (es) { es.forEach(function (e) { seen.set(e.target, e.isIntersecting); }); contactIn = closing.some(function (el) { return seen.get(el); }); updateSticky(); }, { threshold: 0.05 });
+      closing.forEach(function (el) { cio.observe(el); });
+    }
 
     /* Scroll-spy: the section crossing a line 35% down the screen is current */
     var spyIds = ["approach", "work", "partners", "letter", "contact"];
@@ -194,15 +199,55 @@
   if (!reduce && window.scrollY < 40) {
     doc.classList.add("intro");
     requestAnimationFrame(function () { requestAnimationFrame(function () { doc.classList.add("intro-run"); }); });
-    /* The classes stay: the end state is the normal layout, and removing them would re-lay the headline */
-  }
-  var heroDot = $(".hero-dot");
+    /* The classes stay: the end state is the normal layout, and removing them would re-lay the headline.
+       Once the lines have risen, unclip them so the full stop can leap out of its line. */
+    setTimeout(function () { doc.classList.add("intro-done"); }, 1700);
+  } else doc.classList.add("intro-done");
+  var heroDot = $(".wait-dot");
   document.addEventListener("click", function (e) {
     var b = e.target.closest("[data-totop]"); if (!b) return;
     window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
     var logo = $(".nav-logo"); if (logo) setTimeout(function () { logo.focus({ preventScroll: true }); }, reduce ? 0 : 500);
-    if (heroDot && !reduce) setTimeout(function () { heroDot.classList.remove("is-replay"); void heroDot.offsetWidth; heroDot.classList.add("is-replay"); }, 450);
+    if (heroDot && !reduce) setTimeout(function () { heroDot.style.animation = "none"; void heroDot.offsetWidth; heroDot.style.animation = ""; }, 450);
   });
+
+  /* ------------------------------------------------------------------
+     Partner portraits: the red dot opens into the photo. Scrubbed to scroll:
+     the dot becomes an iris that widens to the whole frame while the photo
+     settles from a slight zoom. David's opens a beat after Philip's on desktop.
+     ------------------------------------------------------------------ */
+  var irises = $$(".founder-img");
+  if (irises.length && !reduce && "IntersectionObserver" in window) {
+    doc.classList.add("can-iris");
+    var irisOn = new Set(), irisRaf = 0, mqTwo = window.matchMedia("(min-width: 600px)");
+    irises.forEach(function (el, i) {
+      el.classList.remove("clip"); el._lag = i;
+      var d = document.createElement("span"); d.className = "iris-dot"; d.setAttribute("aria-hidden", "true"); el.appendChild(d);
+    });
+    var irisTick = function () {
+      irisRaf = 0;
+      var vh = window.innerHeight;
+      irisOn.forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        var lag = mqTwo.matches ? el._lag * 0.12 : 0;
+        var p = Math.min(1, Math.max(0, (vh * 0.92 - r.top) / (vh * 0.62) - lag));
+        var e = 1 - Math.pow(1 - p, 3);
+        var cx = r.width / 2, cy = r.height * 0.42;
+        var far = Math.hypot(Math.max(cx, r.width - cx), Math.max(cy, r.height - cy)) + 2;
+        el.style.setProperty("--iris", (14 + e * (far - 14)).toFixed(1) + "px");
+        el.style.setProperty("--iz", (1.22 - 0.22 * e).toFixed(4));
+        el.style.setProperty("--ids", Math.max(0, 1 - e * 2.4).toFixed(3));
+      });
+    };
+    var irisReq = function () { if (!irisRaf) irisRaf = requestAnimationFrame(irisTick); };
+    var irisIo = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) irisOn.add(e.target); else irisOn.delete(e.target); });
+      irisReq();
+    }, { rootMargin: "10% 0px 10% 0px" });
+    irises.forEach(function (el) { irisIo.observe(el); });
+    window.addEventListener("scroll", irisReq, { passive: true });
+    window.addEventListener("resize", irisReq);
+  }
 
   /* ------------------------------------------------------------------
      Reveals: one observer for everything with data-reveal / .clip / data-words
