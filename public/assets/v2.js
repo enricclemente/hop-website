@@ -228,9 +228,14 @@
   });
   if ("IntersectionObserver" in window && !reduce) {
     var rev = new IntersectionObserver(function (es) {
-      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); rev.unobserve(e.target); } });
+      es.forEach(function (e) { if (e.isIntersecting) { (e.target._rev || e.target).classList.add("in"); rev.unobserve(e.target); } });
     }, { rootMargin: "0px 0px -12% 0px", threshold: 0.01 });
-    $$("[data-reveal], [data-words], .clip:not([data-reveal] .clip), .problem").forEach(function (el) { rev.observe(el); });
+    /* A clipped element (clip-path inset 100%) never reports as visible in Chrome, so watch its parent instead */
+    $$("[data-reveal], [data-words], .clip:not([data-reveal] .clip), .problem").forEach(function (el) {
+      var watch = el.classList.contains("clip") && el.parentElement ? el.parentElement : el;
+      if (watch !== el) watch._rev = el;
+      rev.observe(watch);
+    });
   } else {
     $$("[data-reveal], [data-words], .clip, .problem").forEach(function (el) { el.classList.add("in"); });
   }

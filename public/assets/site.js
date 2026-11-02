@@ -841,7 +841,7 @@
     clearTimeout(menuTimer);
     menuBtn.setAttribute("aria-expanded", String(open));
     doc.classList.toggle("menu-open", open);
-    ["main", ".site-foot", ".cta-float"].forEach(function (s) { var n = document.querySelector(s); if (n) n.inert = open; });
+    ["main", "#site-foot", ".cta-float"].forEach(function (s) { var n = document.querySelector(s); if (n) n.inert = open; });
     if (open) {
       menu.hidden = false;
       head && head.classList.remove("is-hidden");
@@ -997,7 +997,7 @@
   var cta = document.querySelector(".cta-float");
   if (cta && "IntersectionObserver" in window) {
     doc.classList.add("has-cta");
-    var blockers = [document.querySelector(".hero"), document.getElementById("contact"), document.querySelector(".site-foot")].filter(Boolean);
+    var blockers = [document.querySelector(".hero"), document.getElementById("contact"), document.getElementById("site-foot")].filter(Boolean);
     var seen = new Map();
     var ctaIO = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) { seen.set(en.target, en.isIntersecting); });

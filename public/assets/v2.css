@@ -189,6 +189,19 @@ html[lang="pl"] .lang-note { display: block; }
 .hero-body { position: relative; z-index: 1; padding-block: 40px; margin-block: auto; }
 .hero-h { color: var(--ivory); --lwm: 5.45; --lw: 8.78; }
 .hero-h .ln { display: inline; }
+/* The full stop after "waiting" is the red dot, hopping on the spot as if it can't wait */
+.wait-dot { display: inline-block; color: var(--red); font-style: normal; transform-origin: 50% 85%; }
+@media (prefers-reduced-motion: no-preference) {
+  .wait-dot { animation: wait-hop 1.9s cubic-bezier(.3, .6, .4, 1) 1.8s infinite; }
+}
+@keyframes wait-hop {
+  0%, 52%, 100% { transform: translateY(0) scale(1, 1); }
+  58% { transform: translateY(0) scale(1.2, .8); }
+  70% { transform: translateY(-.22em) scale(.92, 1.1); }
+  80% { transform: translateY(0) scale(1.18, .82); }
+  86% { transform: translateY(-.06em) scale(.97, 1.03); }
+  92% { transform: translateY(0) scale(1, 1); }
+}
 .hero-bar { position: relative; display: grid; gap: 20px; padding-top: 20px; border-top: 1px solid rgba(239, 235, 228, .14); }
 .hero-traj { position: absolute; left: 0; right: 0; bottom: 100%; aspect-ratio: 342 / 300; transform: translateY(4%); pointer-events: none; }
 .hero-traj .traj-line { stroke: rgba(239, 235, 228, .18); }
@@ -802,13 +815,19 @@ html:not(.js) .nav-menu { visibility: hidden; }
 .counter.near { color: var(--red-on-light); }
 .sub { margin-top: 32px; display: grid; gap: 12px; }
 .sub--inline { grid-template-columns: auto 1fr; align-items: center; gap: 12px 20px; }
-.picks, .seg { display: flex; flex-wrap: wrap; gap: 8px; }
-.pick, .seg label { position: relative; display: inline-flex; }
-.pick input, .seg input { position: absolute; inset: 0; margin: 0; opacity: 0; cursor: pointer; }
-.pick span, .seg span { display: inline-flex; align-items: center; min-height: 44px; padding: 8px 16px; border: 1px solid rgba(27, 26, 25, .25); font-size: 17px; line-height: 1.2; color: var(--ink); transition: background-color .2s, color .2s, border-color .2s; }
-.pick:hover span, .seg label:hover span { border-color: var(--ink); }
-.pick input:checked + span, .seg input:checked + span { background: var(--ink); border-color: var(--ink); color: var(--ivory); font-style: italic; }
-.pick input:focus-visible + span, .seg input:focus-visible + span { outline: 2px solid var(--ink); outline-offset: 2px; }
+/* Options as standard checkboxes (square, any) and radio buttons (round, one) */
+.picks { display: grid; grid-template-columns: 1fr; gap: 0 32px; }
+@media (min-width: 600px) { .picks { grid-template-columns: 1fr 1fr; } }
+.seg { display: flex; flex-wrap: wrap; gap: 0 32px; }
+.pick, .seg label { position: relative; display: flex; }
+.pick input, .seg input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.pick span, .seg span { display: flex; align-items: center; gap: 14px; width: 100%; min-height: 44px; padding: 6px 0; font-size: 17px; line-height: 1.3; color: var(--ink); }
+.pick span::before, .seg span::before { content: ""; flex: none; width: 20px; height: 20px; border: 1.5px solid rgba(27, 26, 25, .55); background: transparent; transition: background-color .15s, border-color .15s, box-shadow .15s; }
+.pick input[type="radio"] + span::before, .seg span::before { border-radius: 50%; }
+.pick:hover span::before, .seg label:hover span::before { border-color: var(--ink); }
+.pick input[type="checkbox"]:checked + span::before { background: var(--ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3.2 3.2L15 7' fill='none' stroke='%23EFEBE4' stroke-width='2'/%3E%3C/svg%3E") center / 18px no-repeat; border-color: var(--ink); }
+.pick input[type="radio"]:checked + span::before, .seg input:checked + span::before { border-color: var(--ink); box-shadow: inset 0 0 0 4px var(--ivory), inset 0 0 0 10px var(--ink); }
+.pick input:focus-visible + span::before, .seg input:focus-visible + span::before { outline: 2px solid var(--ink); outline-offset: 3px; }
 .hp { position: absolute !important; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .submit-row { border-top: 1px solid rgba(27, 26, 25, .9); padding-top: 28px; display: grid; gap: 24px; justify-items: start; }
 .consent { border-top: 0; padding: 0; }
