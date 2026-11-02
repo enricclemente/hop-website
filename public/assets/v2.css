@@ -384,11 +384,15 @@ html.can-iris .iris-dot { display: block; position: absolute; z-index: 2; left: 
 html:not(.js) .plat-p { grid-template-rows: 1fr; }
 html:not(.js) .plat-p > p { padding-bottom: 16px; }
 @media (min-width: 1024px) {
-  .burn-body { grid-template-columns: 360px 1fr; gap: 96px; margin-top: 96px; align-items: start; }
-  .burn-prompt { display: grid; gap: 28px; align-content: start; border-top: 1px solid rgba(239, 235, 228, .2); padding-top: 28px; }
-  .burn-q { margin: 0; line-height: 1.1; letter-spacing: -.01em; }
-  .burn-cta { margin-top: 0; gap: 14px; }
-  .burn-cta .btn { width: auto; justify-self: start; }
+  .burn-body { grid-template-columns: 320px 1fr; gap: 120px; margin-top: 96px; align-items: start; }
+  /* The prompt stays a quiet sidebar next to the list: smaller than the list items, and it follows you down */
+  .burn-prompt { display: grid; gap: 20px; align-content: start; border-top: 1px solid rgba(239, 235, 228, .2); padding-top: 28px; position: sticky; top: calc(var(--nav-h) + 40px); }
+  .burn-risk { font-size: 18px; }
+  .burn-q { margin: 0; font-size: 32px; line-height: 1.15; letter-spacing: -.01em; }
+  .burn-cta { margin-top: 12px; gap: 12px; }
+  .burn-cta .btn { width: auto; justify-self: start; gap: 28px; padding: 15px 24px; min-height: 52px; font-size: 18px; }
+  .burn-cta .btn .btn-i { width: 18px; height: 18px; }
+  .burn-cta .micro { font-size: 15px; }
   .micro { font-size: 16px; }
   .plats { border-bottom: 0; }
   .plats::after { content: ""; display: block; height: 1px; background: rgba(239, 235, 228, .14); }
