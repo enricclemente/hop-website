@@ -811,16 +811,17 @@ html:not(.js) .nav-menu { visibility: hidden; }
 .fset-t { font-style: italic; font-size: calc(22px + 6 * var(--t)); line-height: 1.3; color: var(--ink); }
 .group { display: grid; }
 @media (min-width: 600px) { .group--grid { grid-template-columns: 1fr 1fr; column-gap: 24px; } .group--grid .cell--wide { grid-column: span 1; } }
-.fld { position: relative; display: grid; gap: 4px; border-top: 1px solid rgba(27, 26, 25, .2); padding: 14px 0 12px; transition: border-color .2s; }
-.fld > label:not(.check), .flabel { font-family: var(--sans); font-size: 11px; letter-spacing: .09em; text-transform: uppercase; color: var(--muted-l); }
+.fld { position: relative; display: grid; gap: 8px; align-content: start; padding: 0 0 22px; }
+.fld > label:not(.check), .flabel { font-family: var(--sans); font-size: 14px; font-weight: 500; letter-spacing: .01em; color: var(--ink); }
 .req { color: var(--red-on-light); }
-.opt { text-transform: none; letter-spacing: .01em; font-family: var(--serif); font-style: italic; font-size: 13px; color: var(--muted-l); margin-left: 4px; }
-.fld input, .fld textarea { width: 100%; border: 0; border-radius: 0; background: transparent; color: var(--ink); font-family: var(--serif); font-size: calc(20px + 2 * var(--t)); line-height: 1.4; padding: 4px 0; outline: none; -webkit-appearance: none; appearance: none; }
+.opt { text-transform: none; letter-spacing: .01em; font-family: var(--serif); font-weight: 400; font-style: italic; font-size: 14px; color: var(--muted-l); margin-left: 4px; }
+/* Standard boxed fields: a clear white box with a visible border, a stronger border on focus */
+.fld input:not([type="checkbox"]):not([type="radio"]), .fld textarea { width: 100%; min-height: 52px; border: 1px solid rgba(27, 26, 25, .38); border-radius: 0; background: #FBFAF8; color: var(--ink); font-family: var(--serif); font-size: 18px; line-height: 1.4; padding: 12px 14px; outline: none; -webkit-appearance: none; appearance: none; transition: border-color .15s, box-shadow .15s; }
+.fld input:not([type="checkbox"]):not([type="radio"]):hover, .fld textarea:hover { border-color: rgba(27, 26, 25, .65); }
+.fld input:not([type="checkbox"]):not([type="radio"]):focus, .fld textarea:focus { border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
+.fld.invalid input:not([type="checkbox"]):not([type="radio"]), .fld.invalid textarea { border-color: var(--red-on-light); box-shadow: 0 0 0 1px var(--red-on-light); }
 .fld textarea { min-height: 140px; resize: vertical; }
-.fld input::placeholder, .fld textarea::placeholder { color: var(--next-l); }
-.fld:focus-within { border-top-color: var(--ink); box-shadow: inset 0 2px 0 var(--ink); }
-.fld:focus-within > label { color: var(--ink); }
-.fld.invalid { border-top-color: var(--red-on-light); box-shadow: inset 0 2px 0 var(--red-on-light); }
+.fld input:not([type="checkbox"]):not([type="radio"])::placeholder, .fld textarea::placeholder { color: var(--next-l); }
 .err { font-style: italic; font-size: 15px; line-height: 1.4; color: var(--red-on-light); min-height: 0; }
 .err:empty { display: none; }
 .field-foot { display: flex; justify-content: space-between; gap: 16px; align-items: baseline; }
