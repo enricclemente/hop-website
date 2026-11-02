@@ -124,6 +124,9 @@ br.d, .d-only { display: none; }
 .lang button { min-width: 24px; min-height: 44px; opacity: .7; font-weight: 400; }
 .lang button[aria-pressed="true"] { opacity: 1; font-weight: 500; -webkit-text-stroke: .3px currentColor; }
 .lang-sep { opacity: .4; }
+.lang.has-dot { position: relative; gap: 14px; padding-right: 8px; }
+.nav .lang.has-dot .lang-sep, .lang.has-dot .lang-sep { display: none !important; }
+.lang-dot { position: absolute; left: 0; top: 0; width: 4px; height: 4px; border-radius: 50%; background: var(--red); pointer-events: none; transform-origin: 50% 100%; }
 .nav .lang button[data-lang="pl"], .nav .lang .lang-sep { display: none; }
 .nav .lang button[aria-pressed="false"][data-lang="en"] { display: none; }
 .nav .lang button[aria-pressed="true"][data-lang="pl"] { display: inline-block; }

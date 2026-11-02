@@ -58,8 +58,40 @@
     $$(".lang button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.lang === l)); });
     translate(document.body, l);
     if (langNote) langNote.hidden = l !== "pl";
+    placeLangDot(true);
     try { document.dispatchEvent(new CustomEvent("hop:lang", { detail: l })); } catch (e) {}
   }
+  /* The red dot sits after the chosen language and hops to the other one on a switch */
+  $$(".lang").forEach(function (sw) {
+    var d = document.createElement("span"); d.className = "lang-dot"; d.setAttribute("aria-hidden", "true");
+    sw.appendChild(d); sw.classList.add("has-dot");
+  });
+  function placeLangDot(animate) {
+    $$(".lang").forEach(function (sw) {
+      var dot = sw.querySelector(".lang-dot");
+      var active = sw.querySelector('button[data-lang="' + lang + '"]');
+      if (!dot || !active || !active.offsetWidth) return;
+      var box = sw.getBoundingClientRect(), rg = document.createRange(); rg.selectNodeContents(active); var r = rg.getBoundingClientRect();
+      var fs = parseFloat(getComputedStyle(active).fontSize) || 12;
+      var x = Math.round(r.right - box.left + 3), y = Math.round(r.top - box.top + r.height / 2 + fs * 0.36 - 4);
+      var from = dot.dataset.x != null ? parseFloat(dot.dataset.x) : x;
+      dot.dataset.x = x;
+      dot.style.transform = "translate(" + x + "px," + y + "px)";
+      if (animate && !reduce && dot.animate) {
+        var mid = (from + x) / 2, lift = from === x ? 10 : 14;
+        dot.animate([
+          { transform: "translate(" + from + "px," + y + "px) scale(1, 1)" },
+          { transform: "translate(" + from + "px," + y + "px) scale(1.25, .75)", offset: .12 },
+          { transform: "translate(" + mid + "px," + (y - lift) + "px) scale(.9, 1.1)", offset: .5 },
+          { transform: "translate(" + x + "px," + y + "px) scale(1.25, .75)", offset: .86 },
+          { transform: "translate(" + x + "px," + y + "px) scale(1, 1)" }
+        ], { duration: 520, easing: "cubic-bezier(.3, .6, .4, 1)" });
+      }
+    });
+  }
+  placeLangDot(false);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { placeLangDot(false); });
+  window.addEventListener("resize", function () { placeLangDot(false); });
   document.addEventListener("click", function (e) {
     var b = e.target.closest(".lang button"); if (!b) return;
     /* On phones the nav shows one code; tapping it switches to the other */
@@ -128,7 +160,7 @@
   function focusables() { return $$('a[href], button:not([disabled])', menu).filter(function (el) { return el.offsetParent !== null; }); }
   function openMenu() {
     lastFocus = document.activeElement; menu.hidden = false; menuOpen = true;
-    menuBtn.setAttribute("aria-expanded", "true"); document.body.classList.add("menu-open");
+    menuBtn.setAttribute("aria-expanded", "true"); document.body.classList.add("menu-open"); requestAnimationFrame(function () { placeLangDot(false); });
     $("main").setAttribute("inert", ""); $("#site-foot").setAttribute("inert", ""); nav.setAttribute("inert", "");
     updateSticky();
     var f = focusables(); if (f.length) f[0].focus();
