@@ -86,7 +86,7 @@ br.d, .d-only { display: none; }
 }
 .h1 { --fm: 60; --fd: 136; --lhm: .96; --trm: -0.025em; --trd: -0.035em; }
 .hero .h1 { font-size: min(calc(var(--fm) * 1px), calc((100vw - 2 * var(--pad) - 4px) / var(--lwm, 5.4))); }
-@media (min-width: 600px) { .hero .h1 { font-size: min(136px, calc((var(--content) - 8px) / var(--lw, 8.8))); line-height: 1.1; text-align: center; letter-spacing: -0.035em; } }
+@media (min-width: 600px) { .hero .h1 { font-size: min(136px, calc((var(--content) - 8px) / var(--lw, 8.8))); line-height: 1.1; text-align: left; letter-spacing: -0.035em; } }
 
 /* ---------- Buttons and links ---------- */
 .btn { display: inline-flex; align-items: center; justify-content: space-between; background: var(--red-ui); color: #fff; font-style: italic; line-height: 1.2; white-space: nowrap; transition: background-color .2s ease; }
