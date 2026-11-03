@@ -138,10 +138,14 @@
   /* The nav turns solid once the dark top of the page has scrolled away */
   var navSentinel = $("[data-nav-sentinel]") || $(".hero-bar") || hero;
   if (!navSentinel) nav.classList.add("is-scrolled");
+  /* Solid as soon as the page moves, so nothing ever slides under a see-through nav */
+  var navTick = false;
+  function navSolid() { navTick = false; nav.classList.toggle("is-scrolled", !navSentinel || window.scrollY > 4); }
+  navSolid();
+  window.addEventListener("scroll", function () { if (!navTick) { navTick = true; requestAnimationFrame(navSolid); } }, { passive: true });
   if ("IntersectionObserver" in window) {
     if (navSentinel) new IntersectionObserver(function (es) {
       es.forEach(function (e) { heroGone = !e.isIntersecting; });
-      nav.classList.toggle("is-scrolled", heroGone);
       updateSticky();
     }, { rootMargin: "-80px 0px 0px 0px" }).observe(navSentinel);
     if (contact) {
