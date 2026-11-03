@@ -1491,3 +1491,22 @@ html.who-reveal .who-h .tl { opacity: calc(.14 + .86 * var(--wr, 0)); transform:
 .nav-links .nav-art:hover, .nav-links .nav-art:focus-visible { border-color: rgba(239, 235, 228, .6); background: rgba(239, 235, 228, .06); }
 .mletter .lt-b { transition: transform .6s var(--expo), background-color .3s ease; }
 @media (hover: hover) { .mletter .letter-toggle:hover .lt-b { transform: scale(1.06); } .mletter .letter-toggle[aria-expanded="true"]:hover .lt-b { transform: rotate(180deg) scale(1.06); } }
+.intro-copy { display: block; max-width: 1000px; margin-top: calc(28px + 12 * var(--t)); font-size: calc(17px + 5 * var(--t)); line-height: 1.6; color: var(--ivory); text-wrap: pretty; }
+
+/* ---------- Contact page: body font for everything that isn't a heading ---------- */
+.chead-lead { font-family: var(--sans); font-style: normal; font-size: calc(17px + 3 * var(--t)); line-height: 1.6; color: var(--ivory); max-width: 640px; }
+.chead .rh { font-family: var(--sans); font-style: normal; font-weight: 500; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--red-on-dark); }
+.cbody .pick span, .cbody .seg span { font-family: var(--sans); font-size: 16px; }
+.cbody .opt { font-family: var(--sans); font-style: normal; font-size: 13px; letter-spacing: 0; color: var(--muted-l); }
+.cbody input, .cbody textarea, .cbody select { font-family: var(--sans); font-size: 16px; }
+.cbody .consent, .cbody .consent label, .cbody .check { font-family: var(--sans); font-size: 15px; }
+.cbody .crows a { font-family: var(--sans); font-style: normal; font-size: 15px; }
+.cbody .csprint-s, .cbody .cside-intro, .cbody .hint { font-family: var(--sans); font-style: normal; font-size: 14px; }
+.cbody .flabel, .cbody label { font-family: var(--sans); }
+.cbody .caside-h { font-family: var(--sans); font-style: normal; font-size: 15px; color: var(--muted-l); }
+/* Who we are: title and intro side by side on desktop */
+@media (min-width: 1024px) {
+  .who-head { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); column-gap: calc(48px + 32 * var(--t)); align-items: end; }
+  .who-head .who-h { font-size: min(84px, calc((var(--content) - 80px) * .59 / 9.2)); line-height: 1.12; }
+  .who-head .who-intro { margin-top: 0; padding-bottom: .55em; max-width: none; font-size: calc(15px + 3 * var(--t)); line-height: 1.6; }
+}
