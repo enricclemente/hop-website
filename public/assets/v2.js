@@ -479,4 +479,16 @@
       }
     });
   });
+
+  /* 07b How we do it: tap/click opens a card (one at a time); hover and focus are handled in CSS */
+  var svcs = Array.prototype.slice.call(document.querySelectorAll(".svc"));
+  svcs.forEach(function (card) {
+    var btn = card.querySelector(".svc-btn");
+    if (!btn) return;
+    btn.addEventListener("click", function () {
+      var open = !card.classList.contains("is-open");
+      svcs.forEach(function (c) { c.classList.remove("is-open"); var b = c.querySelector(".svc-btn"); if (b) b.setAttribute("aria-expanded", "false"); });
+      if (open) { card.classList.add("is-open"); btn.setAttribute("aria-expanded", "true"); }
+    });
+  });
 })();

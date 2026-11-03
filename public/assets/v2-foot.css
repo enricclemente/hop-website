@@ -16,7 +16,7 @@
   --serif: "Newsreader", "Newsreader Fallback", Georgia, serif;
   --sans: "Instrument Sans", "Instrument Fallback", Arial, sans-serif;
   --t: clamp(0px, calc((100vw - 390px) / 1050), 1px);
-  --pad: clamp(24px, calc(24px + (100vw - 390px) * .1295), 160px);
+  --pad: clamp(24px, calc(24px + (100vw - 390px) * .0915), 120px);
   --content: min(1920px, 100vw - 2 * var(--pad));
   --nav-h: 60px;
   --expo: cubic-bezier(.16, 1, .3, 1);
