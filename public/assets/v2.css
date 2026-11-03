@@ -907,3 +907,14 @@ html:not(.js) .nav-menu { visibility: hidden; }
   72% { transform: translateY(0) scale(1.16, .84); }
   88% { transform: translateY(-12%) scale(.98, 1.02); }
 }
+
+/* ---------- 01b Intro + manifesto film ---------- */
+.intro { padding-block: calc(24px + 156 * var(--t)) calc(88px + 92 * var(--t)); }
+.intro-h { --fm: 36; --fd: 72; --lhm: 1.15; --lhd: 1.15; --trm: -0.02em; --trd: -0.02em; --lwm: 9.4; --lw: 16.4; text-wrap: pretty; }
+.intro-l { display: block; }
+.intro-h em { font-weight: 300; }
+.mv { margin: calc(32px + 32 * var(--t)) 0 0; }
+.mv-frame { position: relative; aspect-ratio: 16 / 9; background: #2A2925; display: grid; place-items: center; overflow: hidden; }
+.mv-play { width: calc(64px + 32 * var(--t)); aspect-ratio: 1; border-radius: 50%; background: var(--red); display: grid; place-items: center; }
+.mv-play svg { width: 34%; height: auto; fill: var(--ivory); margin-left: 8%; }
+.mv-cap { position: absolute; left: calc(16px + 16 * var(--t)); bottom: calc(14px + 14 * var(--t)); color: var(--muted-d); }
