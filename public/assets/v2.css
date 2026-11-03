@@ -1341,3 +1341,19 @@ html.pm-open { overflow: hidden; }
   .pdot-c svg { width: 11px; height: 11px; }
   .pdot::before, .pdot::after { inset: 3px; border-width: 1px; }
 }
+
+/* Intro statement: exactly two lines from tablet up (one sentence per line); image 1200x620 at 1440 */
+@media (min-width: 600px) {
+  .intro-h { font-size: calc((var(--content) - 8px) / 15.5); line-height: 1.15; }
+  .intro-l { white-space: nowrap; }
+}
+@media (min-width: 1024px) {
+  .mv-frame { aspect-ratio: 1200 / 620; }
+}
+/* Who we are on phones: one sentence per line block, and a taller, tighter crop of the photo (dots re-mapped to the crop) */
+.who-h .tl { display: block; }
+@media (max-width: 599px) {
+  .duo { aspect-ratio: 4 / 3; }
+  .pdot--david { --x: 24.7%; }
+  .pdot--philip { --x: 70.2%; }
+}
