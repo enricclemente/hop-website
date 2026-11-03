@@ -179,7 +179,7 @@ function articlePage(tpl, a, i, list, origin, indexable) {
 const PAGES = {
   'index.html': {path: '/', og: {src: '/assets/og-partners.jpg', w: 1200, h: 630, alt: 'Philip Jacobson and David Anson, the two senior partners of HOP, on a street in Poznań'}, data: (o) => ({'@context': 'https://schema.org', '@graph': [orgLd(o), {'@type': 'WebSite', '@id': o + '/#site', name: NAME, url: o + '/', publisher: {'@id': o + '/#org'}, inLanguage: 'en'}]})},
   'house-of-poland.html': {path: '/house-of-poland'},
-  'articles.html': {path: '/articles'},
+  'articles/index.html': {path: '/articles'},
   'contact.html': {path: '/contact'},
   'privacy.html': {path: '/privacy'},
 }
