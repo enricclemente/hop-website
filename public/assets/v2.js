@@ -635,4 +635,15 @@
     window.addEventListener("resize", whoUpd); whoUpd();
   }
 
+  /* Headlines rise line by line from a mask when they come into view */
+  var rises = [].slice.call(document.querySelectorAll("[data-rise]"));
+  if (rises.length) {
+    if (reduce || !("IntersectionObserver" in window)) rises.forEach(function (el) { el.classList.add("is-in"); });
+    else {
+      doc.classList.add("can-rise");
+      var rio = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("is-in"); rio.unobserve(e.target); } }); }, { rootMargin: "0px 0px -12% 0px", threshold: .2 });
+      rises.forEach(function (el) { rio.observe(el); });
+    }
+  }
+
 })();

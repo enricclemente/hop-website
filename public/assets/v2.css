@@ -1457,3 +1457,37 @@ html.js.jump-pinned .jump-track::after { content: ""; display: block; height: 10
 .hero-h { --lwm: 6.5; }
 /* Who we are title: lines reveal with scroll */
 html.who-reveal .who-h .tl { opacity: calc(.14 + .86 * var(--wr, 0)); transform: translateY(calc((1 - var(--wr, 0)) * 18px)); transition: opacity .25s linear, transform .35s var(--expo); }
+
+/* ---------- Motion pass: quiet, elegant micro-animations ---------- */
+.intro-l, .rl-w { display: block; overflow: hidden; padding-bottom: .14em; margin-bottom: -.14em; }
+.rl { display: inline-block; }
+@media (prefers-reduced-motion: no-preference) {
+  /* headline masks, like the hero */
+  html.can-rise [data-rise] .rl { transform: translateY(110%); transition: transform 1.1s var(--expo); }
+  html.can-rise [data-rise] .intro-l:nth-of-type(2) .rl { transition-delay: .12s; }
+  html.can-rise [data-rise].is-in .rl { transform: none; }
+  /* body copy follows its headline */
+  .intro-copy[data-reveal] { --rd: .25s; }
+  .who-intro[data-reveal] { --rd: .1s; }
+  /* images open from a soft crop and settle */
+  html.js .mv[data-reveal] { opacity: 1; transform: none; }
+  html.js .mv[data-reveal] .mv-frame { clip-path: inset(6% 4% 6% 4%); transition: clip-path 1.4s var(--expo); }
+  html.js .mv[data-reveal] .mv-img { transform: scale(1.08); transition: transform 1.8s var(--expo); }
+  html.js .mv[data-reveal].in .mv-frame { clip-path: inset(0); }
+  html.js .mv[data-reveal].in .mv-img { transform: none; }
+  html.js .duo[data-reveal] { opacity: 1; transform: none; }
+  html.js .duo[data-reveal] picture { clip-path: inset(6% 4% 6% 4%); transition: clip-path 1.4s var(--expo); overflow: hidden; }
+  html.js .duo[data-reveal] img { transform: scale(1.08); transition: transform 1.8s var(--expo); }
+  html.js .duo[data-reveal].in picture { clip-path: inset(0); }
+  html.js .duo[data-reveal].in img { transform: none; }
+  html.js .duo[data-reveal] .pdot { opacity: 0; transform: scale(.4); transition: opacity .5s ease, transform .7s var(--spring); }
+  html.js .duo[data-reveal].in .pdot { opacity: 1; transform: none; transition-delay: .9s; }
+  html.js .duo[data-reveal].in .pdot--philip { transition-delay: 1.05s; }
+  html.js .duo-cap { opacity: 0; transition: opacity .8s ease 1.1s; }
+  html.js .duo.in .duo-cap { opacity: 1; }
+}
+/* micro-interactions */
+.nav-links .nav-art { transition: border-color .35s ease, background-color .35s ease; }
+.nav-links .nav-art:hover, .nav-links .nav-art:focus-visible { border-color: rgba(239, 235, 228, .6); background: rgba(239, 235, 228, .06); }
+.mletter .lt-b { transition: transform .6s var(--expo), background-color .3s ease; }
+@media (hover: hover) { .mletter .letter-toggle:hover .lt-b { transform: scale(1.06); } .mletter .letter-toggle[aria-expanded="true"]:hover .lt-b { transform: rotate(180deg) scale(1.06); } }
