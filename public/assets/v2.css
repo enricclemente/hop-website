@@ -1119,13 +1119,14 @@ html:not(.js) .nav-menu { visibility: hidden; }
 .ahub-h em { font-weight: 300; }
 .art-share-row .linkbtn.lbl { font-family: var(--sans); font-style: normal; font-size: calc(10px + 2 * var(--t)); letter-spacing: .09em; text-transform: uppercase; text-decoration: none; }
 
-/* Desktop line control: who / proof in two lines, How we do it in three */
+/* Desktop line control (+8px over the fit size): who / proof in two balanced lines, How we do it in three */
 @media (min-width: 1024px) {
-  .who-h { --lw: 20.2; white-space: nowrap; }
-  .who-h .tl { display: inline; }
-  .who-h em.tl { display: block; }
-  .proof-h { --lw: 11.8; white-space: nowrap; }
-  .howdo-h { --lw: 20.6; }
+  .who-h { font-size: calc(min(120px, (var(--content) - 12px) / 20.2) + 8px); }
+  .who-h .tl, .who-h em.tl { display: inline; }
+  .proof-h { font-size: min(128px, calc((var(--content) - 12px) / 11.3)); letter-spacing: -0.045em; white-space: nowrap; }
+  .proof-h .tl { display: block; }
+  .howdo-h { font-size: calc(min(120px, (var(--content) - 12px) / 20.6) + 8px); }
+  .howdo-h em { display: inline; }
 }
 
 /* 04 Who we are: partner photos run full width, edge to edge, on a black band */
@@ -1144,3 +1145,16 @@ html:not(.js) .nav-menu { visibility: hidden; }
   .founder:nth-child(2) > .lbl, .founder:nth-child(2) .founder-n { padding-left: calc(24px + 8 * var(--t)); }
   .founder:first-child > .lbl, .founder:first-child .founder-n { padding-left: var(--pad); }
 }
+
+/* 05b Letter: minimal — the title and one dropdown row */
+.letter { padding-block: calc(72px + 48 * var(--t)); }
+.letter-h { margin-top: 0; padding-bottom: calc(20px + 28 * var(--t)); font-size: min(calc(96px + 80 * var(--t)), calc((100vw - 2 * var(--pad)) / 3.6)); }
+.letter-h em { font-style: italic; font-weight: 300; margin-left: .22em; }
+.letter-row { margin-top: 0; border-top: 1px solid rgba(27, 26, 25, .9); border-bottom: 1px solid rgba(27, 26, 25, .9); }
+.letter-toggle { padding-block: calc(18px + 6 * var(--t)); color: var(--ink); }
+.lt-t { font-style: italic; font-size: calc(20px + 10 * var(--t)); display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 20px; }
+.lt-m { font-style: normal; color: var(--muted-l); }
+.lt-b { width: calc(44px + 12 * var(--t)); height: calc(44px + 12 * var(--t)); background: var(--red); color: #fff; transition: transform .6s cubic-bezier(.22, 1, .36, 1), background-color .3s ease; }
+.letter-toggle:hover .lt-b { background: #B0233C; }
+.lt-b svg { width: 18px; height: 18px; }
+.letter-panel { border-bottom: 0; }
