@@ -989,25 +989,6 @@ html:not(.js) .nav-menu { visibility: hidden; }
   .moment-h, .who-h, .proof-h, .burn-h, .model-h, .contact-h, .intro-h, .howdo-h, .p1, .p2 { --lw: 10.6; }
 }
 
-/* Hero: a slow, fluid black — soft warm shadows drifting under the headline */
-.hero { position: relative; isolation: isolate; }
-.hero::before { content: ""; position: absolute; inset: -25%; z-index: -1; pointer-events: none;
-  background:
-    radial-gradient(38% 46% at 22% 32%, rgba(58, 52, 48, .55), transparent 70%),
-    radial-gradient(34% 40% at 78% 68%, rgba(74, 26, 38, .32), transparent 72%),
-    radial-gradient(46% 52% at 62% 18%, rgba(40, 38, 36, .7), transparent 70%),
-    radial-gradient(30% 36% at 40% 82%, rgba(36, 33, 31, .65), transparent 70%);
-  filter: blur(30px); will-change: transform; }
-@media (prefers-reduced-motion: no-preference) {
-  .hero::before { animation: hero-flow 26s cubic-bezier(.45, 0, .55, 1) infinite alternate; }
-}
-@keyframes hero-flow {
-  0% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
-  33% { transform: translate3d(4%, -3%, 0) rotate(8deg) scale(1.06); }
-  66% { transform: translate3d(-3%, 4%, 0) rotate(-6deg) scale(1.02); }
-  100% { transform: translate3d(2%, 2%, 0) rotate(4deg) scale(1.08); }
-}
-
 /* Moment: subtle hover on the country cards */
 @media (hover: hover) {
   .brand { transition: transform .6s cubic-bezier(.22, 1, .36, 1), border-color .5s ease, background-color .5s ease, box-shadow .6s cubic-bezier(.22, 1, .36, 1); }
@@ -1137,3 +1118,29 @@ html:not(.js) .nav-menu { visibility: hidden; }
 .ahub-h { --fm: 52; --fd: 120; --lhm: 1.08; --lhd: 1.2; --trm: -0.02em; --trd: -0.035em; --lwm: 6; --lw: 10.6; }
 .ahub-h em { font-weight: 300; }
 .art-share-row .linkbtn.lbl { font-family: var(--sans); font-style: normal; font-size: calc(10px + 2 * var(--t)); letter-spacing: .09em; text-transform: uppercase; text-decoration: none; }
+
+/* Desktop line control: who / proof in two lines, How we do it in three */
+@media (min-width: 1024px) {
+  .who-h { --lw: 20.2; white-space: nowrap; }
+  .who-h .tl { display: inline; }
+  .who-h em.tl { display: block; }
+  .proof-h { --lw: 11.8; white-space: nowrap; }
+  .howdo-h { --lw: 20.6; }
+}
+
+/* 04 Who we are: partner photos run full width, edge to edge, on a black band */
+.founders { width: 100vw; margin-left: calc(50% - 50vw); gap: 0; background: var(--ink); }
+.founder { gap: 0; }
+.founder-img { width: 100%; height: auto; aspect-ratio: 4 / 5; margin: 0; background: var(--ink-3); }
+.founder-img picture { position: absolute; inset: 0; width: 100%; height: 100%; left: 0; top: 0; }
+.founder-img img { object-position: 50% 28%; }
+.founder > .lbl, .founder-n { padding-inline: var(--pad); }
+.founder > .lbl { padding-top: 24px; color: var(--red-on-dark) !important; }
+.founder-n { color: var(--ivory); padding-bottom: calc(32px + 16 * var(--t)); margin-top: 6px; }
+@media (min-width: 768px) {
+  .founders { grid-template-columns: 1fr 1fr; gap: 0; }
+  .founder-img, .founder:nth-child(2) .founder-img { width: 100%; aspect-ratio: 720 / 620; margin: 0; }
+  .founder-img picture, .founder:nth-child(2) .founder-img picture { width: 100%; height: 100%; left: 0; top: 0; }
+  .founder:nth-child(2) > .lbl, .founder:nth-child(2) .founder-n { padding-left: calc(24px + 8 * var(--t)); }
+  .founder:first-child > .lbl, .founder:first-child .founder-n { padding-left: var(--pad); }
+}
