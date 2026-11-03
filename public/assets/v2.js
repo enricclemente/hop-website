@@ -537,4 +537,38 @@
     window.addEventListener("resize", jReq);
     jUpdate();
   }
+  /* Who we are: a dot on each partner opens their bio */
+  var pm = document.getElementById("pmodal"), pdots = [].slice.call(document.querySelectorAll(".pdot"));
+  if (pm && pdots.length && typeof pm.showModal === "function") {
+    var partners = [
+      { name: "Philip Jacobson", email: "philip@hoppartners.pl", phone: "+48 571 357 205", li: "#",
+        bio: "Philip was Chief Brand Officer at PE-backed Vimergy. For the last five years he has driven brand-led growth at scale-ups across categories, including Tylko, Autry and Chilly\u2019s. Before that, he spent a decade leading brand communication for Nike EMEA and was Global Head of Brand Creative at Maserati." },
+      { name: "David Anson", email: "david@hoppartners.pl", phone: "+48 602 638 219", li: "#",
+        bio: "David was a Brand Creative Lead at Nike and Head of Business Leadership and Client Service at BBH Singapore. Across BBH Singapore, Wieden+Kennedy Amsterdam and Saatchi & Saatchi London, he has led the Nike, Samsung, Meta, Netflix and HSBC business." }
+    ];
+    var pmName = pm.querySelector(".pm-name"), pmBio = pm.querySelector(".pm-bio"), pmI = pm.querySelector(".pm-i"),
+        pmEm = pm.querySelector(".pm-em"), pmPh = pm.querySelector(".pm-ph"), pmLi = pm.querySelector(".pm-li"),
+        pmNextN = pm.querySelector(".pm-next-n"), pmCur = 0, pmOpener = null;
+    var fill = function (i) {
+      var p = partners[i]; pmCur = i;
+      pmName.textContent = p.name; var dot = document.createElement("span"); dot.className = "tdot"; dot.textContent = "."; pmName.appendChild(dot);
+      pmBio.textContent = p.bio; pmI.textContent = String(i + 1);
+      pmEm.textContent = p.email; pmEm.href = "mailto:" + p.email;
+      pmPh.textContent = p.phone; pmPh.href = "tel:" + p.phone.replace(/\s+/g, "");
+      pmLi.href = p.li;
+      pmNextN.textContent = partners[(i + 1) % partners.length].name;
+    };
+    pdots.forEach(function (b) {
+      b.addEventListener("click", function () {
+        pmOpener = b; fill(parseInt(b.getAttribute("data-partner"), 10) || 0);
+        pm.showModal(); doc.classList.add("pm-open");
+        var x = pm.querySelector(".pm-x"); if (x) x.focus({ preventScroll: true });
+      });
+    });
+    pm.querySelector(".pm-next").addEventListener("click", function () { fill((pmCur + 1) % partners.length); pmOpener = document.querySelector('.pdot[data-partner="' + pmCur + '"]') || pmOpener; });
+    pm.querySelector(".pm-x").addEventListener("click", function () { pm.close(); });
+    pm.addEventListener("click", function (e) { if (e.target === pm) pm.close(); });
+    pm.addEventListener("close", function () { doc.classList.remove("pm-open"); if (pmOpener) pmOpener.focus({ preventScroll: true }); });
+  }
+
 })();

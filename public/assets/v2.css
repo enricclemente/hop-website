@@ -1250,3 +1250,94 @@ html.js.jump-live .jump-col--3::before { background: var(--paper); border-color:
 .mletter .letter-body .pull, .mletter .letter-foot { border-color: rgba(239, 235, 228, .15); }
 .mletter .letter-body ol li::before { color: var(--red-on-dark); }
 .mletter :focus-visible { outline-color: var(--ivory); }
+
+/* ---------- 04 Who we are (Figma V4): one photo, a dot on each partner, bio modal ---------- */
+.who { padding-block: calc(88px + 52 * var(--t)); }
+.who + .howdo { padding-top: 0; }
+.who-h .red { font-weight: 400; }
+@media (min-width: 1024px) {
+  .who-h { font-size: min(96px, calc((var(--content) - 12px) / 12.4)); line-height: 1.2; letter-spacing: -0.025em; }
+  .who-h .tl, .who-h em.tl { display: block; }
+}
+.duo { position: relative; margin: calc(48px + 48 * var(--t)) 0 0; aspect-ratio: 1374 / 733; background: var(--ink-3); }
+.duo picture, .duo img { display: block; width: 100%; height: 100%; }
+.duo img { object-fit: cover; }
+.pdot { position: absolute; left: var(--x); top: var(--y); width: 56px; height: 56px; margin: -28px 0 0 -28px; padding: 0; border: 0; background: none; border-radius: 50%; cursor: pointer; z-index: 2; -webkit-tap-highlight-color: transparent; }
+.pdot--david { --x: 32%; --y: 45.4%; }
+.pdot--philip { --x: 64.4%; --y: 47.9%; }
+.pdot::before { content: ""; position: absolute; inset: -10px; border-radius: 50%; border: 1.5px solid rgba(239, 235, 228, .45); transition: inset .45s var(--expo), border-color .3s ease; }
+.pdot-c { position: absolute; inset: 0; border-radius: 50%; background: var(--red); display: grid; place-items: center; transition: transform .45s var(--expo), box-shadow .3s ease; }
+.pdot-c svg { width: 16px; height: 16px; fill: none; stroke: var(--ivory); stroke-width: 1.6; transition: transform .45s var(--expo); }
+.pdot-chip { position: absolute; left: calc(100% + 22px); top: 50%; display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--chrome); color: var(--ivory); white-space: nowrap; pointer-events: none; opacity: 0; transform: translate(-8px, -50%); transition: opacity .3s ease, transform .45s var(--expo); }
+.pdot-n { font-family: var(--serif); font-size: 17px; line-height: 1.2; }
+.pdot-cue { font-family: var(--sans); font-weight: 500; font-size: 11px; letter-spacing: .09em; text-transform: uppercase; color: var(--red-on-dark); }
+@media (hover: hover) {
+  .pdot:hover::before { inset: -14px; border-color: rgba(239, 235, 228, .8); }
+  .pdot:hover .pdot-c { transform: scale(1.14); box-shadow: 0 8px 24px rgba(0, 0, 0, .3); }
+  .pdot:hover .pdot-c svg { transform: scale(1.2); }
+  .pdot:hover .pdot-chip { opacity: 1; transform: translate(0, -50%); }
+}
+.pdot:focus-visible { outline: none; }
+.pdot:focus-visible::before { inset: -14px; border-color: var(--ivory); border-width: 2px; }
+.pdot:focus-visible .pdot-chip { opacity: 1; transform: translate(0, -50%); }
+@media (prefers-reduced-motion: no-preference) {
+  .pdot::after { content: ""; position: absolute; inset: -10px; border-radius: 50%; border: 1.5px solid rgba(239, 235, 228, .5); animation: pdot-pulse 2.4s ease-out infinite; pointer-events: none; }
+  .pdot--philip::after { animation-delay: 1.2s; }
+  .pdot:hover::after, .pdot:focus-visible::after { animation: none; opacity: 0; }
+}
+@keyframes pdot-pulse { 0% { transform: scale(1); opacity: .7; } 100% { transform: scale(1.45); opacity: 0; } }
+@media (max-width: 599px) {
+  .pdot { width: 44px; height: 44px; margin: -22px 0 0 -22px; }
+  .pdot::before, .pdot::after { inset: -7px; }
+  .pdot-c svg { width: 14px; height: 14px; }
+  .pdot-chip { display: none; }
+}
+.who-statement { margin-top: calc(48px + 48 * var(--t)); max-width: 1200px; font-size: calc(28px + 16 * var(--t)); line-height: 1.25; letter-spacing: -0.02em; color: var(--ink); text-wrap: balance; }
+.who-statement em { font-style: italic; }
+
+/* Partner modal: centred dialog on desktop, bottom sheet on phones */
+.pmodal { border: 0; padding: 0; margin: auto; background: var(--paper); color: #0A0A0A; width: min(680px, calc(100vw - 32px)); max-width: none; max-height: calc(100svh - 32px); overflow: auto; box-shadow: 0 24px 64px rgba(0, 0, 0, .28); }
+.pmodal::backdrop { background: rgba(19, 19, 22, .72); }
+.pm-in { padding: 48px 56px; }
+.pm-handle { display: none; }
+.pm-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.pm-role { font-family: var(--sans); font-weight: 500; font-size: 12px; letter-spacing: .09em; text-transform: uppercase; color: var(--red); }
+.pm-x { width: 44px; height: 44px; flex: none; border-radius: 50%; border: 1px solid rgba(10, 10, 10, .2); display: grid; place-items: center; cursor: pointer; transition: border-color .2s ease, background-color .2s ease; }
+.pm-x:hover { border-color: #0A0A0A; }
+.pm-x svg { width: 16px; height: 16px; fill: none; stroke: #0A0A0A; stroke-width: 1.4; }
+.pm-name { margin-top: 32px; font-weight: 400; font-size: calc(40px + 16 * var(--t)); line-height: 1.05; letter-spacing: -0.02em; }
+.pm-name .tdot { color: var(--red); }
+.pm-bio { margin-top: 24px; font-size: calc(18px + 3 * var(--t)); line-height: 1.5; color: #4A4640; }
+.pm-contact { list-style: none; margin: 32px 0 0; padding: 0 0 32px; display: flex; flex-wrap: wrap; gap: 10px 24px; font-family: var(--sans); font-size: 15px; border-bottom: 1px solid rgba(10, 10, 10, .14); }
+.pm-contact a { color: #0A0A0A; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.pm-contact a:hover { color: var(--red); }
+.pm-act { margin-top: 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px 24px; flex-wrap: wrap; }
+.pm-next { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-family: var(--sans); font-size: 15px; color: #0A0A0A; cursor: pointer; }
+.pm-next svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.4; transition: transform .25s var(--expo); }
+.pm-next:hover svg { transform: translateX(4px); }
+.pmodal :focus-visible { outline: 2px solid #0A0A0A; outline-offset: 3px; }
+@media (prefers-reduced-motion: no-preference) {
+  .pmodal[open] { animation: pm-in .45s var(--expo); }
+  .pmodal[open]::backdrop { animation: pm-fade .3s ease; }
+}
+@keyframes pm-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes pm-fade { from { opacity: 0; } to { opacity: 1; } }
+@media (max-width: 599px) {
+  .pmodal { margin: auto 0 0; width: 100%; max-height: 92svh; box-shadow: 0 -12px 40px rgba(0, 0, 0, .25); }
+  .pm-in { padding: 16px 24px calc(32px + env(safe-area-inset-bottom)); }
+  .pm-handle { display: block; width: 36px; height: 4px; border-radius: 2px; background: rgba(10, 10, 10, .2); margin: 0 auto 16px; }
+  .pm-name { margin-top: 24px; }
+  .pm-bio { margin-top: 16px; }
+  .pm-contact { flex-direction: column; margin-top: 24px; padding-bottom: 24px; }
+  .pm-act { flex-direction: column-reverse; align-items: stretch; margin-top: 20px; }
+  .pm-act .btn { justify-content: space-between; }
+  .pm-next { justify-content: flex-start; }
+  @media (prefers-reduced-motion: no-preference) { .pmodal[open] { animation: pm-up .45s var(--expo); } }
+}
+@keyframes pm-up { from { transform: translateY(100%); } to { transform: none; } }
+html.pm-open { overflow: hidden; }
+@media (max-width: 599px) {
+  .pdot-c { inset: 9px; }
+  .pdot-c svg { width: 11px; height: 11px; }
+  .pdot::before, .pdot::after { inset: 3px; border-width: 1px; }
+}
