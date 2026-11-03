@@ -218,8 +218,10 @@
   </section>
 
   <!-- 07 HOW WE WORK — THE LEAP -->
-  <section class="s jump" id="approach" aria-label="How we work: run-up, leap, land">
+  <section class="s jump" id="approach" aria-labelledby="jump-title">
     <div class="jump-pin">
+    <div class="jump-inner">
+    <h2 class="wrap h2 jump-title" id="jump-title">Lorem Ipsum, <em class="red">decade together.</em></h2>
     <div class="wrap jump-wrap">
       <div class="jump-rail" aria-hidden="true"><b></b></div>
       <svg class="jump-svg" viewBox="0 0 1940 400" aria-hidden="true" focusable="false">
@@ -231,24 +233,42 @@
         <li class="jump-col jump-col--1">
           <h3 class="jump-h">Run-up<span class="tdot">.</span></h3>
           <p class="jump-sub">Find the pain nobody’s solving.</p>
-          <ul class="jump-list"><li>Brand audit</li><li>Audience &amp; hero pain point</li></ul>
+          <ul class="jump-list"><li><button class="jump-item" type="button" data-svc="0" aria-haspopup="dialog" aria-controls="smodal"><span class="jump-item-t">Brand audit</span><span class="jump-plus" aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><path d="M10 5v10M5 10h10"/></svg></span></button></li><li><button class="jump-item" type="button" data-svc="1" aria-haspopup="dialog" aria-controls="smodal"><span class="jump-item-t">Audience &amp; hero pain point</span><span class="jump-plus" aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><path d="M10 5v10M5 10h10"/></svg></span></button></li></ul>
         </li>
         <li class="jump-col jump-col--2">
           <h3 class="jump-h">Leap<span class="tdot">.</span></h3>
           <p class="jump-sub">Expose rivals. Own one idea.</p>
-          <ul class="jump-list"><li>De-positioning</li><li>Brand strategy</li><li>Brand platform</li></ul>
+          <ul class="jump-list"><li><button class="jump-item" type="button" data-svc="2" aria-haspopup="dialog" aria-controls="smodal"><span class="jump-item-t">De-positioning</span><span class="jump-plus" aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><path d="M10 5v10M5 10h10"/></svg></span></button></li><li><button class="jump-item" type="button" data-svc="3" aria-haspopup="dialog" aria-controls="smodal"><span class="jump-item-t">Brand strategy</span><span class="jump-plus" aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><path d="M10 5v10M5 10h10"/></svg></span></button></li><li><button class="jump-item" type="button" data-svc="4" aria-haspopup="dialog" aria-controls="smodal"><span class="jump-item-t">Brand platform</span><span class="jump-plus" aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><path d="M10 5v10M5 10h10"/></svg></span></button></li></ul>
         </li>
         <li class="jump-col jump-col--3">
           <h3 class="jump-h">Land<span class="tdot">.</span></h3>
           <p class="jump-sub">Same truth, local accent.</p>
-          <ul class="jump-list"><li>Identity &amp; messaging</li><li>Ideas made real</li><li>Internationalisation</li><li>Performance &amp; optimisation</li></ul>
+          <ul class="jump-list"><li><button class="jump-item" type="button" data-svc="5" aria-haspopup="dialog" aria-controls="smodal"><span class="jump-item-t">Identity &amp; messaging</span><span class="jump-plus" aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><path d="M10 5v10M5 10h10"/></svg></span></button></li><li><button class="jump-item" type="button" data-svc="6" aria-haspopup="dialog" aria-controls="smodal"><span class="jump-item-t">Ideas made real</span><span class="jump-plus" aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><path d="M10 5v10M5 10h10"/></svg></span></button></li><li><button class="jump-item" type="button" data-svc="7" aria-haspopup="dialog" aria-controls="smodal"><span class="jump-item-t">Internationalisation</span><span class="jump-plus" aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><path d="M10 5v10M5 10h10"/></svg></span></button></li><li><button class="jump-item" type="button" data-svc="8" aria-haspopup="dialog" aria-controls="smodal"><span class="jump-item-t">Performance &amp; optimisation</span><span class="jump-plus" aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><path d="M10 5v10M5 10h10"/></svg></span></button></li></ul>
         </li>
       </ol>
+    </div>
     </div>
     </div>
   </section>
 
 </main>
+
+<dialog class="pmodal smodal" id="smodal" aria-labelledby="sm-title">
+  <div class="pm-in">
+    <span class="pm-handle" aria-hidden="true"></span>
+    <div class="pm-top">
+      <p class="pm-role sm-step"></p>
+      <button class="pm-x" type="button" aria-label="Close"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 3l10 10M13 3L3 13"/></svg></button>
+    </div>
+    <p class="sm-svc"></p>
+    <h3 class="pm-name sm-title" id="sm-title"></h3>
+    <p class="pm-bio sm-body"></p>
+    <div class="pm-act sm-act">
+      <a class="btn btn--s" href="/contact" data-cta><span class="btn-t">Let’s make the leap</span><svg class="btn-i" aria-hidden="true" focusable="false"><use href="#i-arrow-r"/></svg></a>
+      <button class="pm-next" type="button"><span class="sm-next"></span><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 8h12M9 3l5 5-5 5"/></svg></button>
+    </div>
+  </div>
+</dialog>
 
 <dialog class="pmodal" id="pmodal" aria-labelledby="pm-name">
   <div class="pm-in">

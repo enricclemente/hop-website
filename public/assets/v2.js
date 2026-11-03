@@ -513,7 +513,7 @@
   if (jump && !reduce) {
     var jPath = jump.querySelector(".jump-path"), jLand = jump.querySelector(".jump-land"), jDot = jump.querySelector(".jump-dot"),
         jCols = [].slice.call(jump.querySelectorAll(".jump-col")), jList = jump.querySelector(".jump-cols"), jRail = jump.querySelector(".jump-rail"),
-        mqWide = window.matchMedia("(min-width: 1024px)"), mqPin = window.matchMedia("(min-width: 1024px) and (min-height: 700px)"),
+        mqWide = window.matchMedia("(min-width: 1024px)"), mqPin = window.matchMedia("(min-width: 1024px) and (min-height: 820px)"),
         jLen = jPath.getTotalLength(), jTick = false;
     var clamp = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
     doc.classList.add("jump-live");
@@ -569,6 +569,44 @@
     pm.querySelector(".pm-x").addEventListener("click", function () { pm.close(); });
     pm.addEventListener("click", function (e) { if (e.target === pm) pm.close(); });
     pm.addEventListener("close", function () { doc.classList.remove("pm-open"); if (pmOpener) pmOpener.focus({ preventScroll: true }); });
+  }
+
+  /* How we work: each service line opens its detail */
+  var sm = document.getElementById("smodal"), sItems = [].slice.call(document.querySelectorAll(".jump-item"));
+  if (sm && sItems.length && typeof sm.showModal === "function") {
+    var leapSvcs = [
+      ["Run-up", "Brand audit", "Know what you stand for.", "Find out what everyone thinks of your brand, from leadership, to entry level employees, to customers. Finding the gaps and re-defining it from the inside out first is non-negotiable. It makes everything else work."],
+      ["Run-up", "Audience & hero pain point", "Know who you\u2019re for. Give them a reason.", "Anchor your brand strategy in the customer. Understand their needs deeply and solve their problems better than anyone else."],
+      ["Leap", "De-positioning", "Be the best solution.", "A clear customer value proposition that makes you the only choice in your market."],
+      ["Leap", "Brand strategy", "Who you are. Where you\u2019re going.", "A framework that directs your effort and energy, focusing every action on what delivers competitive advantage that galvanises and inspires your team."],
+      ["Leap", "Brand platform", "One big idea. Everything behind it.", "A single, memorable idea, expressed across every touchpoint, that becomes your identity and drives growth."],
+      ["Land", "Identity & messaging", "An identity that matches your ambition. Words that sell it.", "Every message and experience, aligned to one consistent voice that builds coherence and trust."],
+      ["Land", "Ideas made real", "Get their attention. Be remembered.", "Ideas people see, touch and taste, built to travel and proven to work."],
+      ["Land", "Internationalisation", "Built to travel.", "A strategy for localising and globalising who you are, so you can win new markets and recruit new audiences."],
+      ["Land", "Performance & optimisation", "Know what works. Spend on that.", "Brand and performance optimised in real time, cutting inefficient spend and maximising effectiveness."]
+    ];
+    var smStep = sm.querySelector(".sm-step"), smSvc = sm.querySelector(".sm-svc"), smTitle = sm.querySelector(".sm-title"),
+        smBody = sm.querySelector(".sm-body"), smNext = sm.querySelector(".sm-next"), smCur = 0, smOpener = null;
+    var pad2 = function (n) { return (n < 10 ? "0" : "") + n; };
+    var smFill = function (i) {
+      var d = leapSvcs[i]; smCur = i;
+      smStep.textContent = d[0] + " \u00b7 " + pad2(i + 1) + " of " + pad2(leapSvcs.length);
+      smSvc.textContent = d[1];
+      smTitle.textContent = d[2].slice(0, -1); var dot = document.createElement("span"); dot.className = "tdot"; dot.textContent = d[2].slice(-1); smTitle.appendChild(dot);
+      smBody.textContent = d[3];
+      smNext.textContent = (i === leapSvcs.length - 1 ? "Back to: " : "Next: ") + leapSvcs[(i + 1) % leapSvcs.length][1];
+    };
+    sItems.forEach(function (b) {
+      b.addEventListener("click", function () {
+        smOpener = b; smFill(parseInt(b.getAttribute("data-svc"), 10) || 0);
+        sm.showModal(); doc.classList.add("pm-open");
+        var x = sm.querySelector(".pm-x"); if (x) x.focus({ preventScroll: true });
+      });
+    });
+    sm.querySelector(".pm-next").addEventListener("click", function () { smFill((smCur + 1) % leapSvcs.length); smOpener = sItems[smCur] || smOpener; });
+    sm.querySelector(".pm-x").addEventListener("click", function () { sm.close(); });
+    sm.addEventListener("click", function (e) { if (e.target === sm) sm.close(); });
+    sm.addEventListener("close", function () { doc.classList.remove("pm-open"); if (smOpener) smOpener.focus({ preventScroll: true }); });
   }
 
 })();

@@ -1231,7 +1231,7 @@ html.js.jump-live .jump-col--3::before { background: var(--paper); border-color:
 @media (min-width: 1024px) {
   .jump-rail, html.js.jump-live .jump-rail { display: none; }
 }
-@media (min-width: 1024px) and (min-height: 700px) {
+@media (min-width: 1024px) and (min-height: 820px) {
   html.js.jump-pinned .jump { height: 200vh; padding-block: 0; overflow: visible; }
   html.js.jump-pinned .jump-pin { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; padding-top: var(--nav-h); box-sizing: border-box; overflow: hidden; }
   html.js.jump-pinned .jump-pin > .wrap { width: 100%; }
@@ -1356,4 +1356,35 @@ html.pm-open { overflow: hidden; }
   .duo { aspect-ratio: 4 / 3; }
   .pdot--david { --x: 24.7%; }
   .pdot--philip { --x: 70.2%; }
+}
+
+/* ---------- 07 How we work (Figma V4): title, clickable service lines, service modal ---------- */
+.jump-inner { width: 100%; }
+.jump-title { font-size: calc(40px + 56 * var(--t)); line-height: 1.2; letter-spacing: -0.025em; font-weight: 400; margin-bottom: calc(48px + 32 * var(--t)); color: var(--ink); text-wrap: balance; }
+.jump-title em { font-style: italic; font-weight: 400; }
+@media (min-width: 1024px) { .jump-title { font-size: min(96px, calc((var(--content) - 12px) / 12.4)); } }
+.jump-list li { padding: 0; }
+.jump-item { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; min-height: 44px; text-align: left; font: inherit; color: inherit; cursor: pointer; background: none; border: 0; }
+.jump-item-t { transition: color .25s ease; }
+.jump-plus { width: 26px; height: 26px; flex: none; border-radius: 50%; border: 1px solid rgba(10, 10, 10, .25); display: grid; place-items: center; transition: background-color .25s ease, border-color .25s ease, transform .4s var(--expo); }
+.jump-plus svg { width: 14px; height: 14px; fill: none; stroke: #0A0A0A; stroke-width: 1.4; transition: stroke .25s ease; }
+.jump-list li { transition: border-color .25s ease; }
+@media (hover: hover) {
+  .jump-list li:hover { border-top-color: rgba(10, 10, 10, .5); }
+  .jump-item:hover .jump-item-t { color: var(--red); }
+  .jump-item:hover .jump-plus { background: var(--red); border-color: var(--red); transform: rotate(90deg); }
+  .jump-item:hover .jump-plus svg { stroke: var(--ivory); }
+}
+.jump-item:focus-visible { outline: 2px solid #0A0A0A; outline-offset: 2px; }
+.jump-item:focus-visible .jump-item-t { color: var(--red); }
+@media (min-width: 1024px) { .jump-item { padding-block: max(8px, calc(var(--u) * 13)); min-height: 0; } }
+.sm-step { color: var(--muted-l); }
+.sm-svc { margin-top: 40px; font-family: var(--sans); font-weight: 500; font-size: 12px; letter-spacing: .09em; text-transform: uppercase; color: var(--red); }
+.smodal .sm-title { margin-top: 14px; font-size: calc(36px + 16 * var(--t)); line-height: 1.08; }
+.smodal .sm-body { margin-top: 24px; }
+.sm-act { margin-top: 40px; padding-top: 24px; border-top: 1px solid rgba(10, 10, 10, .14); }
+@media (max-width: 599px) {
+  .sm-svc { margin-top: 28px; }
+  .smodal .sm-body { margin-top: 16px; }
+  .sm-act { margin-top: 28px; padding-top: 20px; }
 }
