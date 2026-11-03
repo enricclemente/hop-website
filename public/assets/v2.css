@@ -926,3 +926,6 @@ html:not(.js) .nav-menu { visibility: hidden; }
   .moment-h, .who-h, .proof-h, .burn-h, .model-h, .contact-h, .p1, .p2 { --lw: 10.6; }
 }
 .tl { display: block; text-wrap: balance; }
+
+/* 04 Who we are: intro under the title */
+.who-intro { max-width: 760px; margin-top: calc(24px + 8 * var(--t)); font-size: calc(18px + 6 * var(--t)); line-height: 1.5; color: var(--muted-l); text-wrap: pretty; }
