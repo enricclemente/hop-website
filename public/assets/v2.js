@@ -156,7 +156,7 @@
     }
 
     /* Scroll-spy: the section crossing a line 35% down the screen is current */
-    var spyIds = ["approach", "work", "partners", "letter"];
+    var spyIds = ["services", "partners", "letter"];
     var current = null;
     var spy = new IntersectionObserver(function (es) {
       es.forEach(function (e) { if (e.isIntersecting) current = e.target.id; else if (current === e.target.id) current = null; });
