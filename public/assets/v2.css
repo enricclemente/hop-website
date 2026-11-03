@@ -1237,3 +1237,16 @@ html.js.jump-live .jump-col--3::before { background: var(--paper); border-color:
   html.js.jump-pinned .jump-pin > .wrap { width: 100%; }
 }
 .jump-wrap { position: relative; }
+
+/* ---------- Letter dropdown inside the intro (dark), per Figma V4 01b ---------- */
+.mletter { margin-top: calc(32px + 32 * var(--t)); color: var(--ivory); }
+.mletter .letter-row { margin-top: 0; border-top: 1px solid rgba(239, 235, 228, .28); border-bottom: 1px solid rgba(239, 235, 228, .28); }
+.mletter .letter-toggle, .mletter .lt-t, .mletter .letter-toggle:hover .lt-t { color: var(--ivory); }
+.mletter .lt-m { color: var(--dim-d-text); }
+.mletter .letter-body, .mletter .letter-stand { color: var(--muted-d); }
+.mletter .byline dd, .mletter .letter-body .lede, .mletter .letter-body h3, .mletter .letter-body .pull, .mletter .letter-body ol strong,
+.mletter .letter-body .strong-line, .mletter .letter-body .closer, .mletter .letter-body .sign, .mletter .letter-foot, .mletter .letter-close { color: var(--ivory) !important; }
+.mletter .byline dt { color: var(--dim-d-text); }
+.mletter .letter-body .pull, .mletter .letter-foot { border-color: rgba(239, 235, 228, .15); }
+.mletter .letter-body ol li::before { color: var(--red-on-dark); }
+.mletter :focus-visible { outline-color: var(--ivory); }
