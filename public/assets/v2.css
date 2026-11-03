@@ -1439,3 +1439,18 @@ html.js.jump-pinned .jump-track::after { content: ""; display: block; height: 10
 .pm-name { -webkit-text-stroke: .3px currentColor; paint-order: stroke fill; }
 .sm-svc, .pm-role { font-weight: 500; letter-spacing: .1em; }
 .pm-next, .pm-contact { font-weight: 500; }
+
+/* Copy from the brief: intro support lines, Who intro paragraphs, photo caption */
+.intro-copy { max-width: 720px; margin-top: calc(24px + 8 * var(--t)); display: grid; gap: 12px; font-family: var(--sans); font-size: calc(16px + 4 * var(--t)); line-height: 1.6; color: var(--muted-d); }
+.who-intro { display: grid; gap: 14px; }
+.who-intro p { margin: 0; }
+.duo-cap { position: absolute; left: 0; top: calc(100% + 16px); font-family: var(--serif); font-style: italic; font-size: calc(17px + 3 * var(--t)); color: var(--muted-l); }
+.duo { margin-bottom: calc(40px + 8 * var(--t)); }
+/* CTAs in the body font */
+.btn, .btn .btn-t { font-family: var(--sans); font-style: normal; font-weight: 500; -webkit-text-stroke: 0; letter-spacing: .01em; }
+.lang, .lang button { font-family: var(--sans); font-weight: 500; letter-spacing: .04em; -webkit-text-stroke: 0; }
+.cbtn { font-family: var(--sans); font-style: normal; font-weight: 500; }
+.hero-pos, .alink { font-family: var(--sans); font-style: normal; font-weight: 500; letter-spacing: .005em; }
+.who-intro { color: var(--ink); }
+.hero-h { --lw: 9.05; }
+.hero-h { --lwm: 5.9; }

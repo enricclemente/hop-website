@@ -552,9 +552,9 @@
   var pm = document.getElementById("pmodal"), pdots = [].slice.call(document.querySelectorAll(".pdot"));
   if (pm && pdots.length && typeof pm.showModal === "function") {
     var partners = [
-      { name: "Philip Jacobson", email: "philip@hoppartners.pl", phone: "+48 571 357 205", li: "#",
+      { name: "Philip Jacobson", email: "philip@hoppartners.com", phone: "+48 571 357 205", li: "#",
         bio: "Philip was Chief Brand Officer at PE-backed Vimergy. For the last five years he has driven brand-led growth at scale-ups across categories, including Tylko, Autry and Chilly\u2019s. Before that, he spent a decade leading brand communication for Nike EMEA and was Global Head of Brand Creative at Maserati." },
-      { name: "David Anson", email: "david@hoppartners.pl", phone: "+48 602 638 219", li: "#",
+      { name: "David Anson", email: "david@hoppartners.com", phone: "+48 602 638 219", li: "#",
         bio: "David was a Brand Creative Lead at Nike and Head of Business Leadership and Client Service at BBH Singapore. Across BBH Singapore, Wieden+Kennedy Amsterdam and Saatchi & Saatchi London, he has led the Nike, Samsung, Meta, Netflix and HSBC business." }
     ];
     var pmName = pm.querySelector(".pm-name"), pmBio = pm.querySelector(".pm-bio"),
@@ -587,13 +587,12 @@
   if (sm && sItems.length && typeof sm.showModal === "function") {
     var leapSvcs = [
       ["Run-up", "Brand audit", "Know what you stand for.", "Find out what everyone thinks of your brand, from leadership, to entry level employees, to customers. Finding the gaps and re-defining it from the inside out first is non-negotiable. It makes everything else work."],
-      ["Run-up", "Audience & hero pain point", "Know who you\u2019re for. Give them a reason.", "Anchor your brand strategy in the customer. Understand their needs deeply and solve their problems better than anyone else."],
-      ["Leap", "De-positioning", "Be the best solution.", "A clear customer value proposition that makes you the only choice in your market."],
+      ["Run-up", "Audience & segmentation research", "Know who you\u2019re for. Give them a reason.", "Anchor your brand strategy in the customer: understand their needs deeply and solve their problems better than anyone else."],
+      ["Leap", "Brand positioning", "Be the best solution.", "A clear customer value proposition that makes you the only choice in your market."],
       ["Leap", "Brand strategy", "Who you are. Where you\u2019re going.", "A framework that directs your effort and energy, focusing every action on what delivers competitive advantage that galvanises and inspires your team."],
-      ["Leap", "Brand platform", "One big idea. Everything behind it.", "A single, memorable idea, expressed across every touchpoint, that becomes your identity and drives growth."],
-      ["Land", "Identity & messaging", "An identity that matches your ambition. Words that sell it.", "Every message and experience, aligned to one consistent voice that builds coherence and trust."],
-      ["Land", "Ideas made real", "Get their attention. Be remembered.", "Ideas people see, touch and taste, built to travel and proven to work."],
-      ["Land", "Internationalisation", "Built to travel.", "A strategy for localising and globalising who you are, so you can win new markets and recruit new audiences."],
+      ["Leap", "Brand creative platform", "One big idea. Everything behind it.", "A single, memorable idea, expressed across every touchpoint, that becomes your identity and drives growth."],
+      ["Land", "Brand identity & messaging", "An identity that matches your ambition. Words that sell it.", "Every message and experience, aligned to one consistent voice that builds coherence and trust."],
+      ["Land", "Brand internationalisation", "Built to travel.", "A strategy for localising and globalising who you are, so you can win new markets and recruit new audiences."],
       ["Land", "Performance & optimisation", "Know what works. Spend on that.", "Brand and performance optimised in real time, cutting inefficient spend and maximising effectiveness."]
     ];
     var smSvc = sm.querySelector(".sm-svc"), smTitle = sm.querySelector(".sm-title"),

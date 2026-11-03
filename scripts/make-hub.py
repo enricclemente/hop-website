@@ -55,8 +55,8 @@ for a in ARTICLES:
 hub_main = f'''<main id="main" class="ahub">
   <section class="s ahub-head ink" aria-labelledby="ahub-h">
     <div class="wrap">
-      <h1 class="h2 ahub-h" id="ahub-h">Thinking out <em>loud</em><span class="tdot">.</span></h1>
-      <p class="ahub-lead">Notes on brand, positioning and taking Polish companies global, from the two partners.</p>
+      <h1 class="h2 ahub-h" id="ahub-h">House of <em>Poland</em><span class="tdot">.</span></h1>
+      <p class="ahub-lead">HOP is also the House of Poland: our research and publishing arm, and home of the HOP Index Report.</p>
     </div>
   </section>
   <section class="s ahub-list" aria-label="All articles">
