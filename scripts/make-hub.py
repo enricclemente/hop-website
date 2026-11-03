@@ -69,7 +69,7 @@ hub_main = f'''<main id="main" class="ahub">
 </main>'''
 os.makedirs(os.path.join(PUB, 'articles'), exist_ok=True)
 open(os.path.join(PUB, 'articles', 'index.html'), 'w', encoding='utf8').write(
-    page('Articles · HOP.', 'Notes on brand, positioning and taking Polish companies global, from the two partners of HOP.', hub_main, robots=False).replace('<main id="main" class="ahub">', '<main id="main" class="ahub" data-page="articles">'))
+    page('House of Poland · HOP.', 'Notes on brand, positioning and taking Polish companies global, from the two partners of HOP.', hub_main, robots=False).replace('<main id="main" class="ahub">', '<main id="main" class="ahub" data-page="articles">'))
 
 # ---------- articles ----------
 for idx, a in enumerate(ARTICLES):
@@ -129,5 +129,5 @@ for idx, a in enumerate(ARTICLES):
     </div>
   </section>
 </main>'''
-    open(os.path.join(PUB, 'articles', a['slug'] + '.html'), 'w', encoding='utf8').write(page(a['title'][:-1] + ' · HOP. Articles', a['ex'], main))
+    open(os.path.join(PUB, 'articles', a['slug'] + '.html'), 'w', encoding='utf8').write(page(a['title'][:-1] + ' · House of Poland · HOP.', a['ex'], main))
 print('hub + %d articles written' % len(ARTICLES))

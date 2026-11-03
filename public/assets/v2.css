@@ -1408,7 +1408,6 @@ html.js.jump-pinned .jump-pin { position: sticky; top: var(--jump-top); height: 
 .lang button { display: inline-flex; align-items: center; }
 .nav .lang button[aria-pressed="true"][data-lang="pl"] { display: inline-flex; }
 @media (min-width: 1024px) { .nav .lang button { display: inline-flex !important; } }
-.menu .flag { width: 20px; height: 14px; }
 /* Intro image */
 .mv-frame picture { position: absolute; inset: 0; }
 .mv-frame .mv-img { width: 100%; height: 100%; object-fit: cover; }
@@ -1423,3 +1422,5 @@ html.js.jump-pinned .jump-track::after { content: ""; display: block; height: 10
 .acard-no { z-index: 1; }
 .who-statement em { font-weight: 400; -webkit-text-stroke: .6px currentColor; paint-order: stroke fill; }
 .acard-img::after { content: ""; position: absolute; inset: 40% 0 0; background: linear-gradient(to top, rgba(19, 19, 22, .62), transparent); z-index: 0; pointer-events: none; }
+/* Nav pill: House of Poland, more room inside */
+.nav-links .nav-art { padding: 10px 22px; }
