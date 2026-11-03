@@ -908,7 +908,7 @@ html:not(.js) .nav-menu { visibility: hidden; }
 }
 
 /* ---------- 01b Intro + manifesto film ---------- */
-.intro { background: var(--ink-3); padding-block: calc(72px + 108 * var(--t)) calc(88px + 92 * var(--t)); }
+.manifesto { background: var(--ink-3); padding-block: calc(72px + 108 * var(--t)) calc(88px + 92 * var(--t)); }
 .intro-h { text-wrap: balance; }
 .intro-l { display: block; }
 .intro-h em { font-weight: 300; }
@@ -925,48 +925,57 @@ html:not(.js) .nav-menu { visibility: hidden; }
 .who-intro { max-width: 760px; margin-top: calc(24px + 8 * var(--t)); font-size: calc(18px + 6 * var(--t)); line-height: 1.5; color: var(--muted-l); text-wrap: pretty; }
 
 /* ---------- 07b How we do it: nine service cards (hover on desktop, tap on touch) ---------- */
-.howdo { background: var(--ivory); padding-block: calc(8px + 32 * var(--t)) calc(88px + 52 * var(--t)); }
+.howdo { --svc-e: cubic-bezier(.22, 1, .36, 1); background: var(--ivory); padding-block: calc(8px + 92 * var(--t)) calc(88px + 12 * var(--t)); }
 .howdo-h { text-wrap: balance; }
 .howdo-h em { display: block; }
 .svc-grid { list-style: none; margin: calc(32px + 16 * var(--t)) 0 0; padding: 0; display: grid; gap: 12px; }
-.svc { position: relative; display: flex; flex-direction: column; background: #F6F4EF; color: var(--ink); transition: background-color .35s ease, color .35s ease; }
-.svc-btn { display: flex; flex-direction: column; gap: 28px; flex: 1; width: 100%; padding: 22px 22px 0; text-align: left; font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+.svc { position: relative; display: flex; flex-direction: column; min-height: var(--svc-min, 0px); background: #F6F4EF; color: var(--ink); transition: background-color .6s var(--svc-e), color .6s var(--svc-e); }
+.svc-btn { display: flex; flex-direction: column; gap: 28px; flex: 1 0 auto; width: 100%; padding: 22px 22px 0; text-align: left; font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
 .svc-btn:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
 .svc-top { display: flex; align-items: center; gap: 12px; width: 100%; }
-.svc-n { font-family: var(--sans); font-size: 12px; letter-spacing: .04em; color: var(--muted-l); -webkit-text-stroke: .3px currentColor; font-variant-numeric: lining-nums tabular-nums; transition: color .35s ease; }
-.svc-s { flex: 1; font-family: var(--sans); font-size: 11px; letter-spacing: .09em; text-transform: uppercase; color: var(--muted-l); transition: color .35s ease; }
+.svc-n { font-family: var(--sans); font-size: 12px; letter-spacing: .04em; color: var(--muted-l); -webkit-text-stroke: .3px currentColor; font-variant-numeric: lining-nums tabular-nums; transition: color .6s var(--svc-e); }
+.svc-s { flex: 1; font-family: var(--sans); font-size: 11px; letter-spacing: .09em; text-transform: uppercase; color: var(--muted-l); transition: color .6s var(--svc-e); }
 .svc-i { position: relative; width: 14px; height: 14px; flex: none; }
-.svc-i::before, .svc-i::after { content: ""; position: absolute; left: 50%; top: 50%; background: var(--ink); transition: transform .35s var(--expo), background-color .35s ease, border-radius .35s ease, width .35s ease, height .35s ease; }
+.svc-i::before, .svc-i::after { content: ""; position: absolute; left: 50%; top: 50%; background: var(--ink); transition: width .6s var(--svc-e), height .6s var(--svc-e), border-radius .6s var(--svc-e), background-color .6s var(--svc-e), transform .6s var(--svc-e); }
 .svc-i::before { width: 14px; height: 1.5px; transform: translate(-50%, -50%); }
 .svc-i::after { width: 1.5px; height: 14px; transform: translate(-50%, -50%); }
-.svc-h { font-size: 22px; line-height: 1.25; letter-spacing: -0.01em; text-wrap: balance; padding-bottom: 22px; }
-.svc-b { display: grid; margin: 0; padding: 0 22px; max-height: 0; overflow: hidden; opacity: 0; font-size: 15px; line-height: 1.5; color: var(--muted-d); transition: max-height .45s var(--expo), opacity .3s ease, padding .45s var(--expo); }
-/* Open state (tap / hover / focus) */
+.svc-h { font-size: 22px; line-height: 1.25; letter-spacing: -0.01em; text-wrap: balance; padding-bottom: 22px; transition: padding .6s var(--svc-e), color .6s var(--svc-e); }
+/* Description: rows 0fr → 1fr gives a true, smooth height animation */
+.svc-b { flex: none; display: grid; grid-template-rows: 0fr; transition: grid-template-rows .6s var(--svc-e); }
+.svc-bi { min-height: 0; overflow: hidden; }
+.svc-bi p { margin: 0; padding: 0 22px 22px; font-size: 15px; line-height: 1.5; color: var(--muted-d); opacity: 0; transform: translateY(10px); transition: opacity .35s ease, transform .6s var(--svc-e); }
+/* Open state (tap, hover, keyboard focus) */
 .svc.is-open, .svc:has(.svc-btn:focus-visible) { background: var(--ink); color: var(--ivory); }
 .svc.is-open .svc-n, .svc:has(.svc-btn:focus-visible) .svc-n { color: var(--red-on-dark); }
 .svc.is-open .svc-s, .svc:has(.svc-btn:focus-visible) .svc-s { color: var(--muted-d); }
 .svc.is-open .svc-h, .svc:has(.svc-btn:focus-visible) .svc-h { font-style: italic; padding-bottom: 10px; }
-.svc.is-open .svc-b, .svc:has(.svc-btn:focus-visible) .svc-b { max-height: 14em; opacity: 1; padding-bottom: 22px; }
-.svc.is-open .svc-i::before, .svc.is-open .svc-i::after, .svc:has(.svc-btn:focus-visible) .svc-i::before, .svc:has(.svc-btn:focus-visible) .svc-i::after { width: 12px; height: 12px; border-radius: 50%; background: var(--red); }
+.svc.is-open .svc-b, .svc:has(.svc-btn:focus-visible) .svc-b { grid-template-rows: 1fr; }
+.svc.is-open .svc-bi p, .svc:has(.svc-btn:focus-visible) .svc-bi p { opacity: 1; transform: none; transition: opacity .5s ease .12s, transform .7s var(--svc-e) .06s; }
+.svc.is-open .svc-i::before, .svc.is-open .svc-i::after, .svc:has(.svc-btn:focus-visible) .svc-i::before, .svc:has(.svc-btn:focus-visible) .svc-i::after { width: 10px; height: 10px; border-radius: 50%; background: var(--red); }
 @media (hover: hover) {
   .svc:hover { background: var(--ink); color: var(--ivory); }
   .svc:hover .svc-n { color: var(--red-on-dark); }
   .svc:hover .svc-s { color: var(--muted-d); }
   .svc:hover .svc-h { font-style: italic; padding-bottom: 10px; }
-  .svc:hover .svc-b { max-height: 14em; opacity: 1; padding-bottom: 22px; }
-  .svc:hover .svc-i::before, .svc:hover .svc-i::after { width: 12px; height: 12px; border-radius: 50%; background: var(--red); }
+  .svc:hover .svc-b { grid-template-rows: 1fr; }
+  .svc:hover .svc-bi p { opacity: 1; transform: none; transition: opacity .5s ease .12s, transform .7s var(--svc-e) .06s; }
+  .svc:hover .svc-i::before, .svc:hover .svc-i::after { width: 10px; height: 10px; border-radius: 50%; background: var(--red); }
 }
 @media (min-width: 700px) { .svc-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; } }
+@media (min-width: 1280px) { .svc-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (min-width: 1024px) {
-  .svc-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; }
-  .svc { aspect-ratio: 3 / 2; }
-  .svc-btn { padding: 24px 24px 0; justify-content: space-between; }
+  .svc-grid { gap: 24px; }
+  .svc { aspect-ratio: 384 / 200; }
+  .svc-btn { padding: 24px 24px 0; gap: 16px; justify-content: space-between; }
   .svc-h { font-size: calc(20px + 6 * var(--t)); padding-bottom: 24px; }
-  .svc-b { padding-inline: 24px; font-size: 14px; }
-  .svc.is-open .svc-b, .svc:has(.svc-btn:focus-visible) .svc-b { padding-bottom: 24px; }
-  @media (hover: hover) { .svc:hover .svc-b { padding-bottom: 24px; } }
+  .svc-bi p { padding: 0 24px 24px; font-size: 14px; }
 }
-@media (prefers-reduced-motion: reduce) { .svc, .svc-b, .svc-i::before, .svc-i::after, .svc-n, .svc-s { transition: none; } }
+/* Measuring pass (JS): open, unanimated, natural height */
+.svc.measure, .svc.measure * { transition: none !important; }
+.svc.measure { aspect-ratio: auto !important; min-height: 0 !important; }
+.svc.measure .svc-h { font-style: italic; padding-bottom: 10px; }
+.svc.measure .svc-b { grid-template-rows: 1fr; }
+@media (prefers-reduced-motion: reduce) { .svc, .svc *, .svc-i::before, .svc-i::after { transition: none !important; } }
 
 /* One title style for every main section (matches "Poland has gone global."); the hero keeps its own */
 .moment-h, .who-h, .proof-h, .burn-h, .model-h, .contact-h, .intro-h, .howdo-h, .p1, .p2 { --fm: 52; --fd: 120; --lhm: .98; --lhd: 1; --trm: -0.02em; --trd: -0.035em; }

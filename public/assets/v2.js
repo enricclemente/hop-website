@@ -482,6 +482,22 @@
 
   /* 07b How we do it: tap/click opens a card (one at a time); hover and focus are handled in CSS */
   var svcs = Array.prototype.slice.call(document.querySelectorAll(".svc"));
+  /* Every card gets the height of the tallest open card, so rows never jump on hover */
+  var svcGrid = document.querySelector(".svc-grid");
+  function sizeCards() {
+    if (!svcGrid) return;
+    if (!window.matchMedia("(min-width: 700px)").matches) { svcGrid.style.removeProperty("--svc-min"); return; }
+    var max = 0;
+    svcs.forEach(function (c) { c.classList.add("measure"); });
+    svcs.forEach(function (c) { max = Math.max(max, c.offsetHeight); });
+    svcs.forEach(function (c) { c.classList.remove("measure"); });
+    svcGrid.style.setProperty("--svc-min", Math.ceil(max) + "px");
+  }
+  if (svcGrid) {
+    sizeCards();
+    var svcT; window.addEventListener("resize", function () { clearTimeout(svcT); svcT = setTimeout(sizeCards, 150); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(sizeCards);
+  }
   svcs.forEach(function (card) {
     var btn = card.querySelector(".svc-btn");
     if (!btn) return;
