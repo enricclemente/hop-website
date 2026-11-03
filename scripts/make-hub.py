@@ -43,7 +43,7 @@ cards = []
 for a in ARTICLES:
     cards.append(f'''        <li class="acard">
           <a class="acard-a" href="/articles/{a['slug']}">
-            <span class="acard-img acard-img--{a['n']}" aria-hidden="true"><span class="acard-no">No. {a['n']}</span></span>
+            <span class="acard-img acard-img--{a['n']}" aria-hidden="true"><picture><source type="image/avif" srcset="/assets/img/r/intro-krakow-800.avif 800w, /assets/img/r/intro-krakow-1200.avif 1200w" sizes="(min-width: 1024px) 34vw, 100vw"><source type="image/webp" srcset="/assets/img/r/intro-krakow-800.webp 800w, /assets/img/r/intro-krakow-1200.webp 1200w" sizes="(min-width: 1024px) 34vw, 100vw"><img class="acard-pic" src="/assets/img/r/intro-krakow-800.jpg" srcset="/assets/img/r/intro-krakow-800.jpg 800w, /assets/img/r/intro-krakow-1200.jpg 1200w" sizes="(min-width: 1024px) 34vw, 100vw" alt="" width="800" height="413" loading="lazy" decoding="async"></picture><span class="acard-no">No. {a['n']}</span></span>
             <span class="acard-t">
               <span class="lbl lbl--m acard-topic">{e(a['topic'])}</span>
               <span class="acard-h">{title_html(a)}</span>
@@ -55,7 +55,6 @@ for a in ARTICLES:
 hub_main = f'''<main id="main" class="ahub">
   <section class="s ahub-head ink" aria-labelledby="ahub-h">
     <div class="wrap">
-      <p class="lbl lbl--m lbl--red-d ahub-k"><span class="kdot" aria-hidden="true"></span>Articles · {len(ARTICLES)}</p>
       <h1 class="h2 ahub-h" id="ahub-h">Thinking out <em>loud</em><span class="tdot">.</span></h1>
       <p class="ahub-lead">Notes on brand, positioning and taking Polish companies global, from the two partners.</p>
     </div>

@@ -1841,3 +1841,6 @@ h1 em, h2 em, h3 em, .dk-h em, .dk-closer em, p em, blockquote em, dd em { font-
 }
 @keyframes logo-hop { 0%, 82%, 100% { transform: none; } 85% { transform: scale(1.22, .78); } 90% { transform: translateY(-70%) scale(.9, 1.12); } 95% { transform: translateY(0) scale(1.16, .84); } 98% { transform: translateY(-12%) scale(.98, 1.02); } }
 @keyframes logo-hop-now { 0%, 100% { transform: none; } 15% { transform: scale(1.22, .78); } 45% { transform: translateY(-70%) scale(.9, 1.12); } 72% { transform: translateY(0) scale(1.16, .84); } 88% { transform: translateY(-12%) scale(.98, 1.02); } }
+
+/* Language flags */
+.flag { display: inline-block; width: 16px; height: 11px; margin-right: 6px; vertical-align: -1px; border-radius: 1px; box-shadow: 0 0 0 .5px rgba(128, 128, 128, .4); }

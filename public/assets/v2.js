@@ -517,13 +517,16 @@
         jLen = jPath.getTotalLength(), jTick = false;
     var clamp = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
     doc.classList.add("jump-live");
+    var jTrack = jump.querySelector(".jump-track"), jPin = jump.querySelector(".jump-pin");
     var jUpdate = function () {
       jTick = false;
-      var vh = window.innerHeight, r = jump.getBoundingClientRect(), p;
-      doc.classList.toggle("jump-pinned", mqPin.matches);
+      var vh = window.innerHeight, p;
+      var topPx = parseFloat(getComputedStyle(jPin).getPropertyValue("--jump-top")) || 120;
+      var canPin = mqWide.matches && jPin.offsetHeight + topPx + 24 <= vh;
+      doc.classList.toggle("jump-pinned", canPin);
       if (mqWide.matches) {
-        if (mqPin.matches) p = clamp(-r.top / Math.max(1, r.height - vh) * 1.08);
-        else p = clamp((vh * .8 - r.top) / (vh * .9));
+        if (canPin) { var tr = jTrack.getBoundingClientRect(); p = clamp((topPx - tr.top) / Math.max(1, tr.height - jPin.offsetHeight) * 1.08); }
+        else { var r = jump.getBoundingClientRect(); p = clamp((vh * .8 - r.top) / (vh * .9)); }
         var q = clamp(p / .94), pt = jPath.getPointAtLength(q * jLen);
         jDot.setAttribute("cx", pt.x.toFixed(1)); jDot.setAttribute("cy", pt.y.toFixed(1));
       } else {
@@ -546,13 +549,13 @@
       { name: "David Anson", email: "david@hoppartners.pl", phone: "+48 602 638 219", li: "#",
         bio: "David was a Brand Creative Lead at Nike and Head of Business Leadership and Client Service at BBH Singapore. Across BBH Singapore, Wieden+Kennedy Amsterdam and Saatchi & Saatchi London, he has led the Nike, Samsung, Meta, Netflix and HSBC business." }
     ];
-    var pmName = pm.querySelector(".pm-name"), pmBio = pm.querySelector(".pm-bio"), pmI = pm.querySelector(".pm-i"),
+    var pmName = pm.querySelector(".pm-name"), pmBio = pm.querySelector(".pm-bio"),
         pmEm = pm.querySelector(".pm-em"), pmPh = pm.querySelector(".pm-ph"), pmLi = pm.querySelector(".pm-li"),
         pmNextN = pm.querySelector(".pm-next-n"), pmCur = 0, pmOpener = null;
     var fill = function (i) {
       var p = partners[i]; pmCur = i;
       pmName.textContent = p.name; var dot = document.createElement("span"); dot.className = "tdot"; dot.textContent = "."; pmName.appendChild(dot);
-      pmBio.textContent = p.bio; pmI.textContent = String(i + 1);
+      pmBio.textContent = p.bio;
       pmEm.textContent = p.email; pmEm.href = "mailto:" + p.email;
       pmPh.textContent = p.phone; pmPh.href = "tel:" + p.phone.replace(/\s+/g, "");
       pmLi.href = p.li;
@@ -585,12 +588,11 @@
       ["Land", "Internationalisation", "Built to travel.", "A strategy for localising and globalising who you are, so you can win new markets and recruit new audiences."],
       ["Land", "Performance & optimisation", "Know what works. Spend on that.", "Brand and performance optimised in real time, cutting inefficient spend and maximising effectiveness."]
     ];
-    var smStep = sm.querySelector(".sm-step"), smSvc = sm.querySelector(".sm-svc"), smTitle = sm.querySelector(".sm-title"),
+    var smSvc = sm.querySelector(".sm-svc"), smTitle = sm.querySelector(".sm-title"),
         smBody = sm.querySelector(".sm-body"), smNext = sm.querySelector(".sm-next"), smCur = 0, smOpener = null;
     var pad2 = function (n) { return (n < 10 ? "0" : "") + n; };
     var smFill = function (i) {
       var d = leapSvcs[i]; smCur = i;
-      smStep.textContent = d[0] + " \u00b7 " + pad2(i + 1) + " of " + pad2(leapSvcs.length);
       smSvc.textContent = d[1];
       smTitle.textContent = d[2].slice(0, -1); var dot = document.createElement("span"); dot.className = "tdot"; dot.textContent = d[2].slice(-1); smTitle.appendChild(dot);
       smBody.textContent = d[3];

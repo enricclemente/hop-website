@@ -1388,3 +1388,38 @@ html.pm-open { overflow: hidden; }
   .smodal .sm-body { margin-top: 16px; }
   .sm-act { margin-top: 28px; padding-top: 20px; }
 }
+
+/* How we work spacing: 180px above and below at 1440 (88px on phones); on tall desktop screens the content pins just under the nav for one screen of scrolling */
+.jump { padding-block: calc(88px + 92 * var(--t)); overflow: visible; }
+.jump-pin { --jump-top: 128px; }
+html.js.jump-pinned .jump { height: auto; padding-block: calc(88px + 92 * var(--t)); overflow: visible; }
+html.js.jump-pinned .jump-track { padding-bottom: 100vh; }
+html.js.jump-pinned .jump-pin { position: sticky; top: var(--jump-top); height: auto; display: block; padding-top: 0; overflow: visible; }
+.sm-spacer { flex: 1; }
+.smodal .sm-svc { margin-top: 8px; }
+
+/* ---------- Nav refinements ---------- */
+.nav-links .nav-art::before { content: none; display: none; }
+.nav-links .nav-art { margin-left: 0; }
+/* Newsreader ships 300–400 here, so a hairline stroke gives a medium weight without going bold */
+.nav-links .nav-art, .btn .btn-t { -webkit-text-stroke: .35px currentColor; paint-order: stroke fill; }
+/* Language flags */
+.flag { display: inline-block; width: 16px; height: 11px; margin-right: 6px; vertical-align: -1px; border-radius: 1px; box-shadow: 0 0 0 .5px rgba(239, 235, 228, .35); flex: none; }
+.lang button { display: inline-flex; align-items: center; }
+.nav .lang button[aria-pressed="true"][data-lang="pl"] { display: inline-flex; }
+@media (min-width: 1024px) { .nav .lang button { display: inline-flex !important; } }
+.menu .flag { width: 20px; height: 14px; }
+/* Intro image */
+.mv-frame picture { position: absolute; inset: 0; }
+.mv-frame .mv-img { width: 100%; height: 100%; object-fit: cover; }
+.sm-act { justify-content: flex-end; } @media (max-width: 599px) { .sm-act { align-items: flex-start; } }
+html.js.jump-pinned .jump-track { padding-bottom: 0; }
+html.js.jump-pinned .jump-track::after { content: ""; display: block; height: 100vh; }
+.pmodal:not(.smodal) .pm-name { margin-top: 8px; }
+/* Article cards: Kraków photo as the thumbnail */
+.acard-img picture { position: absolute; inset: 0; }
+.acard-pic { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1.2s var(--e, cubic-bezier(.22, 1, .36, 1)); }
+@media (hover: hover) { .acard-a:hover .acard-pic { transform: scale(1.05); } }
+.acard-no { z-index: 1; }
+.who-statement em { font-weight: 400; -webkit-text-stroke: .6px currentColor; paint-order: stroke fill; }
+.acard-img::after { content: ""; position: absolute; inset: 40% 0 0; background: linear-gradient(to top, rgba(19, 19, 22, .62), transparent); z-index: 0; pointer-events: none; }
