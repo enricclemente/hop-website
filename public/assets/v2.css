@@ -886,3 +886,25 @@ html:not(.js) .nav-menu { visibility: hidden; }
 .consent.invalid { box-shadow: none; }
 .counter { white-space: nowrap; }
 .sent, .form-alert { scroll-margin-top: calc(var(--nav-h) + 40px); }
+
+/* Logo: burgundy full stop that gives a small hop in the nav (every few seconds, and on hover/focus) */
+.logo-dot { fill: var(--red); }
+.nav-dot { transform-box: fill-box; transform-origin: 50% 100%; }
+@media (prefers-reduced-motion: no-preference) {
+  .nav-logo .nav-dot, .menu-logo .nav-dot { animation: logo-hop 6s cubic-bezier(.3, .6, .4, 1) 2.2s infinite; }
+  .nav-logo:hover .nav-dot, .nav-logo:focus-visible .nav-dot { animation: logo-hop-now .9s cubic-bezier(.3, .6, .4, 1) 1; }
+}
+@keyframes logo-hop {
+  0%, 82%, 100% { transform: none; }
+  85% { transform: scale(1.22, .78); }
+  90% { transform: translateY(-70%) scale(.9, 1.12); }
+  95% { transform: translateY(0) scale(1.16, .84); }
+  98% { transform: translateY(-12%) scale(.98, 1.02); }
+}
+@keyframes logo-hop-now {
+  0%, 100% { transform: none; }
+  15% { transform: scale(1.22, .78); }
+  45% { transform: translateY(-70%) scale(.9, 1.12); }
+  72% { transform: translateY(0) scale(1.16, .84); }
+  88% { transform: translateY(-12%) scale(.98, 1.02); }
+}

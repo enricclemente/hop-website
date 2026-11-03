@@ -1831,3 +1831,14 @@ h1 em, h2 em, h3 em, .dk-h em, .dk-closer em, p em, blockquote em, dd em { font-
   .to-top { min-height: 44px; }
 }
 @media (max-width: 620px) { .rows .k, .tag-sample, .row-by { font-size: .6875rem; } }
+
+/* SVG logo (replaces the text wordmark in page headers) */
+.wordmark .wm-svg { display: block; height: 1.05em; width: auto; fill: currentColor; overflow: visible; }
+.wordmark .logo-dot { fill: #9E1B32; }
+.wordmark .nav-dot { transform-box: fill-box; transform-origin: 50% 100%; }
+@media (prefers-reduced-motion: no-preference) {
+  .site-head .wordmark .nav-dot { animation: logo-hop 6s cubic-bezier(.3, .6, .4, 1) 2.2s infinite; }
+  .site-head .wordmark:hover .nav-dot, .site-head .wordmark:focus-visible .nav-dot { animation: logo-hop-now .9s cubic-bezier(.3, .6, .4, 1) 1; }
+}
+@keyframes logo-hop { 0%, 82%, 100% { transform: none; } 85% { transform: scale(1.22, .78); } 90% { transform: translateY(-70%) scale(.9, 1.12); } 95% { transform: translateY(0) scale(1.16, .84); } 98% { transform: translateY(-12%) scale(.98, 1.02); } }
+@keyframes logo-hop-now { 0%, 100% { transform: none; } 15% { transform: scale(1.22, .78); } 45% { transform: translateY(-70%) scale(.9, 1.12); } 72% { transform: translateY(0) scale(1.16, .84); } 88% { transform: translateY(-12%) scale(.98, 1.02); } }
