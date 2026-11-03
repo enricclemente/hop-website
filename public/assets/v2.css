@@ -1162,3 +1162,7 @@ html:not(.js) .nav-menu { visibility: hidden; }
 /* Intro statement: a step below the section titles */
 .intro-h { --fm: 44; --fd: 96; }
 @media (min-width: 600px) { .intro-h { --lw: 12.4; } }
+
+/* Article cards: plain black image, no gradient */
+.acard-img { background: var(--ink); }
+.acard-img::before { display: none; }
