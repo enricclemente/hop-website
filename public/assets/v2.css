@@ -909,7 +909,7 @@ html:not(.js) .nav-menu { visibility: hidden; }
 
 /* ---------- 01b Intro + manifesto film ---------- */
 .intro { background: var(--ink-3); padding-block: calc(72px + 108 * var(--t)) calc(88px + 92 * var(--t)); }
-.intro-h { --fm: 36; --fd: 72; --lhm: 1.15; --lhd: 1.15; --trm: -0.02em; --trd: -0.02em; --lwm: 9.4; --lw: 16.4; text-wrap: pretty; }
+.intro-h { text-wrap: balance; }
 .intro-l { display: block; }
 .intro-h em { font-weight: 300; }
 .mv { margin: calc(32px + 32 * var(--t)) 0 0; }
@@ -918,11 +918,7 @@ html:not(.js) .nav-menu { visibility: hidden; }
 .mv-play svg { width: 34%; height: auto; fill: var(--ivory); margin-left: 8%; }
 .mv-cap { position: absolute; left: calc(16px + 16 * var(--t)); bottom: calc(14px + 14 * var(--t)); color: var(--muted-d); }
 
-/* One title style for every main section (matches "Poland has gone global."); the hero keeps its own */
-.moment-h, .who-h, .proof-h, .burn-h, .model-h, .contact-h { --fm: 52; --fd: 112; --lhm: .98; --lhd: 1; --trm: -0.02em; --trd: -0.035em; }
-@media (min-width: 600px) {
-  .moment-h, .who-h, .proof-h, .burn-h, .model-h, .contact-h { --lw: 10.6; }
-}
+
 .tl { display: block; text-wrap: balance; }
 
 /* 04 Who we are: intro under the title */
@@ -930,8 +926,8 @@ html:not(.js) .nav-menu { visibility: hidden; }
 
 /* ---------- 07b How we do it: nine service cards (hover on desktop, tap on touch) ---------- */
 .howdo { background: var(--ivory); padding-block: calc(8px + 32 * var(--t)) calc(88px + 52 * var(--t)); }
-.howdo-h { max-width: 900px; font-weight: 400; font-size: calc(30px + 14 * var(--t)); line-height: 1.25; letter-spacing: -0.015em; text-wrap: balance; }
-.howdo-h em { display: block; font-weight: 400; }
+.howdo-h { text-wrap: balance; }
+.howdo-h em { display: block; }
 .svc-grid { list-style: none; margin: calc(32px + 16 * var(--t)) 0 0; padding: 0; display: grid; gap: 12px; }
 .svc { position: relative; display: flex; flex-direction: column; background: #F6F4EF; color: var(--ink); transition: background-color .35s ease, color .35s ease; }
 .svc-btn { display: flex; flex-direction: column; gap: 28px; flex: 1; width: 100%; padding: 22px 22px 0; text-align: left; font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
@@ -971,3 +967,11 @@ html:not(.js) .nav-menu { visibility: hidden; }
   @media (hover: hover) { .svc:hover .svc-b { padding-bottom: 24px; } }
 }
 @media (prefers-reduced-motion: reduce) { .svc, .svc-b, .svc-i::before, .svc-i::after, .svc-n, .svc-s { transition: none; } }
+
+/* One title style for every main section (matches "Poland has gone global."); the hero keeps its own */
+.moment-h, .who-h, .proof-h, .burn-h, .model-h, .contact-h, .intro-h, .howdo-h, .p1, .p2 { --fm: 52; --fd: 120; --lhm: .98; --lhd: 1; --trm: -0.02em; --trd: -0.035em; }
+/* Every title that ends in a full stop ends in burgundy */
+.tdot { color: var(--red); font-style: inherit; }
+@media (min-width: 600px) {
+  .moment-h, .who-h, .proof-h, .burn-h, .model-h, .contact-h, .intro-h, .howdo-h, .p1, .p2 { --lw: 10.6; }
+}
