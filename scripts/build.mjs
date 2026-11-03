@@ -116,5 +116,19 @@ if (projectId || fixture) {
 
 applySEO(dist, ARTICLES)
 
+/* Cache-busting: version every /assets/*.css|js link with a short content hash */
+{
+  const { createHash } = await import('node:crypto')
+  const { readdirSync } = await import('node:fs')
+  const ver = new Map()
+  const v = (f) => { if (!ver.has(f)) { const fp = join(dist, f); ver.set(f, existsSync(fp) ? createHash('sha1').update(readFileSync(fp)).digest('hex').slice(0, 8) : null) } return ver.get(f) }
+  const walk = (d) => readdirSync(d, { withFileTypes: true }).flatMap((e) => e.isDirectory() ? walk(join(d, e.name)) : e.name.endsWith('.html') ? [join(d, e.name)] : [])
+  for (const f of walk(dist)) {
+    const html = readFileSync(f, 'utf8')
+    const out = html.replace(/(href|src)="\/(assets\/[^"?#]+\.(?:css|js))"/g, (m, a, path) => { const h = v(path); return h ? `${a}="/${path}?v=${h}"` : m })
+    if (out !== html) writeFileSync(f, out)
+  }
+}
+
 if (!existsSync(join(dist, 'index.html'))) throw new Error('Build failed: dist/index.html missing')
 console.log('Built to dist/')

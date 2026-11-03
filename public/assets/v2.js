@@ -125,7 +125,7 @@
      Nav: state Top → Scrolled after the hero, scroll-spy, mobile menu,
      sticky CTA on phones
      ------------------------------------------------------------------ */
-  var nav = $("#nav"), hero = $("#top"), sticky = $("#sticky-cta"), contact = $("#contact"), menu = $("#menu");
+  var nav = $("#nav"), hero = $("#top"), sticky = $("#sticky-cta"), contact = $("#contact-offer"), menu = $("#menu");
   var heroGone = false, contactIn = false, menuOpen = false;
   function updateSticky() {
     if (!sticky) return;
@@ -150,13 +150,13 @@
     }, { rootMargin: "-80px 0px 0px 0px" }).observe(navSentinel);
     if (contact) {
       /* Hide the sticky CTA while the closing headline or the sprint offer is on screen */
-      var closing = [contact, $("#contact-offer")].filter(Boolean), seen = new Map();
+      var closing = [contact].filter(Boolean), seen = new Map();
       var cio = new IntersectionObserver(function (es) { es.forEach(function (e) { seen.set(e.target, e.isIntersecting); }); contactIn = closing.some(function (el) { return seen.get(el); }); updateSticky(); }, { threshold: 0.05 });
       closing.forEach(function (el) { cio.observe(el); });
     }
 
     /* Scroll-spy: the section crossing a line 35% down the screen is current */
-    var spyIds = ["approach", "work", "partners", "letter", "contact"];
+    var spyIds = ["approach", "work", "partners", "letter"];
     var current = null;
     var spy = new IntersectionObserver(function (es) {
       es.forEach(function (e) { if (e.isIntersecting) current = e.target.id; else if (current === e.target.id) current = null; });
@@ -507,4 +507,14 @@
       if (open) { card.classList.add("is-open"); btn.setAttribute("aria-expanded", "true"); }
     });
   });
+
+  /* Manifesto film: the play button starts the (placeholder) film in place */
+  var mv = document.querySelector(".mv"), mvVideo = mv && mv.querySelector(".mv-video"), mvPlay = mv && mv.querySelector(".mv-play");
+  if (mv && mvVideo && mvPlay) {
+    mvPlay.addEventListener("click", function () {
+      mvVideo.controls = true; mv.classList.add("is-playing");
+      var pr = mvVideo.play(); if (pr && pr.catch) pr.catch(function () {});
+    });
+    mvVideo.addEventListener("ended", function () { mv.classList.remove("is-playing"); mvVideo.controls = false; });
+  }
 })();

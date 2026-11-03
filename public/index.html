@@ -63,7 +63,7 @@
       <li><a href="#work" data-spy="work"><span class="mnum">02</span><span class="mtxt">Work</span></a></li>
       <li><a href="#partners" data-spy="partners"><span class="mnum">03</span><span class="mtxt">Partners</span></a></li>
       <li><a href="#letter" data-spy="letter"><span class="mnum">04</span><span class="mtxt">Letter</span></a></li>
-      <li><a href="#contact" data-spy="contact"><span class="mnum">05</span><span class="mtxt">Contact</span></a></li>
+      <li><a href="/contact"><span class="mnum">05</span><span class="mtxt">Contact</span></a></li>
     </ol>
   </nav>
   <div class="menu-bottom">
@@ -94,8 +94,11 @@
       <h2 class="h2 intro-h" id="intro-h"><span class="intro-l">Hop! is what Poles shout as they leap.</span> <em class="intro-l">We help businesses take theirs<span class="tdot">.</span></em></h2>
       <figure class="mv" data-reveal>
         <div class="mv-frame">
-          <span class="mv-play" aria-hidden="true"><svg viewBox="0 0 24 28" focusable="false"><path d="M3 2.5 21.5 14 3 25.5Z"/></svg></span>
-          <figcaption class="lbl mv-cap">Manifesto film · coming soon</figcaption>
+          <video class="mv-video" preload="none" playsinline poster="/assets/video/manifesto-poster.jpg" aria-label="Manifesto film (placeholder)">
+            <source src="/assets/video/manifesto-placeholder.mp4" type="video/mp4">
+          </video>
+          <button class="mv-play" type="button" aria-label="Play the manifesto film"><svg viewBox="0 0 24 28" aria-hidden="true" focusable="false"><path d="M3 2.5 21.5 14 3 25.5Z"/></svg></button>
+          <figcaption class="lbl mv-cap">Manifesto film · placeholder</figcaption>
         </div>
       </figure>
     </div>
@@ -182,7 +185,6 @@
   <!-- 05 PROOF -->
   <section class="s proof ink" id="work" aria-labelledby="proof-h">
     <div class="wrap">
-      <p class="rh">Proof</p>
       <h2 class="h2 proof-h" id="proof-h"><span class="tl">We’ve made the leap before.</span> <span class="tl"><em>From Poland,</em> <em class="red">for the world.</em></span></h2>
     </div>
     <div class="cases-wrap">
@@ -449,48 +451,19 @@
     </div>
   </section>
 
-  <!-- 09 CONTACT — TAKE THE LEAP -->
-  <section class="s contact ink" id="contact" aria-labelledby="contact-h">
-    <div class="wrap">
-      <h2 class="h2 contact-h" id="contact-h"><span class="ln">The product <br class="m">is ready.</span><br><span class="ln">The story is <br class="m"><em>waiting<span class="tdot">.</span></em></span></h2>
-    </div>
-  </section>
-
-  <section class="s contact-offer ink" id="contact-offer" aria-label="A two-week positioning sprint">
-    <div class="wrap">
-      <div class="offer-row">
-        <div class="offer">
-          <p class="lbl lbl--m lbl--red-d">A two-week positioning sprint</p>
-          <p class="offer-t">Your burning platform, your leap and one big idea, in two weeks.</p>
-          <p class="offer-s">A small step before the big leap.</p>
-          <a class="btn btn--l" href="/contact" data-cta><span class="btn-t">Let’s make the leap</span><svg class="btn-i" aria-hidden="true" focusable="false"><use href="#i-arrow-r"/></svg></a>
-        </div>
-        <div class="direct">
-          <p class="direct-lead">Or write to a partner directly.</p>
-          <ul class="people" role="list">
-            <li class="person">
-              <p class="lbl d-only">Senior partner</p>
-              <p class="person-n" data-notr>Philip Jacobson</p>
-              <a class="person-e" href="mailto:philip@hoppartners.pl" data-notr>philip@hoppartners.pl</a>
-              <button class="lbl copy" type="button" data-copy="philip@hoppartners.pl" aria-label="Copy Philip’s email address">Copy</button>
-            </li>
-            <li class="person">
-              <p class="lbl d-only">Senior partner</p>
-              <p class="person-n" data-notr>David Anson</p>
-              <a class="person-e" href="mailto:david@hoppartners.pl" data-notr>david@hoppartners.pl</a>
-              <button class="lbl copy" type="button" data-copy="david@hoppartners.pl" aria-label="Copy David’s email address">Copy</button>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
 </main>
 
 <!-- 10 FOOTER -->
 <footer class="foot ink" id="site-foot">
   <div class="wrap">
+    <section class="foot-cta" id="contact-offer" aria-labelledby="foot-cta-h">
+      <div class="foot-cta-t">
+        <p class="lbl lbl--m lbl--red-d">A two-week positioning sprint</p>
+        <h2 class="foot-cta-h" id="foot-cta-h">Your burning platform, your leap and one big idea, in two weeks<span class="tdot">.</span></h2>
+        <p class="foot-cta-s">A small step before the big leap.</p>
+      </div>
+      <a class="btn btn--l foot-cta-b" href="/contact" data-cta><span class="btn-t">Let’s make the leap</span><svg class="btn-i" aria-hidden="true" focusable="false"><use href="#i-arrow-r"/></svg></a>
+    </section>
     <div class="foot-top">
       <div class="foot-brand">
         <a class="foot-logo" href="#top" aria-label="HOP, back to the top">
