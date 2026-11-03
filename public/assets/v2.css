@@ -918,3 +918,6 @@ html:not(.js) .nav-menu { visibility: hidden; }
 .mv-play { width: calc(64px + 32 * var(--t)); aspect-ratio: 1; border-radius: 50%; background: var(--red); display: grid; place-items: center; }
 .mv-play svg { width: 34%; height: auto; fill: var(--ivory); margin-left: 8%; }
 .mv-cap { position: absolute; left: calc(16px + 16 * var(--t)); bottom: calc(14px + 14 * var(--t)); color: var(--muted-d); }
+
+/* 04 Who we are: intro under the title */
+.who-intro { max-width: 760px; margin-top: calc(24px + 8 * var(--t)); font-size: calc(18px + 6 * var(--t)); line-height: 1.5; color: var(--muted-l); text-wrap: pretty; }
