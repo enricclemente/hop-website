@@ -1158,3 +1158,7 @@ html:not(.js) .nav-menu { visibility: hidden; }
 .letter-toggle:hover .lt-b { background: #B0233C; }
 .lt-b svg { width: 18px; height: 18px; }
 .letter-panel { border-bottom: 0; }
+
+/* Intro statement: a step below the section titles */
+.intro-h { --fm: 44; --fd: 96; }
+@media (min-width: 600px) { .intro-h { --lw: 12.4; } }
