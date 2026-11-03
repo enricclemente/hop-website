@@ -1168,12 +1168,16 @@ html:not(.js) .nav-menu { visibility: hidden; }
 .acard-img::before { display: none; }
 
 /* ---------- Black surfaces: the HOP rug (credentials cover texture) instead of flat black ---------- */
-:root { --rug-c: #292825; --rug-i: url("/assets/tex/rug.webp"); }
-html { background: var(--rug-c) var(--rug-i) 0 0 / 960px 960px repeat; }
+:root { --rug-c: #1E1D1F; --rug-i: url("/assets/tex/rug.webp"); }
+html { background: var(--rug-c) var(--rug-i) 0 0 / 800px 800px repeat; }
 .ink, .nav.is-scrolled, .menu, .founders, .acard-img,
-.svc.is-open, .svc:has(.svc-btn:focus-visible) { background-color: var(--rug-c); background-image: var(--rug-i); background-size: 960px 960px; background-repeat: repeat; }
+.svc.is-open, .svc:has(.svc-btn:focus-visible) { background-color: var(--rug-c); background-image: var(--rug-i); background-size: 800px 800px; background-repeat: repeat; }
 @media (hover: hover) {
-  .svc:hover, .acard-a:hover { background-color: var(--rug-c); background-image: var(--rug-i); background-size: 960px 960px; }
+  .svc:hover, .acard-a:hover { background-color: var(--rug-c); background-image: var(--rug-i); background-size: 800px 800px; }
 }
 /* the intro keeps a lighter step on the same rug */
-.manifesto { background-image: linear-gradient(rgba(239, 235, 228, .045), rgba(239, 235, 228, .045)), var(--rug-i); background-size: auto, 960px 960px; }
+.manifesto { background-image: linear-gradient(rgba(239, 235, 228, .045), rgba(239, 235, 228, .045)), var(--rug-i); background-size: auto, 800px 800px; }
+
+/* Nav, menu and footer: solid dark, no texture */
+:root { --chrome: #131316; }
+.nav.is-scrolled, .menu, #site-foot, #site-foot.ink { background: var(--chrome) !important; }
