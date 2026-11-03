@@ -508,4 +508,39 @@
     });
   });
 
+  /* How we work: the ball advances along the leap as the page scrolls */
+  var jump = document.querySelector(".jump");
+  if (jump && !reduce) {
+    var jPath = jump.querySelector(".jump-path"), jLand = jump.querySelector(".jump-land"), jDot = jump.querySelector(".jump-dot"),
+        jCols = [].slice.call(jump.querySelectorAll(".jump-col")), jList = jump.querySelector(".jump-cols"), jRail = jump.querySelector(".jump-rail"),
+        mqWide = window.matchMedia("(min-width: 1024px)"), mqPin = window.matchMedia("(min-width: 1024px) and (min-height: 700px)"),
+        jLen = jPath.getTotalLength(), jTick = false;
+    var clamp = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
+    doc.classList.add("jump-live");
+    var jUpdate = function () {
+      jTick = false;
+      var vh = window.innerHeight, r = jump.getBoundingClientRect(), p;
+      doc.classList.toggle("jump-pinned", mqPin.matches);
+      if (mqWide.matches) {
+        if (mqPin.matches) p = clamp(-r.top / Math.max(1, r.height - vh) * 1.08);
+        else p = clamp((vh * .8 - r.top) / (vh * .9));
+        var q = clamp(p / .86), pt = jPath.getPointAtLength(q * jLen);
+        jPath.style.strokeDashoffset = 1 - q;
+        jLand.style.strokeDashoffset = 1 - clamp((p - .86) / .12);
+        jDot.setAttribute("cx", pt.x.toFixed(1)); jDot.setAttribute("cy", pt.y.toFixed(1));
+        jCols[0].classList.add("on");
+        jCols[1].classList.toggle("on", q > .42);
+        jCols[2].classList.toggle("on", q > .94);
+      } else {
+        var lr = jList.getBoundingClientRect(), span = Math.max(1, jCols[2].offsetTop - 0);
+        var y = clamp((vh * .6 - lr.top) / span) * span;
+        jRail.style.setProperty("--rp", y.toFixed(1));
+        jCols.forEach(function (c) { c.classList.toggle("on", y >= c.offsetTop - 40); });
+      }
+    };
+    var jReq = function () { if (!jTick) { jTick = true; requestAnimationFrame(jUpdate); } };
+    window.addEventListener("scroll", jReq, { passive: true });
+    window.addEventListener("resize", jReq);
+    jUpdate();
+  }
 })();
