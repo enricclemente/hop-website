@@ -1424,3 +1424,18 @@ html.js.jump-pinned .jump-track::after { content: ""; display: block; height: 10
 .acard-img::after { content: ""; position: absolute; inset: 40% 0 0; background: linear-gradient(to top, rgba(19, 19, 22, .62), transparent); z-index: 0; pointer-events: none; }
 /* Nav pill: House of Poland, more room inside */
 .nav-links .nav-art { padding: 10px 22px; }
+
+/* ---------- Body copy in Instrument Sans (headlines and display lines stay Newsreader) ---------- */
+.who-intro, .pm-bio, .letter-body p:not(.lede):not(.strong-line):not(.closer):not(.letter-stand):not(.pull):not(.sign), .letter-body ol li,
+.art-col p, .art-col li, .acard-ex, .lead, .cd-intro, .cb-text, .cd-desc {
+  font-family: var(--sans); font-weight: 400; letter-spacing: 0;
+}
+.who-intro { font-size: calc(16px + 4 * var(--t)); line-height: 1.6; }
+.letter-body p:not(.lede):not(.strong-line):not(.closer):not(.letter-stand):not(.pull):not(.sign), .letter-body ol li { font-size: calc(16px + 1 * var(--t)); line-height: 1.7; }
+.art-col p, .art-col li { font-size: calc(16px + 2 * var(--t)); line-height: 1.7; }
+.acard-ex { font-size: 16px; line-height: 1.6; }
+/* Modals: a touch heavier overall, body in Instrument Sans */
+.pm-bio { font-size: calc(16px + 2 * var(--t)); line-height: 1.65; color: #2F2C28; }
+.pm-name { -webkit-text-stroke: .3px currentColor; paint-order: stroke fill; }
+.sm-svc, .pm-role { font-weight: 500; letter-spacing: .1em; }
+.pm-next, .pm-contact { font-weight: 500; }

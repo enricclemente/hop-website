@@ -521,12 +521,20 @@
     var jUpdate = function () {
       jTick = false;
       var vh = window.innerHeight, p;
-      var topPx = parseFloat(getComputedStyle(jPin).getPropertyValue("--jump-top")) || 120;
-      var canPin = mqWide.matches && jPin.offsetHeight + topPx + 24 <= vh;
+      var navH = (document.getElementById("nav") || {}).offsetHeight || 84, pinH = jPin.offsetHeight;
+      /* sit 128px down when there is room, otherwise just under the nav, so laptops pin too */
+      var topPx = Math.max(navH + 8, Math.min(128, vh - pinH - 16));
+      var canPin = mqWide.matches && pinH + navH + 16 <= vh;
+      jPin.style.top = topPx + "px";
       doc.classList.toggle("jump-pinned", canPin);
       if (mqWide.matches) {
         if (canPin) { var tr = jTrack.getBoundingClientRect(); p = clamp((topPx - tr.top) / Math.max(1, tr.height - jPin.offsetHeight) * 1.08); }
-        else { var r = jump.getBoundingClientRect(); p = clamp((vh * .8 - r.top) / (vh * .9)); }
+        else {
+          /* short screens: travel over most of a screen of scrolling */
+          var sv = jump.querySelector(".jump-svg").getBoundingClientRect();
+          var st = vh - sv.height - 24, en = navH + 8;
+          p = clamp((st - sv.top) / Math.max(1, st - en));
+        }
         var q = clamp(p / .94), pt = jPath.getPointAtLength(q * jLen);
         jDot.setAttribute("cx", pt.x.toFixed(1)); jDot.setAttribute("cy", pt.y.toFixed(1));
       } else {
