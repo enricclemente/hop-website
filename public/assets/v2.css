@@ -1454,3 +1454,6 @@ html.js.jump-pinned .jump-track::after { content: ""; display: block; height: 10
 .who-intro { color: var(--ink); }
 .hero-h { --lw: 9.05; }
 .hero-h { --lwm: 5.9; }
+.hero-h { --lwm: 6.5; }
+/* Who we are title: lines reveal with scroll */
+html.who-reveal .who-h .tl { opacity: calc(.14 + .86 * var(--wr, 0)); transform: translateY(calc((1 - var(--wr, 0)) * 18px)); transition: opacity .25s linear, transform .35s var(--expo); }

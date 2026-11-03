@@ -618,4 +618,21 @@
     sm.addEventListener("close", function () { doc.classList.remove("pm-open"); if (smOpener) smOpener.focus({ preventScroll: true }); });
   }
 
+  /* Who we are title: each line fills in as you scroll */
+  var whoH = document.querySelector(".who-h"), whoLines = whoH ? [].slice.call(whoH.querySelectorAll(".tl")) : [];
+  if (whoLines.length && !reduce) {
+    doc.classList.add("who-reveal");
+    var whoTick = false;
+    var whoUpd = function () {
+      whoTick = false;
+      var r = whoH.getBoundingClientRect(), vh = window.innerHeight;
+      var p = (vh * .88 - r.top) / (vh * .88 - vh * .3 + r.height * .3);
+      p = p < 0 ? 0 : p > 1 ? 1 : p;
+      var n = whoLines.length;
+      whoLines.forEach(function (l, k) { var t = p * n - k; t = t < 0 ? 0 : t > 1 ? 1 : t; l.style.setProperty("--wr", t.toFixed(3)); });
+    };
+    window.addEventListener("scroll", function () { if (!whoTick) { whoTick = true; requestAnimationFrame(whoUpd); } }, { passive: true });
+    window.addEventListener("resize", whoUpd); whoUpd();
+  }
+
 })();
