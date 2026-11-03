@@ -524,18 +524,12 @@
       if (mqWide.matches) {
         if (mqPin.matches) p = clamp(-r.top / Math.max(1, r.height - vh) * 1.08);
         else p = clamp((vh * .8 - r.top) / (vh * .9));
-        var q = clamp(p / .86), pt = jPath.getPointAtLength(q * jLen);
-        jPath.style.strokeDashoffset = 1 - q;
-        jLand.style.strokeDashoffset = 1 - clamp((p - .86) / .12);
+        var q = clamp(p / .94), pt = jPath.getPointAtLength(q * jLen);
         jDot.setAttribute("cx", pt.x.toFixed(1)); jDot.setAttribute("cy", pt.y.toFixed(1));
-        jCols[0].classList.add("on");
-        jCols[1].classList.toggle("on", q > .42);
-        jCols[2].classList.toggle("on", q > .94);
       } else {
         var lr = jList.getBoundingClientRect(), span = Math.max(1, jCols[2].offsetTop - 0);
         var y = clamp((vh * .6 - lr.top) / span) * span;
         jRail.style.setProperty("--rp", y.toFixed(1));
-        jCols.forEach(function (c) { c.classList.toggle("on", y >= c.offsetTop - 40); });
       }
     };
     var jReq = function () { if (!jTick) { jTick = true; requestAnimationFrame(jUpdate); } };

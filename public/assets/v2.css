@@ -1226,20 +1226,13 @@ html { background: var(--rug-c) var(--rug-i) 0 0 / var(--rug-s) repeat; }
 /* scroll-driven leap: the ball travels the line as you scroll */
 .jump-rail { display: none; }
 html.js.jump-live .jump-rail { display: block; position: absolute; left: 0; top: 0; bottom: 0; width: 11px; pointer-events: none; }
-html.js.jump-live .jump-cols::before { background: rgba(10, 10, 10, .18); }
-.jump-rail i { position: absolute; left: 5px; top: 18px; width: 1px; height: calc(var(--rp, 0) * 1px); background: #0A0A0A; }
 .jump-rail b { position: absolute; left: -2px; top: 13px; width: 15px; height: 15px; border-radius: 50%; background: var(--red); transform: translateY(calc(var(--rp, 0) * 1px)); }
 html.js.jump-live .jump-col--3::before { background: var(--paper); border-color: #0A0A0A; width: 11px; height: 11px; left: -28px; }
-html.js.jump-live .jump-col { opacity: .18; transition: opacity .6s ease; }
-html.js.jump-live .jump-col.on { opacity: 1; }
 @media (min-width: 1024px) {
   .jump-rail, html.js.jump-live .jump-rail { display: none; }
-  html.js.jump-live .jump-col { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .9s var(--expo); }
-  html.js.jump-live .jump-col.on { opacity: 1; transform: none; }
-  html.js.jump-live .jump-path, html.js.jump-live .jump-land { stroke-dasharray: 1 1; }
 }
 @media (min-width: 1024px) and (min-height: 700px) {
-  html.js.jump-pinned .jump { height: 230vh; padding-block: 0; overflow: visible; }
+  html.js.jump-pinned .jump { height: 200vh; padding-block: 0; overflow: visible; }
   html.js.jump-pinned .jump-pin { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; padding-top: var(--nav-h); box-sizing: border-box; overflow: hidden; }
   html.js.jump-pinned .jump-pin > .wrap { width: 100%; }
 }
