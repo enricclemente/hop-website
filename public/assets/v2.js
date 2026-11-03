@@ -508,13 +508,4 @@
     });
   });
 
-  /* Manifesto film: the play button starts the (placeholder) film in place */
-  var mv = document.querySelector(".mv"), mvVideo = mv && mv.querySelector(".mv-video"), mvPlay = mv && mv.querySelector(".mv-play");
-  if (mv && mvVideo && mvPlay) {
-    mvPlay.addEventListener("click", function () {
-      mvVideo.controls = true; mv.classList.add("is-playing");
-      var pr = mvVideo.play(); if (pr && pr.catch) pr.catch(function () {});
-    });
-    mvVideo.addEventListener("ended", function () { mv.classList.remove("is-playing"); mvVideo.controls = false; });
-  }
 })();
