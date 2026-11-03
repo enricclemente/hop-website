@@ -1525,3 +1525,12 @@ html.who-reveal .who-h .tl { opacity: calc(.14 + .86 * var(--wr, 0)); transform:
 .foot-social svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; }
 .foot-social .ig-dot { fill: currentColor; stroke: none; }
 .foot-social:hover, .foot-social:focus-visible { border-color: rgba(239, 235, 228, .7); background: rgba(239, 235, 228, .06); }
+/* House of Poland pill: a tiny pulsing dot, like the partner dots */
+.nav-links .nav-art { gap: 10px; padding-left: 18px; }
+.nav-art-dot { position: relative; width: 7px; height: 7px; flex: none; border-radius: 50%; background: var(--red); transition: transform .45s var(--expo); }
+.nav-art-dot::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 1px solid rgba(224, 106, 126, .7); opacity: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .nav-art-dot::after { animation: art-pulse 2.6s ease-out infinite; }
+}
+@keyframes art-pulse { 0% { transform: scale(.6); opacity: .9; } 70%, 100% { transform: scale(1.9); opacity: 0; } }
+.nav-links .nav-art:hover .nav-art-dot, .nav-links .nav-art:focus-visible .nav-art-dot { transform: scale(1.35); }
