@@ -1510,3 +1510,18 @@ html.who-reveal .who-h .tl { opacity: calc(.14 + .86 * var(--wr, 0)); transform:
   .who-head .who-h { font-size: min(84px, calc((var(--content) - 80px) * .59 / 9.2)); line-height: 1.12; }
   .who-head .who-intro { margin-top: 0; padding-bottom: .55em; max-width: none; font-size: calc(15px + 3 * var(--t)); line-height: 1.6; }
 }
+
+/* Mobile pass fixes */
+.art-pull p { font-family: var(--serif); font-style: italic; font-weight: 300; }
+.art-share { font-family: var(--sans); font-style: normal; font-weight: 500; font-size: 15px; }
+.art-crumbs a.lbl { display: inline-flex; align-items: center; min-height: 44px; }
+@media (max-width: 599px) {
+  .duo { margin-bottom: 64px; }
+  .duo-cap { top: calc(100% + 14px); font-size: 16px; }
+  .who-statement { margin-top: 0; }
+}
+/* Footer Instagram link */
+.foot-social { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; margin-top: 24px; border: 1px solid rgba(239, 235, 228, .28); border-radius: 50%; color: var(--ivory); transition: border-color .3s ease, background-color .3s ease; }
+.foot-social svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+.foot-social .ig-dot { fill: currentColor; stroke: none; }
+.foot-social:hover, .foot-social:focus-visible { border-color: rgba(239, 235, 228, .7); background: rgba(239, 235, 228, .06); }

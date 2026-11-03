@@ -85,3 +85,9 @@ html[lang="pl"] #site-foot { padding-bottom: 72px; }
 }
 @media (max-width: 1023px) { #site-foot { padding-bottom: calc(112px + env(safe-area-inset-bottom)); } }
 
+
+/* Instagram */
+#site-foot .foot-social { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; margin-top: 24px; border: 1px solid rgba(239, 235, 228, .28); border-radius: 50%; color: var(--ivory, #EFEBE4); transition: border-color .3s ease, background-color .3s ease; }
+#site-foot .foot-social svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+#site-foot .foot-social .ig-dot { fill: currentColor; stroke: none; }
+#site-foot .foot-social:hover, #site-foot .foot-social:focus-visible { border-color: rgba(239, 235, 228, .7); background: rgba(239, 235, 228, .06); }
