@@ -891,9 +891,8 @@ html:not(.js) .nav-menu { visibility: hidden; }
 .logo-dot { fill: var(--red); }
 .nav-dot { transform-box: fill-box; transform-origin: 50% 100%; }
 @media (prefers-reduced-motion: no-preference) {
-  .nav-logo .nav-dot, .menu-logo .nav-dot { animation: logo-hop 6s cubic-bezier(.3, .6, .4, 1) 2.2s infinite; }
-  .nav-logo:hover .nav-dot, .nav-logo:focus-visible .nav-dot { animation: logo-hop-now .9s cubic-bezier(.3, .6, .4, 1) 1; }
-}
+  .nav-logo .nav-dot, .menu-logo .nav-dot { animation: logo-hop-now 1.9s cubic-bezier(.3, .6, .4, 1) .6s infinite; }
+  }
 @keyframes logo-hop {
   0%, 82%, 100% { transform: none; }
   85% { transform: scale(1.22, .78); }
