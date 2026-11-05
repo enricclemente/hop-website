@@ -600,7 +600,7 @@
     var pad2 = function (n) { return (n < 10 ? "0" : "") + n; };
     var smFill = function (i) {
       var d = leapSvcs[i]; smCur = i;
-      smSvc.textContent = d[1];
+      smSvc.textContent = d[0] + " \u00b7 " + d[1];
       smTitle.textContent = d[2].slice(0, -1); var dot = document.createElement("span"); dot.className = "tdot"; dot.textContent = d[2].slice(-1); smTitle.appendChild(dot);
       smBody.textContent = d[3];
       smNext.textContent = (i === leapSvcs.length - 1 ? "Back to: " : "Next: ") + leapSvcs[(i + 1) % leapSvcs.length][1];
