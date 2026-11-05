@@ -753,3 +753,12 @@ html.i5-on .i5 { display: block; position: fixed; inset: 0; z-index: 1000; point
   .jump-list { margin-top: 28px; }
   .jump-item { min-height: 60px; }
 }
+
+/* ---------- 36. Service card carries its service's icon: a square hairline tile that mirrors the close button ---------- */
+.smodal .sm-ico { flex: none; display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid rgba(239, 235, 228, .28); color: var(--ivory); }
+.smodal .sm-ico svg { width: 20px; height: 20px; }
+.smodal .sm-ico:empty { display: none; }
+.smodal.glass-l .pm-top { justify-content: flex-start; gap: 14px; }
+.smodal.glass-l .pm-top .pm-x { margin-left: auto; }
+.smodal.glass-l .sm-svc::before { content: none; }
+@media (min-width: 1024px) { .smodal.glass-l .sm-title { margin-top: 22px; } }

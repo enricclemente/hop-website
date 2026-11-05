@@ -610,6 +610,8 @@
     var smFill = function (i) {
       var d = leapSvcs[i]; smCur = i;
       smSvc.textContent = d[0] + " \u00b7 " + d[1];
+      var ico = sm.querySelector(".sm-ico"), src = sItems[i] && sItems[i].querySelector(".jump-ico svg");
+      if (ico) { ico.textContent = ""; if (src) ico.appendChild(src.cloneNode(true)); }
       smTitle.textContent = d[2].slice(0, -1); var dot = document.createElement("span"); dot.className = "tdot"; dot.textContent = d[2].slice(-1); smTitle.appendChild(dot);
       smBody.textContent = d[3];
       var last = i === leapSvcs.length - 1;
