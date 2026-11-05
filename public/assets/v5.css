@@ -5,7 +5,7 @@
    ===================================================================== */
 
 :root {
-  --glass-d: rgba(20, 19, 18, .56);
+  --glass-d: rgba(20, 19, 18, .38);
   --glass-l: rgba(251, 250, 248, .74);
   --hold: 3s;
 }
@@ -564,3 +564,114 @@ html.i5-on .i5 { display: block; position: fixed; inset: 0; z-index: 1000; point
   .sticky-cta { display: none !important; }
   .foot { padding-bottom: calc(40px + env(safe-area-inset-bottom)); }
 }
+
+/* ---------- 24. Client round: phrases that must hold together on one line ---------- */
+.hs-i .nb { white-space: nowrap; }
+/* the type scales down just enough for the longest held phrase (11.5em) to fit the column */
+@media (min-width: 600px) and (max-width: 1023px) { .hs { font-size: min(calc(54px + 50 * var(--t)), calc(var(--content) / 11.6)); } }
+@media (min-width: 1024px) and (max-width: 1440px) { .hs { font-size: min(calc(46px + 58 * var(--t)), calc(var(--content) / 11.6)); } }
+/* phones: at the approved 54px no phrase of that length fits a 390px screen, so it wraps as a unit */
+@media (max-width: 599px) { .hs-i .nb { white-space: normal; } }
+@media (max-width: 599px) {
+  /* the italic answer starts its own line, so each held phrase reads as one unit */
+  .hs-i .hs-v > em { display: block; }
+  /* the one four-sentence statement steps down a size so it never crowds the header */
+  .hs-i--long { font-size: .8em; }
+}
+
+/* ---------- 25. Client round: lighter profile glass; service cards in the same dark glass ---------- */
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) { .pmodal.glass-d { background: rgba(20, 19, 18, .74); } }
+
+/* service detail: the profile card's material, type and entrance; still centred */
+.pmodal.smodal.glass-l {
+  width: min(420px, calc(100vw - 48px)); color: var(--ivory);
+  background: rgba(20, 19, 18, .86); border: 1px solid rgba(239, 235, 228, .2); border-radius: 10px;
+  -webkit-backdrop-filter: blur(28px) saturate(1.15); backdrop-filter: blur(28px) saturate(1.15);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .35);
+}
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) { .pmodal.smodal.glass-l { background: rgba(20, 19, 18, .74); } }
+.pmodal.smodal.glass-l::backdrop { background: rgba(19, 19, 22, .5); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
+.smodal.glass-l .pm-in { gap: 0; padding: 30px 32px 26px; }
+.smodal.glass-l .sm-svc { font-size: 10px; letter-spacing: .2em; color: rgba(239, 235, 228, .66); }
+.smodal.glass-l .sm-svc::before { background: var(--red-on-dark); }
+.smodal.glass-l .pm-x { border-color: rgba(239, 235, 228, .35); }
+.smodal.glass-l .pm-x:hover { border-color: var(--ivory); background: rgba(239, 235, 228, .08); }
+.smodal.glass-l .pm-x svg { stroke: var(--ivory); }
+.smodal.glass-l .sm-title { margin-top: 18px; font-size: 34px; line-height: 1.08; color: var(--ivory); }
+.smodal.glass-l .sm-title .tdot { color: var(--red-on-dark); }
+.smodal.glass-l .sm-body { margin-top: 16px; font-size: 15px; line-height: 1.62; color: rgba(239, 235, 228, .9); }
+.smodal.glass-l .sm-act { margin-top: 22px; padding-top: 18px; border-top: 1px solid rgba(239, 235, 228, .16); }
+.smodal.glass-l .pm-next { font-size: 13px; font-weight: 400; color: rgba(239, 235, 228, .78); }
+.smodal.glass-l .pm-next:hover { color: var(--ivory); }
+.smodal.glass-l .pm-next svg { stroke: currentColor; }
+.smodal.glass-l :focus-visible { outline-color: var(--ivory); }
+@media (prefers-reduced-motion: no-preference) {
+  .pmodal.smodal.glass-l[open] { animation: glass-anchor .55s var(--expo); }
+}
+/* phones: the profile's dark sheet */
+@media (max-width: 599px) {
+  .pmodal.glass-d { background: rgba(27, 26, 25, .9); -webkit-backdrop-filter: blur(24px) saturate(1.15); backdrop-filter: blur(24px) saturate(1.15); }
+  .pmodal.smodal.glass-l { width: 100%; margin: auto 0 0; border: 0; border-radius: 20px 20px 0 0; background: rgba(27, 26, 25, .9); box-shadow: 0 -12px 40px rgba(0, 0, 0, .35); }
+  .smodal.glass-l .pm-in { gap: 0; padding: 10px 24px calc(28px + env(safe-area-inset-bottom)); }
+  .smodal.glass-l .pm-handle { margin-bottom: 18px; background: rgba(239, 235, 228, .3); }
+  .smodal.glass-l .sm-title { margin-top: 14px; font-size: 30px; }
+  .smodal.glass-l .sm-body { margin-top: 12px; }
+  .smodal.glass-l .sm-prog { margin-top: 20px; }
+  .smodal.glass-l .sm-prog i { background: rgba(239, 235, 228, .18); }
+  .smodal.glass-l .sm-prog i.is-on { background: var(--red-on-dark); }
+  .smodal.glass-l .sm-act { margin-top: 18px; padding-top: 0; border-top: 0; }
+  .smodal.glass-l .pm-prev { border-color: rgba(239, 235, 228, .3); color: var(--ivory); }
+  .smodal.glass-l .pm-next { font-size: 14px; font-weight: 500; background: var(--ivory); color: var(--ink); }
+  .smodal.glass-l .pm-next:hover { color: var(--ink); }
+  @media (prefers-reduced-motion: no-preference) { .pmodal.smodal.glass-l[open] { animation: pm-up .45s cubic-bezier(.16, 1, .3, 1); } }
+}
+
+/* ---------- 26. How we do it: title and statement lead into the graph ---------- */
+.jump-pre .jump-title { margin-top: calc(48px + 32 * var(--t)); margin-bottom: 0; }
+.jump-pre .how-st { margin-top: calc(24px + 16 * var(--t)); max-width: 26em; }
+.jump-pre { margin-bottom: calc(56px + 48 * var(--t)); }
+
+/* ---------- 27. Footer: upright type throughout; House of Poland column holds long titles ---------- */
+#site-foot, #site-foot * { font-style: normal; }
+#site-foot .fcol a { white-space: nowrap; }
+#site-foot .fcol--hop { flex: 0 1 300px; min-width: 0; }
+#site-foot .fcol--hop a { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; white-space: normal; text-wrap: balance; max-width: 30ch; }
+#site-foot .fcol-note { margin: 18px 0 0; max-width: 34ch; font-size: 14px; line-height: 1.6; color: var(--muted-d); text-wrap: pretty; }
+
+/* ---------- 28. CTA: deep burgundy, a darker fill draws across on hover, a soft light passes, the arrow loops ---------- */
+.btn {
+  --cta: #7A1527; --cta-deep: #520C19;
+  position: relative; isolation: isolate; overflow: hidden;
+  background: var(--cta);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 1px 2px rgba(20, 6, 10, .18);
+  transition: box-shadow .6s cubic-bezier(.19, 1, .22, 1), transform .6s cubic-bezier(.19, 1, .22, 1);
+}
+.btn:hover, .btn:focus-visible { background: var(--cta); }
+.btn::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; background: var(--cta-deep);
+  transform: scaleX(0); transform-origin: right center;
+  transition: transform .75s cubic-bezier(.19, 1, .22, 1);
+}
+.btn::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 236, 228, .1) 50%, transparent 65%);
+  transform: translateX(-110%);
+}
+.btn:hover::before, .btn:focus-visible::before { transform: scaleX(1); transform-origin: left center; }
+.btn:hover, .btn:focus-visible { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .1), 0 14px 32px -14px rgba(82, 12, 25, .75); }
+.btn:hover .btn-i, .btn:focus-visible .btn-i { transform: none; }
+.btn:active { transform: translateY(1px); }
+@media (prefers-reduced-motion: no-preference) {
+  .btn:hover { transform: translateY(-1px); }
+  .btn:hover::after, .btn:focus-visible::after { transition: transform 1.1s cubic-bezier(.19, 1, .22, 1) .08s; transform: translateX(110%); }
+  .btn:hover .btn-i, .btn:focus-visible .btn-i { animation: cta-arrow .7s cubic-bezier(.19, 1, .22, 1); }
+}
+@keyframes cta-arrow { 0% { transform: none; opacity: 1; } 38% { transform: translateX(12px); opacity: 0; } 39% { transform: translateX(-12px); opacity: 0; } 100% { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .btn::before { transition: none; } }
+/* the header CTA reads as the primary action: a touch larger, more air */
+@media (min-width: 1024px) {
+  .nav-cta.btn--s { gap: 18px; min-height: 48px; padding: 14px 24px; font-size: 16px; letter-spacing: .005em; }
+}
+.cbtn { background: #7A1527; transition: background-color .45s cubic-bezier(.19, 1, .22, 1); }
+.cbtn:hover { background: #520C19; }
+@media (min-width: 1024px) { .pmodal.glass-d.is-anchored { -webkit-backdrop-filter: blur(20px) saturate(1.15); backdrop-filter: blur(20px) saturate(1.15); } }
