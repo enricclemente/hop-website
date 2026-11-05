@@ -352,3 +352,20 @@ html.i5-on .i5 { display: block; position: fixed; inset: 0; z-index: 1000; point
 
 /* ---------- 18 · How we do it: 4px more between Run-up · Leap · Land ---------- */
 @media (min-width: 1024px) { .jump-cols { column-gap: calc(var(--u) * 47 + 4px); } }
+
+/* ---------- 19 · Nav: the three links identical — Instrument Sans caps, no pill, no stroke, no dot ---------- */
+@media (min-width: 1024px) {
+  .nav-links { gap: 34px; align-items: center; }
+  .nav-links .nav-sec, .nav-links .nav-art {
+    display: inline-block; margin: 0; padding: 10px 0; border: 0; border-radius: 0; background: none;
+    font-family: var(--sans); font-style: normal; font-weight: 500; font-size: 12px; line-height: 1.5; letter-spacing: .14em; text-transform: uppercase;
+    -webkit-text-stroke: 0; color: rgba(239, 235, 228, .78); transition: color .2s ease;
+  }
+  .nav-links .nav-art:hover, .nav-links .nav-art:focus-visible, .nav-links .nav-art[aria-current], .nav-links .nav-art[aria-current="page"],
+  .nav-links .nav-sec:hover, .nav-links .nav-sec:focus-visible, .nav-links .nav-sec[aria-current] { background: none; border: 0; color: var(--ivory); }
+  .nav-art-dot { display: none; }
+  /* same "you are here" marker for all three */
+  .nav-links .nav-art::after { display: block !important; }
+  .nav-links .nav-sec::after, .nav-links .nav-art::after { top: auto; bottom: 0; }
+  .nav-links a[aria-current="page"]::after { transform: scale(1); }
+}
