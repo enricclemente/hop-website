@@ -770,3 +770,9 @@ html.i5-on .i5 { display: block; position: fixed; inset: 0; z-index: 1000; point
 /* ---------- 38. Contact form: a guiding line under each section title ---------- */
 .fset-legend { margin-bottom: 8px; }
 .fset-sub { margin: 0 0 24px; max-width: 52ch; font-family: var(--sans); font-size: 15px; line-height: 1.55; color: var(--muted-l); text-wrap: pretty; }
+
+/* ---------- 39. Pinned graph keeps clear of the header: room for the creative-leap headline that sits above the curve ---------- */
+@media (min-width: 1024px) {
+  .jump-inner { padding-top: 48px; }
+  .jump-pre { margin-bottom: calc(8px + 48 * var(--t)); }
+}
