@@ -673,3 +673,25 @@ html.i5-on .i5 { display: block; position: fixed; inset: 0; z-index: 1000; point
 .cbtn { background: #7A1527; transition: background-color .45s cubic-bezier(.19, 1, .22, 1); }
 .cbtn:hover { background: #520C19; }
 @media (min-width: 1024px) { .pmodal.glass-d.is-anchored { -webkit-backdrop-filter: blur(20px) saturate(1.15); backdrop-filter: blur(20px) saturate(1.15); } }
+
+/* ---------- 29. House of Poland cards: no number over the photo; a quiet, paper-light hover ---------- */
+.acard-no, .acard-img::after { display: none; }
+.acard-a { position: relative; transition: transform .7s cubic-bezier(.22, 1, .36, 1); }
+.acard-a::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; box-shadow: 0 28px 56px -30px rgba(26, 20, 15, .38); opacity: 0; transition: opacity .7s cubic-bezier(.22, 1, .36, 1); }
+.acard { position: relative; z-index: 0; }
+.acard-h { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .16em; text-decoration-color: transparent; transition: text-decoration-color .5s ease; }
+.acard-f { position: relative; }
+.acard-f::before { content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 1px; background: var(--red); transform: scaleX(0); transform-origin: left center; transition: transform .8s cubic-bezier(.22, 1, .36, 1); }
+@media (hover: hover) {
+  .acard-a:hover { background: #FBFAF8; background-image: none; color: var(--ink); transform: translate3d(0, -4px, 0); }
+  .acard-a:hover::after { opacity: 1; }
+  .acard-a:hover .acard-h { font-style: normal; text-decoration-color: rgba(27, 26, 25, .25); }
+  .acard-a:hover .acard-ex, .acard-a:hover .acard-f .lbl { color: var(--muted-l); }
+  .acard-a:hover .acard-topic { color: var(--red-on-light); }
+  .acard-a:hover .acard-f { border-color: rgba(27, 26, 25, .14); }
+  .acard-a:hover .acard-f::before { transform: scaleX(1); }
+  .acard-a:hover .acard-read { color: var(--red-on-light); }
+  .acard-a:hover .acard-read span { transform: translate3d(6px, 0, 0); }
+  .acard-a:hover .acard-pic { transform: scale(1.04); }
+}
+@media (prefers-reduced-motion: reduce) { .acard-a, .acard-a:hover { transform: none; } }
