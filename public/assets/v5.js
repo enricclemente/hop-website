@@ -190,7 +190,7 @@
     var arm = function () { hero.removeAttribute("data-run"); void hero.offsetWidth; hero.setAttribute("data-run", ""); };
     /* the cover line hugs the last line of the statement on screen (2 or 3 lines), gliding as they change */
     var tag = $(".hero5-tag", hero);
-    var seatTag = function () { if (!tag) return; var lift = Math.max(0, hs.offsetHeight - items[cur].offsetHeight); tag.style.setProperty("--lift", lift.toFixed(1) + "px"); };
+    var seatTag = function () { if (!tag) return; var lift = Math.max(0, (hs.offsetHeight - items[cur].offsetHeight) / 2); tag.style.setProperty("--lift", lift.toFixed(1) + "px"); };
     var syncPause = function () { hero.classList.toggle("is-paused", userPaused || offscreen || document.hidden); };
 
     var go = function (n, user) {

@@ -343,7 +343,7 @@ html.i5-on .i5 { display: block; position: fixed; inset: 0; z-index: 1000; point
 }
 
 /* ---------- 17 · Hero cover line follows the statement's last line ---------- */
-.hs-i { align-self: start; }
+.hs-i { align-self: center; }
 .hero5-tag { transform: translateY(calc(var(--lift, 0px) * -1)); }
 @media (prefers-reduced-motion: no-preference) {
   .hero5-tag { transition: transform .9s cubic-bezier(.16, 1, .3, 1); }
