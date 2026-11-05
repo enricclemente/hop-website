@@ -766,3 +766,7 @@ html.i5-on .i5 { display: block; position: fixed; inset: 0; z-index: 1000; point
 /* ---------- 37. Letter heading 4px bigger ---------- */
 .l5-h { font-size: calc(34px + 12 * var(--t)); }
 @media (max-width: 1023px) { .l5-h { font-size: 32px; } }
+
+/* ---------- 38. Contact form: a guiding line under each section title ---------- */
+.fset-legend { margin-bottom: 8px; }
+.fset-sub { margin: 0 0 24px; max-width: 52ch; font-family: var(--sans); font-size: 15px; line-height: 1.55; color: var(--muted-l); text-wrap: pretty; }
