@@ -735,3 +735,21 @@ html.i5-on .i5 { display: block; position: fixed; inset: 0; z-index: 1000; point
 /* ---------- 34. Cards square, like every other surface on the site ---------- */
 .pmodal.glass-d, .pmodal.glass-l, .pmodal.smodal.glass-l { border-radius: 0; }
 @media (max-width: 599px) { .pmodal.glass-d, .pmodal.glass-l, .pmodal.smodal.glass-l { border-radius: 0; } }
+
+/* ---------- 35. How we do it: more air in each phase; a Hugeicon (free, MIT) per service ---------- */
+.jump-ico { flex: none; display: grid; place-items: center; width: 20px; height: 20px; color: rgba(27, 26, 25, .55); transition: color .25s ease; }
+.jump-ico svg { width: 20px; height: 20px; }
+.jump-item { justify-content: flex-start; gap: 14px; }
+.jump-item-t { flex: 1; min-width: 0; }
+.jump-item .jump-plus { margin-left: auto; }
+.jump-item:hover .jump-ico, .jump-item:focus-visible .jump-ico, .jump-item.is-active .jump-ico { color: var(--red); }
+@media (min-width: 1024px) {
+  .jump-sub { margin-top: max(12px, calc(var(--u) * 18)); }
+  .jump-list { margin-top: max(28px, calc(var(--u) * 44)); }
+  .jump-item { gap: 16px; padding-block: max(14px, calc(var(--u) * 20)); }
+}
+@media (max-width: 1023px) {
+  .jump-sub { margin-top: 12px; }
+  .jump-list { margin-top: 28px; }
+  .jump-item { min-height: 60px; }
+}
