@@ -22,6 +22,80 @@
     }
   }
 
+  /* ---------- Intro: “House of Poland.” → HoP → hop. → into the nav, curtain lifts ----------
+     ≈3s, homepage, once per visit (decided in <head> by intro5.js). Click or any key skips.
+     Beats: 0 write-in · .7s the rest of each word collapses, initials slide together ·
+     1.45s HoP resolves into the wordmark, the red full stop leaps into the logo ·
+     2.05s the logo flies into the nav while the rug curtain lifts · ~3s site. */
+  var introDone = Promise.resolve();
+  var i5 = $("#i5");
+  if (i5 && doc.classList.contains("i5-on") && "animate" in Element.prototype) {
+    introDone = new Promise(function (resolve) {
+      var bg = $(".i5-bg", i5), stage = $(".i5-stage", i5), word = $(".i5-word", i5), logo = $(".i5-logo", i5),
+          idot = $(".i5-dot", i5), stop = $(".i5-stop", i5), xs = $$(".i5-x", i5), anims = [], timers = [], ended = false;
+      var A = function (el, kf, o) { var a = el.animate(kf, Object.assign({ fill: "forwards" }, o)); anims.push(a); return a; };
+      var later = function (fn, ms) { timers.push(setTimeout(fn, ms)); };
+      var end = function (fast) {
+        if (ended) return; ended = true;
+        timers.forEach(clearTimeout);
+        var out = i5.animate([{ opacity: 1 }, { opacity: 0 }], { duration: fast ? 320 : 220, easing: "ease-out", fill: "forwards" });
+        out.onfinish = function () { doc.classList.remove("i5-on"); if (i5.parentNode) i5.parentNode.removeChild(i5); resolve(); };
+      };
+      var skip = function () { end(true); };
+      i5.addEventListener("pointerdown", skip);
+      window.addEventListener("keydown", skip, { once: true });
+      later(function () { end(true); }, 5600); /* before the CSS failsafe at 6s */
+
+      var morph = function () {
+        var cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+        var wr = word.getBoundingClientRect(), sr = stop.getBoundingClientRect();
+        var fs = parseFloat(getComputedStyle(word).fontSize) || 120;
+        var lw = Math.min(window.innerWidth * .62, Math.max(wr.width * 1.08, Math.min(window.innerWidth * .5, 320))), lh = lw * 268 / 516;
+        logo.style.width = lw + "px"; logo.style.height = lh + "px";
+        logo.style.left = (-lw / 2) + "px"; logo.style.top = (-lh / 2) + "px";
+        logo.style.transformOrigin = "50% 50%";
+        /* the full stop becomes a free dot, then leaps to the logo's dot */
+        var ds = lw * 61 / 516, s0 = (fs * .16) / ds;
+        var ax = sr.left + sr.width * .46 - cx, ay = sr.top + sr.height * .8 - cy;
+        var bx = -lw / 2 + lw * (504.94 - 22) / 516, by = -lh / 2 + lh * (196.78 - 18) / 268;
+        idot.style.width = idot.style.height = ds + "px";
+        var T = function (x, y, s) { return "translate(" + (x - ds / 2).toFixed(1) + "px," + (y - ds / 2).toFixed(1) + "px) scale(" + s + ")"; };
+        stop.style.color = "transparent";
+        var lift = Math.max(lw * .38, 80), mx = (ax + bx) / 2, my = Math.min(ay, by) - lift, kf = [
+          { offset: 0, transform: T(ax, ay, s0), opacity: 1 },
+          { offset: .12, transform: T(ax, ay + 3, s0 * 1.25) + " scale(1.2,.78)", opacity: 1 }];
+        for (var k = 1; k <= 16; k++) {
+          var t = k / 16, e = t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2, u = 1 - e;
+          kf.push({ offset: .16 + .7 * t, transform: T(u * u * ax + 2 * u * e * mx + e * e * bx, u * u * ay + 2 * u * e * my + e * e * by, (s0 + (1 - s0) * e).toFixed(3)), opacity: 1 });
+        }
+        kf.push({ offset: .93, transform: T(bx, by + 2, 1) + " scale(1.22,.8)", opacity: 1 }, { offset: 1, transform: T(bx, by, 1), opacity: 1 });
+        A(idot, kf, { duration: 760, easing: "linear" });
+        A(word, [{ opacity: 1, filter: "blur(0px)", transform: "translate(-50%,-50%) scale(1)" }, { opacity: 0, filter: "blur(10px)", transform: "translate(-50%,-50%) scale(.94)" }], { duration: 420, easing: "cubic-bezier(.4,0,.2,1)" });
+        A(logo, [{ opacity: 0, filter: "blur(14px)", transform: "scale(1.08)" }, { opacity: 1, filter: "blur(0px)", transform: "scale(1)" }], { duration: 620, delay: 120, easing: "cubic-bezier(.16,1,.3,1)" });
+        later(function () { fly(lw, lh); }, 900);
+      };
+      var fly = function (lw, lh) {
+        var nl = $(".nav-logo svg"), cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+        var nr = nl ? nl.getBoundingClientRect() : { left: cx - 40, top: 20, width: 80 };
+        var s = nr.width / lw, tx = nr.left - (cx - s * lw / 2), ty = nr.top - (cy - s * lh / 2);
+        A(stage, [{ transform: "translate(0px,0px) scale(1)" }, { transform: "translate(" + tx.toFixed(1) + "px," + ty.toFixed(1) + "px) scale(" + s.toFixed(4) + ")" }], { duration: 900, easing: "cubic-bezier(.7,0,.16,1)" });
+        A(bg, [{ clipPath: "inset(0 0 0% 0)" }, { clipPath: "inset(0 0 100% 0)" }], { duration: 980, delay: 140, easing: "cubic-bezier(.76,0,.24,1)" })
+          .onfinish = function () { end(false); };
+      };
+      var run = function () {
+        A(word, [{ opacity: 0, filter: "blur(14px)", transform: "translate(-50%,-42%)" }, { opacity: 1, filter: "blur(0px)", transform: "translate(-50%,-50%)" }], { duration: 900, easing: "cubic-bezier(.16,1,.3,1)" });
+        xs.forEach(function (x, i) {
+          var w = x.getBoundingClientRect().width;
+          A(x, [{ maxWidth: w + "px", opacity: 1, filter: "blur(0px)" }, { maxWidth: "0px", opacity: 0, filter: "blur(8px)" }], { duration: 680, delay: 760 + i * 70, easing: "cubic-bezier(.7,0,.2,1)" });
+        });
+        later(morph, 760 + 2 * 70 + 680 + 60);
+      };
+      var go5 = function () { if (!ended) run(); };
+      var f = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+      Promise.race([f, new Promise(function (r) { setTimeout(r, 1200); })]).then(go5, go5);
+    });
+  } else if (i5) { doc.classList.remove("i5-on"); }
+
   /* ---------- Hero: six statements — kinetic type, punctuated by the dot ---------- */
   var hero = $(".hero5"), hs = $("#hs");
   if (hero && hs && "animate" in Element.prototype) {
@@ -191,7 +265,7 @@
       });
     };
     var ready = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
-    ready.then(start, start);
+    ready.then(function () { return introDone; }).then(start, start);
 
     /* language switch: rebuild every statement in the new language, keep state */
     document.addEventListener("click", function (e) {

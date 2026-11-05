@@ -91,3 +91,7 @@ html[lang="pl"] #site-foot { padding-bottom: 72px; }
 #site-foot .foot-social svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; }
 #site-foot .foot-social .ig-dot { fill: currentColor; stroke: none; }
 #site-foot .foot-social:hover, #site-foot .foot-social:focus-visible { border-color: rgba(239, 235, 228, .7); background: rgba(239, 235, 228, .06); }
+/* client feedback (4 Nov): LinkedIn beside Instagram, production icon style */
+#site-foot .foot-socials { display: flex; gap: 12px; margin-top: 24px; }
+#site-foot .foot-socials .foot-social { margin-top: 0; }
+#site-foot .foot-social .li-f { fill: currentColor; stroke: none; }

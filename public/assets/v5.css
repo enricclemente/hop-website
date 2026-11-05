@@ -245,3 +245,30 @@ html:not(.hs-live) .hs-ctl { display: none; }
 .chead-h em { font-style: italic; font-weight: 300; color: var(--ivory); }
 .chead-h .tdot { color: var(--red); }
 .jump-inner > .lhls { width: var(--content); margin-inline: auto; }
+
+/* ---------- 12 · Client elements in the production nav + footer (styles stay production) ---------- */
+@media (min-width: 1024px) {
+  .nav-links .nav-sec { -webkit-text-stroke: .35px currentColor; paint-order: stroke fill; }
+}
+.foot-socials { display: flex; gap: 12px; margin-top: 24px; }
+.foot-socials .foot-social { margin-top: 0; }
+.foot-social .li-f { fill: currentColor; stroke: none; }
+
+/* ---------- 13 · Intro: “House of Poland.” → HoP → hop. → into the nav ----------
+   Shown only when the head gate adds html.i5-on (homepage, once per visit, never
+   with reduced motion). Failsafe: whatever happens, it clears itself at 6s. */
+.i5 { display: none; }
+html.i5-on { overflow: hidden; animation: i5-unlock 0s 6s forwards; }
+html.i5-on .i5 { display: block; position: fixed; inset: 0; z-index: 1000; pointer-events: auto; animation: i5-failsafe .4s ease 6s forwards; }
+@keyframes i5-unlock { to { overflow: visible; } }
+@keyframes i5-failsafe { to { opacity: 0; visibility: hidden; pointer-events: none; } }
+.i5-bg { position: absolute; inset: 0; background-color: var(--rug-c); background-image: var(--rug-i); background-size: var(--rug-s); }
+.i5-stage { position: absolute; left: 50%; top: 50%; transform-origin: 0 0; }
+.i5-word { position: absolute; left: 0; top: 0; margin: 0; transform: translate(-50%, -50%); white-space: nowrap;
+  font-family: var(--serif); font-weight: 400; font-size: clamp(44px, 9.4vw, 152px); line-height: 1; letter-spacing: -0.02em; color: var(--ivory); opacity: 0; }
+.i5-word em { font-style: italic; font-weight: 300; }
+.i5-k, .i5-x { display: inline-block; vertical-align: top; }
+.i5-x { overflow: hidden; white-space: pre; }
+.i5-stop { display: inline-block; vertical-align: top; color: var(--red); }
+.i5-logo { position: absolute; left: 0; top: 0; display: block; max-width: none; overflow: visible; fill: #FFFFFF; opacity: 0; }
+.i5-dot { position: absolute; left: 0; top: 0; border-radius: 50%; background: var(--red); opacity: 0; will-change: transform; }
