@@ -7,7 +7,7 @@
 :root {
   --glass-d: rgba(20, 19, 18, .56);
   --glass-l: rgba(251, 250, 248, .74);
-  --hold: 3.6s;
+  --hold: 3s;
 }
 
 /* ---------- 1 · Surfaces: the production rug, one run for hero + letter ---------- */
@@ -254,7 +254,7 @@ html:not(.hs-live) .hs-ctl { display: none; }
 .foot-socials .foot-social { margin-top: 0; }
 .foot-social .li-f { fill: currentColor; stroke: none; }
 
-/* ---------- 13 · Intro: “House of Poland.” → HoP → hop. → into the nav ----------
+/* ---------- 13 · Intro: “House of Poland.” → hop. → into the nav ----------
    Shown only when the head gate adds html.i5-on (homepage, once per visit, never
    with reduced motion). Failsafe: whatever happens, it clears itself at 6s. */
 .i5 { display: none; }
@@ -272,3 +272,15 @@ html.i5-on .i5 { display: block; position: fixed; inset: 0; z-index: 1000; point
 .i5-stop { display: inline-block; vertical-align: top; color: var(--red); }
 .i5-logo { position: absolute; left: 0; top: 0; display: block; max-width: none; overflow: visible; fill: #FFFFFF; opacity: 0; }
 .i5-dot { position: absolute; left: 0; top: 0; border-radius: 50%; background: var(--red); opacity: 0; will-change: transform; }
+
+/* ---------- 14 · Privacy + 404 on the site shell ---------- */
+.legal-col { max-width: 760px; }
+.legal-col .art-sub { margin-top: 24px; }
+.legal-col .table-wrap { overflow-x: auto; margin-block: 8px; -webkit-overflow-scrolling: touch; }
+.legal-col .store-table { width: 100%; min-width: 560px; border-collapse: collapse; font-family: var(--sans); font-size: 15px; line-height: 1.45; color: var(--ink); }
+.legal-col .store-table th { text-align: left; font-weight: 500; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted-l); padding: 0 16px 10px 0; border-bottom: 1px solid rgba(27, 26, 25, .2); }
+.legal-col .store-table td { padding: 12px 16px 12px 0; border-bottom: 1px solid rgba(27, 26, 25, .1); vertical-align: top; }
+.legal-col code { font-size: 13px; }
+.nf { min-height: 100svh; display: flex; align-items: center; }
+.nf .wrap { width: var(--content); }
+.nf-act { margin-top: calc(32px + 16 * var(--t)); }

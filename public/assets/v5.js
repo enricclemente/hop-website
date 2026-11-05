@@ -22,11 +22,11 @@
     }
   }
 
-  /* ---------- Intro: “House of Poland.” → HoP → hop. → into the nav, curtain lifts ----------
+  /* ---------- Intro: “House of Poland.” → hop. → into the nav, curtain lifts ----------
      ≈3s, homepage, once per visit (decided in <head> by intro5.js). Click or any key skips.
-     Beats: 0 write-in · .7s the rest of each word collapses, initials slide together ·
-     1.45s HoP resolves into the wordmark, the red full stop leaps into the logo ·
-     2.05s the logo flies into the nav while the rug curtain lifts · ~3s site. */
+     Beats: 0 “House of Poland.” writes in · 1.35s it dissolves into the hop. wordmark
+     while the red full stop leaps across into the logo · 2.25s the logo flies into the
+     nav while the rug curtain lifts · ~3.2s site. */
   var introDone = Promise.resolve();
   var i5 = $("#i5");
   if (i5 && doc.classList.contains("i5-on") && "animate" in Element.prototype) {
@@ -50,7 +50,7 @@
         var cx = window.innerWidth / 2, cy = window.innerHeight / 2;
         var wr = word.getBoundingClientRect(), sr = stop.getBoundingClientRect();
         var fs = parseFloat(getComputedStyle(word).fontSize) || 120;
-        var lw = Math.min(window.innerWidth * .62, Math.max(wr.width * 1.08, Math.min(window.innerWidth * .5, 320))), lh = lw * 268 / 516;
+        var lw = Math.min(window.innerWidth * .5, 340), lh = lw * 268 / 516;
         logo.style.width = lw + "px"; logo.style.height = lh + "px";
         logo.style.left = (-lw / 2) + "px"; logo.style.top = (-lh / 2) + "px";
         logo.style.transformOrigin = "50% 50%";
@@ -70,8 +70,8 @@
         }
         kf.push({ offset: .93, transform: T(bx, by + 2, 1) + " scale(1.22,.8)", opacity: 1 }, { offset: 1, transform: T(bx, by, 1), opacity: 1 });
         A(idot, kf, { duration: 760, easing: "linear" });
-        A(word, [{ opacity: 1, filter: "blur(0px)", transform: "translate(-50%,-50%) scale(1)" }, { opacity: 0, filter: "blur(10px)", transform: "translate(-50%,-50%) scale(.94)" }], { duration: 420, easing: "cubic-bezier(.4,0,.2,1)" });
-        A(logo, [{ opacity: 0, filter: "blur(14px)", transform: "scale(1.08)" }, { opacity: 1, filter: "blur(0px)", transform: "scale(1)" }], { duration: 620, delay: 120, easing: "cubic-bezier(.16,1,.3,1)" });
+        A(word, [{ opacity: 1, filter: "blur(0px)", transform: "translate(-50%,-50%) scale(1)" }, { opacity: 0, filter: "blur(12px)", transform: "translate(-50%,-50%) scale(.9)" }], { duration: 520, easing: "cubic-bezier(.4,0,.2,1)" });
+        A(logo, [{ opacity: 0, filter: "blur(16px)", transform: "scale(1.18)" }, { opacity: 1, filter: "blur(0px)", transform: "scale(1)" }], { duration: 700, delay: 140, easing: "cubic-bezier(.16,1,.3,1)" });
         later(function () { fly(lw, lh); }, 900);
       };
       var fly = function (lw, lh) {
@@ -84,11 +84,7 @@
       };
       var run = function () {
         A(word, [{ opacity: 0, filter: "blur(14px)", transform: "translate(-50%,-42%)" }, { opacity: 1, filter: "blur(0px)", transform: "translate(-50%,-50%)" }], { duration: 900, easing: "cubic-bezier(.16,1,.3,1)" });
-        xs.forEach(function (x, i) {
-          var w = x.getBoundingClientRect().width;
-          A(x, [{ maxWidth: w + "px", opacity: 1, filter: "blur(0px)" }, { maxWidth: "0px", opacity: 0, filter: "blur(8px)" }], { duration: 680, delay: 760 + i * 70, easing: "cubic-bezier(.7,0,.2,1)" });
-        });
-        later(morph, 760 + 2 * 70 + 680 + 60);
+        later(morph, 1350);
       };
       var go5 = function () { if (!ended) run(); };
       var f = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();

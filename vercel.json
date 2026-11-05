@@ -101,9 +101,19 @@
       "permanent": false
     },
     {
+      "source": "/house-of-poland/:slug",
+      "destination": "/articles",
+      "permanent": false
+    },
+    {
+      "source": "/house-of-poland",
+      "destination": "/articles",
+      "permanent": false
+    },
+    {
       "source": "/house-of-poland.html",
-      "destination": "/house-of-poland",
-      "permanent": true
+      "destination": "/articles",
+      "permanent": false
     },
     {
       "source": "/index",

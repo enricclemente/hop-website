@@ -206,3 +206,51 @@ main = f'''<main id="main" class="art" data-page="articles">
 open(os.path.join(PUB, 'articles', 'say-hop.html'), 'w', encoding='utf8').write(page('Say Hop. · House of Poland · HOP.', L['summary'], main))
 print('letter written: /articles/say-hop (%d sections, %d min read)' % (len(heads), mins))
 
+
+# ---------- privacy + 404 on the same shell (nav, menu, footer) as every other page ----------
+def plain(title, desc, main, robots):
+    return page(title, desc, main, robots=robots).replace('<script src="/assets/v2-article.js"></script>\n', '')
+privacy_main = '''<main id="main" class="art legal" data-page="privacy">
+  <header class="s art-cover ink">
+    <div class="wrap">
+      <p class="art-crumbs"><span class="lbl lbl--m lbl--red-d">Privacy</span></p>
+      <h1 class="h1 art-h">Privacy notice<span class="tdot">.</span></h1>
+      <p class="art-dek">Placeholder. Your privacy notice goes here before launch.</p>
+    </div>
+  </header>
+  <div class="s art-body">
+    <div class="wrap">
+      <article class="art-col legal-col">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. This site uses no cookies and no tracking. Fonts are served from this site, not from Google, so no visitor data is sent to third parties when a page loads.</p>
+        <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+        <h2 class="art-sub" id="cookies"><span>Cookies and storage</span></h2>
+        <p>This site sets no cookies and uses no advertising or tracking. It stores a few small items in your browser (local storage). Nothing optional is stored until you choose, and you can change your choice at any time with <button class="linkbtn ulink" type="button" data-consent="settings">Cookie settings</button>, also in the footer.</p>
+        <div class="table-wrap">
+          <table class="store-table">
+            <thead><tr><th scope="col">Name</th><th scope="col">Category</th><th scope="col">Purpose</th><th scope="col">Kept</th></tr></thead>
+            <tbody>
+              <tr><td data-notr><code>hop-consent</code></td><td>Necessary</td><td>Remembers your cookie choice</td><td>12 months</td></tr>
+              <tr><td data-notr><code>hop-lang</code></td><td>Necessary</td><td>Remembers the language you picked</td><td>Until you clear it</td></tr>
+              <tr><td data-notr><code>hop-intro</code></td><td>Necessary</td><td>Plays the opening animation only once per visit</td><td>Until you close the tab</td></tr>
+              <tr><td data-notr><code>hop-contact-draft</code></td><td>Preferences</td><td>Keeps an unsent contact form</td><td>Until sent or cleared</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Statistics: not in use. If we add anonymous visit statistics, they will only run with your consent and will be listed here.</p>
+      </article>
+    </div>
+  </div>
+</main>'''
+open(os.path.join(PUB, 'privacy.html'), 'w', encoding='utf8').write(plain('Privacy notice · HOP.', 'How HOP handles your data: no tracking, no advertising cookies.', privacy_main, robots=False))
+nf_main = '''<main id="main" class="art legal" data-page="404">
+  <header class="s art-cover ink nf">
+    <div class="wrap">
+      <p class="art-crumbs"><span class="lbl lbl--m lbl--red-d">404</span></p>
+      <h1 class="h1 art-h">This page didn’t make the leap<span class="tdot">.</span></h1>
+      <p class="art-dek">The link may be old, or the address mistyped.</p>
+      <p class="nf-act"><a class="btn btn--l" href="/"><span class="btn-t">Back to the home page</span><svg class="btn-i" aria-hidden="true" focusable="false"><use href="#i-arrow-r"/></svg></a></p>
+    </div>
+  </header>
+</main>'''
+open(os.path.join(PUB, '404.html'), 'w', encoding='utf8').write(plain('Page not found · HOP.', 'This page didn’t make the leap.', nf_main, robots=True))
+print('privacy + 404 written on the site shell')
