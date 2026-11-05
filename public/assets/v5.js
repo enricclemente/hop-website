@@ -188,6 +188,9 @@
     };
 
     var arm = function () { hero.removeAttribute("data-run"); void hero.offsetWidth; hero.setAttribute("data-run", ""); };
+    /* the cover line hugs the last line of the statement on screen (2 or 3 lines), gliding as they change */
+    var tag = $(".hero5-tag", hero);
+    var seatTag = function () { if (!tag) return; var lift = Math.max(0, hs.offsetHeight - items[cur].offsetHeight); tag.style.setProperty("--lift", lift.toFixed(1) + "px"); };
     var syncPause = function () { hero.classList.toggle("is-paused", userPaused || offscreen || document.hidden); };
 
     var go = function (n, user) {
@@ -201,7 +204,8 @@
       void ni.offsetWidth;
       var b = at(n);
       if (reduce) { ni.classList.add("is-in"); put(b); }
-      else { setTimeout(function () { ni.classList.add("is-in"); }, 240); leap(a, b, 980, 60); }
+      else { setTimeout(function () { ni.classList.add("is-in"); seatTag(); }, 240); leap(a, b, 980, 60); }
+      if (reduce) seatTag();
       segs.forEach(function (s, k) { if (k === n) s.setAttribute("aria-current", "true"); else s.removeAttribute("aria-current"); s.tabIndex = k === n ? 0 : -1; });
       if (curN) curN.textContent = (n < 9 ? "0" : "") + (n + 1);
       hs.setAttribute("aria-live", user ? "polite" : "off");
@@ -252,7 +256,7 @@
     /* first statement: it writes itself, and the dot drops in from above to end it */
     var start = function () {
       var first = items[0], b = at(0), fs = parseFloat(getComputedStyle(hs).fontSize) || 80;
-      first.classList.add("is-on");
+      first.classList.add("is-on"); hero.classList.add("tag-still"); seatTag(); void hero.offsetWidth; hero.classList.remove("tag-still");
       if (reduce || window.scrollY > 40) { first.classList.add("is-in"); put(b); arm(); return; }
       requestAnimationFrame(function () {
         setTimeout(function () { first.classList.add("is-in"); }, 120);
@@ -266,9 +270,9 @@
     /* language switch: rebuild every statement in the new language, keep state */
     document.addEventListener("click", function (e) {
       if (!(e.target.closest && e.target.closest(".lang button"))) return;
-      setTimeout(function () { items.forEach(function (p, i) { build(p, EN[i]); }); if (!flight.length) put(at(cur)); }, 0);
+      setTimeout(function () { items.forEach(function (p, i) { build(p, EN[i]); }); if (!flight.length) put(at(cur)); seatTag(); }, 0);
     });
-    var rz; window.addEventListener("resize", function () { clearTimeout(rz); rz = setTimeout(function () { if (!flight.length) put(at(cur)); }, 120); });
+    var rz; window.addEventListener("resize", function () { clearTimeout(rz); rz = setTimeout(function () { if (!flight.length) put(at(cur)); seatTag(); }, 120); });
   }
 
   /* ---------- How we do it: the leap headlines land as the dot passes ---------- */
@@ -337,15 +341,32 @@
     window.addEventListener("resize", function () { if (pm.open) place(byName()); });
   }
 
-  /* ---------- How we do it: the open service stays marked in the graph ---------- */
+  /* ---------- How we do it: the open service stays marked in the graph; on desktop the
+     glass card sits beside it (Figma: card offset 440px into the stage for a Run-up item,
+     the mirror for Land), so the red item stays visible ---------- */
   var sm = $("#smodal");
   if (sm) {
-    var sItems = $$(".jump-item"), markSvc = function () {
+    var sItems = $$(".jump-item"), stageEl = $(".jump-wrap");
+    var current = function () {
       var name = ((sm.querySelector(".sm-svc") || {}).textContent || "").split("\u00b7").pop().trim();
-      sItems.forEach(function (b) { b.classList.toggle("is-active", sm.open && b.textContent.trim() === name); });
+      return sItems.filter(function (b) { return b.textContent.trim() === name; })[0] || null;
     };
-    sItems.forEach(function (b) { b.addEventListener("click", function () { requestAnimationFrame(markSvc); }); });
-    var snx = sm.querySelector(".pm-next"); if (snx) snx.addEventListener("click", function () { requestAnimationFrame(markSvc); });
-    sm.addEventListener("close", function () { sItems.forEach(function (b) { b.classList.remove("is-active"); }); });
+    var placeSm = function () {
+      var it = current();
+      sItems.forEach(function (b) { b.classList.toggle("is-active", sm.open && b === it); });
+      if (!mqDesk.matches || !stageEl || !it) { sm.classList.remove("is-anchored"); sm.style.left = sm.style.top = ""; return; }
+      sm.classList.add("is-anchored");
+      var wr = stageEl.getBoundingClientRect(), u = wr.width / 1200, w = sm.offsetWidth, h = sm.offsetHeight;
+      var col = it.closest(".jump-col"), ci = col ? [].indexOf.call(col.parentNode.children, col) : 0;
+      var left = wr.left + (ci === 0 ? 440 * u : ci === 1 ? wr.width - w : 0);
+      if (ci === 2) left = wr.left + Math.max(0, (wr.width - 340 * u) - w - 40 * u);
+      left = clamp(left, 16, window.innerWidth - w - 16);
+      var vh = window.innerHeight, top = clamp(wr.top + 50 * u, 16, Math.max(16, vh - h - 16));
+      sm.style.left = left + "px"; sm.style.top = top + "px";
+    };
+    sItems.forEach(function (b) { b.addEventListener("click", function () { requestAnimationFrame(placeSm); }); });
+    var snx = sm.querySelector(".pm-next"); if (snx) snx.addEventListener("click", function () { requestAnimationFrame(placeSm); });
+    window.addEventListener("resize", function () { if (sm.open) placeSm(); });
+    sm.addEventListener("close", function () { sItems.forEach(function (b) { b.classList.remove("is-active"); }); sm.classList.remove("is-anchored"); sm.style.left = sm.style.top = ""; });
   }
 })();
