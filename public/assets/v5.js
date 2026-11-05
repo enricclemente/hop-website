@@ -215,16 +215,16 @@
         var d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0; if (!d) return;
         e.preventDefault(); var n = (k + d + segs.length) % segs.length; segs[n].focus(); go(n, true);
       });
-      s.querySelector("i").addEventListener("animationend", function (e) {
-        if (e.animationName === "segfill" && s.getAttribute("aria-current") === "true") go((cur + 1) % items.length);
-      });
     });
+    var clock = $(".hs-clock", hero);
+    if (clock) clock.addEventListener("animationend", function (e) { if (e.animationName === "segfill") go((cur + 1) % items.length); });
     /* tap/click the statement: leap to the next one */
     hs.addEventListener("click", function (e) { if (e.target.closest(".hs-i.is-on")) go((cur + 1) % items.length, true); });
     if (pauseBtn) pauseBtn.addEventListener("click", function () {
       userPaused = !userPaused;
       pauseBtn.setAttribute("aria-pressed", String(userPaused));
       pauseBtn.setAttribute("aria-label", userPaused ? "Play the statements" : "Pause the statements");
+      var pt = pauseBtn.querySelector(".hs-pause-t"); if (pt) pt.textContent = userPaused ? "Play" : "Pause";
       syncPause();
     });
     if ("IntersectionObserver" in window) new IntersectionObserver(function (es) { offscreen = !es[0].isIntersecting; syncPause(); }, { threshold: .15 }).observe(hero);
