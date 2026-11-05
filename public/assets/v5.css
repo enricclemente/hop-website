@@ -728,3 +728,6 @@ html.i5-on .i5 { display: block; position: fixed; inset: 0; z-index: 1000; point
 @media (max-width: 599px) { .smodal.glass-l .sm-body, .glass-d .pm-bio { font-size: 16px; line-height: 1.6; } }
 .l5-foot .letter-close, .l5-foot .alink { -webkit-text-stroke: 0; }
 .l5-foot .alink { font-weight: 400; }
+
+/* ---------- 33. Hero tagline 4px bigger (10 → 14px) ---------- */
+.hero5-tag { font-size: 14px; }
