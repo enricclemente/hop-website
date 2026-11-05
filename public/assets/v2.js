@@ -552,9 +552,9 @@
   var pm = document.getElementById("pmodal"), pdots = [].slice.call(document.querySelectorAll(".pdot"));
   if (pm && pdots.length && typeof pm.showModal === "function") {
     var partners = [
-      { name: "Philip Jacobson", email: "philip@hoppartners.com", phone: "+48 571 357 205", li: "#",
+      { name: "Philip Jacobson", img: "/assets/img/philip.webp", email: "philip@hoppartners.com", phone: "+48 571 357 205", li: "#",
         bio: "Philip was Chief Brand Officer at PE-backed Vimergy. For the last five years he has driven brand-led growth at scale-ups across categories, including Tylko, Autry and Chilly\u2019s. Before that, he spent a decade leading brand communication for Nike EMEA and was Global Head of Brand Creative at Maserati." },
-      { name: "David Anson", email: "david@hoppartners.com", phone: "+48 602 638 219", li: "#",
+      { name: "David Anson", img: "/assets/img/david.webp", email: "david@hoppartners.com", phone: "+48 602 638 219", li: "#",
         bio: "David was a Brand Creative Lead at Nike and Head of Business Leadership and Client Service at BBH Singapore. Across BBH Singapore, Wieden+Kennedy Amsterdam and Saatchi & Saatchi London, he has led the Nike, Samsung, Meta, Netflix and HSBC business." }
     ];
     var pmName = pm.querySelector(".pm-name"), pmBio = pm.querySelector(".pm-bio"),
@@ -564,8 +564,11 @@
       var p = partners[i]; pmCur = i;
       pmName.textContent = p.name; var dot = document.createElement("span"); dot.className = "tdot"; dot.textContent = "."; pmName.appendChild(dot);
       pmBio.textContent = p.bio;
-      pmEm.textContent = p.email; pmEm.href = "mailto:" + p.email;
-      pmPh.textContent = p.phone; pmPh.href = "tel:" + p.phone.replace(/\s+/g, "");
+      /* full text on desktop, one-word actions on phones */
+      var two = function (el, full, short) { el.textContent = ""; var f = document.createElement("span"); f.className = "pm-f"; f.textContent = full; var sh = document.createElement("span"); sh.className = "pm-s"; sh.textContent = short; el.appendChild(f); el.appendChild(sh); };
+      two(pmEm, p.email, "Email"); pmEm.href = "mailto:" + p.email;
+      two(pmPh, p.phone, "Call"); pmPh.href = "tel:" + p.phone.replace(/\s+/g, "");
+      var av = pm.querySelector(".pm-av"); if (av && p.img) av.src = p.img;
       pmLi.href = p.li;
       pmNextN.textContent = partners[(i + 1) % partners.length].name;
     };
@@ -603,7 +606,11 @@
       smSvc.textContent = d[0] + " \u00b7 " + d[1];
       smTitle.textContent = d[2].slice(0, -1); var dot = document.createElement("span"); dot.className = "tdot"; dot.textContent = d[2].slice(-1); smTitle.appendChild(dot);
       smBody.textContent = d[3];
-      smNext.textContent = (i === leapSvcs.length - 1 ? "Back to: " : "Next: ") + leapSvcs[(i + 1) % leapSvcs.length][1];
+      var last = i === leapSvcs.length - 1;
+      smNext.textContent = ""; var nf = document.createElement("span"); nf.className = "pm-f"; nf.textContent = (last ? "Back to: " : "Next: ") + leapSvcs[(i + 1) % leapSvcs.length][1];
+      var ns = document.createElement("span"); ns.className = "pm-s"; ns.textContent = last ? "Start again" : "Next"; smNext.appendChild(nf); smNext.appendChild(ns);
+      [].forEach.call(sm.querySelectorAll(".sm-prog i"), function (b, k) { b.classList.toggle("is-on", k === i); });
+      var pv = sm.querySelector(".pm-prev"); if (pv) pv.disabled = i === 0;
     };
     sItems.forEach(function (b) {
       b.addEventListener("click", function () {
@@ -613,6 +620,17 @@
       });
     });
     sm.querySelector(".pm-next").addEventListener("click", function () { smFill((smCur + 1) % leapSvcs.length); smOpener = sItems[smCur] || smOpener; });
+    var smPrev = sm.querySelector(".pm-prev");
+    if (smPrev) smPrev.addEventListener("click", function () { if (smCur > 0) { smFill(smCur - 1); smOpener = sItems[smCur] || smOpener; sm.dispatchEvent(new Event("hop:svc")); } });
+    sm.querySelector(".pm-next").addEventListener("click", function () { sm.dispatchEvent(new Event("hop:svc")); });
+    /* phones: swipe sideways to browse the services */
+    var sx = null, sy = null;
+    sm.addEventListener("touchstart", function (e) { var t = e.touches[0]; sx = t.clientX; sy = t.clientY; }, { passive: true });
+    sm.addEventListener("touchend", function (e) {
+      if (sx === null) return; var t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy; sx = null;
+      if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+      if (dx < 0) sm.querySelector(".pm-next").click(); else if (smPrev && !smPrev.disabled) smPrev.click();
+    }, { passive: true });
     sm.querySelector(".pm-x").addEventListener("click", function () { sm.close(); });
     sm.addEventListener("click", function (e) { if (e.target === sm) sm.close(); });
     sm.addEventListener("close", function () { doc.classList.remove("pm-open"); if (smOpener) smOpener.focus({ preventScroll: true }); });

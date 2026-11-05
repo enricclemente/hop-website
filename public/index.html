@@ -64,9 +64,6 @@
   <div class="menu-top">
     <button class="menu-close" type="button" aria-label="Close menu"><svg aria-hidden="true" focusable="false"><use href="#i-close"/></svg></button>
     <a class="menu-logo" href="#top" aria-label="HOP, back to the top"><svg viewBox="22 18 516 268" aria-hidden="true" focusable="false"><use href="#logo-mark"/></svg></a>
-    <div class="lang lang--menu" role="group" aria-label="Language">
-      <button type="button" data-lang="en" aria-pressed="true" lang="en">EN</button><span class="lang-sep" aria-hidden="true">·</span><button type="button" data-lang="pl" aria-pressed="false" lang="pl">PL</button>
-    </div>
   </div>
   <nav aria-label="Menu">
     <ol class="menu-links">
@@ -78,6 +75,9 @@
     </ol>
   </nav>
   <div class="menu-bottom">
+    <div class="lang lang--menu lang--seg" role="group" aria-label="Language">
+      <button type="button" data-lang="en" aria-pressed="true" lang="en">English</button><button type="button" data-lang="pl" aria-pressed="false" lang="pl">Polski</button>
+    </div>
     <a class="btn btn--l btn--full" href="/contact" data-cta><span class="btn-t">Let’s make the leap</span><svg class="btn-i" aria-hidden="true" focusable="false"><use href="#i-arrow-r"/></svg></a>
     <p class="menu-mail" data-notr><a href="mailto:philip@hoppartners.com">philip@hoppartners.com</a> · <a href="mailto:david@hoppartners.com">david@hoppartners.com</a></p>
   </div>
@@ -100,6 +100,7 @@
         <div class="hs-fx" aria-hidden="true"><span class="hs-ring"></span><span class="hs-ghost"></span><span class="hs-ghost"></span><span class="hs-ghost"></span><span class="hs-dot"></span></div>
       </div>
       <p class="hero5-tag">Brand strategy for businesses ready to leap</p>
+      <div class="hs-pg" aria-hidden="true"><span class="hs-pg-d"><i class="is-on"></i><i></i><i></i><i></i><i></i><i></i></span><span class="hs-hint">Tap to continue</span></div>
       <button class="hs-pause" type="button" aria-pressed="false" aria-label="Pause the statements"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path class="i-pause" d="M5 3.5v9M11 3.5v9"/><path class="i-play" d="M5 3.2v9.6L12.6 8z"/></svg><span class="hs-pause-t">Pause</span></button>
       <span class="hs-clock" aria-hidden="true"></span>
     </div>
@@ -111,7 +112,7 @@
       <div class="mletter" id="letter">
         <div class="letter-row">
           <button class="letter-toggle" type="button" aria-expanded="true" aria-controls="letter-panel" id="letter-toggle">
-            <span class="lt-t">Read our letter to Poland’s best companies</span>
+            <span class="lt-t"><span class="lt-e">Our letter</span>Read our letter to Poland’s best companies</span>
             <span class="lt-b" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           </button>
         </div>
@@ -157,6 +158,7 @@
         <button class="pdot pdot--david" type="button" data-partner="1" aria-haspopup="dialog" aria-controls="pmodal" aria-label="About David Anson"><span class="pdot-c" aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><path d="M10 4v12M4 10h12"/></svg></span><span class="pdot-chip" aria-hidden="true"><span class="pdot-n" data-notr>David Anson</span><span class="pdot-cue">Read bio</span></span></button>
         <button class="pdot pdot--philip" type="button" data-partner="0" aria-haspopup="dialog" aria-controls="pmodal" aria-label="About Philip Jacobson"><span class="pdot-c" aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><path d="M10 4v12M4 10h12"/></svg></span><span class="pdot-chip" aria-hidden="true"><span class="pdot-n" data-notr>Philip Jacobson</span><span class="pdot-cue">Read bio</span></span></button>
       </figure>
+      <p class="duo-hint">Tap a name to read their story.</p>
     </div>
   </section>
 
@@ -170,6 +172,10 @@
     <div class="jump-inner">
     <h2 class="wrap h2 jump-title" id="jump-title" data-rise><span class="rl-w"><span class="rl">Everything the leap needs. <em class="red">One partner.</em></span></span></h2>
     <div class="wrap jump-wrap">
+      <nav class="mmap" aria-label="Phases">
+        <svg class="mmap-svg" viewBox="0 0 342 48" aria-hidden="true" focusable="false"><path class="mmap-path" d="M0 40H120C150 40 165 6 215 6C255 6 280 16 300 22H342"/><circle class="mmap-dot" cx="0" cy="40" r="6"/></svg>
+        <div class="mmap-l"><a href="#ph-1" aria-current="step">Run-up</a><a href="#ph-2">Leap</a><a href="#ph-3">Land</a></div>
+      </nav>
       <div class="lhls">
         <p class="lhl lhl--l"><span class="lhl-e">The positioning leap</span>A positioning leap makes you the only choice<span class="tdot">.</span></p>
         <p class="lhl lhl--r"><span class="lhl-e">The creative leap</span>A creative leap makes you impossible to ignore<span class="tdot">.</span></p>
@@ -181,17 +187,17 @@
         <circle class="jump-dot" cx="1345" cy="143" r="15"/>
       </svg>
       <ol class="jump-cols">
-        <li class="jump-col jump-col--1">
+        <li class="jump-col jump-col--1" id="ph-1">
           <h3 class="jump-h">Run-up<span class="tdot">.</span></h3>
           <p class="jump-sub">Find the pain nobody’s solving.</p>
           <ul class="jump-list"><li><button class="jump-item" type="button" data-svc="0" aria-haspopup="dialog" aria-controls="smodal"><span class="jump-item-t">Brand audit</span><span class="jump-plus" aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><path d="M10 5v10M5 10h10"/></svg></span></button></li><li><button class="jump-item" type="button" data-svc="1" aria-haspopup="dialog" aria-controls="smodal"><span class="jump-item-t">Audience &amp; segmentation research</span><span class="jump-plus" aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><path d="M10 5v10M5 10h10"/></svg></span></button></li></ul>
         </li>
-        <li class="jump-col jump-col--2">
+        <li class="jump-col jump-col--2" id="ph-2">
           <h3 class="jump-h">Leap<span class="tdot">.</span></h3>
           <p class="jump-sub">Expose rivals. Own one idea.</p>
           <ul class="jump-list"><li><button class="jump-item" type="button" data-svc="2" aria-haspopup="dialog" aria-controls="smodal"><span class="jump-item-t">Brand positioning</span><span class="jump-plus" aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><path d="M10 5v10M5 10h10"/></svg></span></button></li><li><button class="jump-item" type="button" data-svc="3" aria-haspopup="dialog" aria-controls="smodal"><span class="jump-item-t">Brand strategy</span><span class="jump-plus" aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><path d="M10 5v10M5 10h10"/></svg></span></button></li><li><button class="jump-item" type="button" data-svc="4" aria-haspopup="dialog" aria-controls="smodal"><span class="jump-item-t">Brand creative platform</span><span class="jump-plus" aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><path d="M10 5v10M5 10h10"/></svg></span></button></li></ul>
         </li>
-        <li class="jump-col jump-col--3">
+        <li class="jump-col jump-col--3" id="ph-3">
           <h3 class="jump-h">Land<span class="tdot">.</span></h3>
           <p class="jump-sub">Same truth, local accent.</p>
           <ul class="jump-list"><li><button class="jump-item" type="button" data-svc="5" aria-haspopup="dialog" aria-controls="smodal"><span class="jump-item-t">Brand identity &amp; messaging</span><span class="jump-plus" aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><path d="M10 5v10M5 10h10"/></svg></span></button></li><li><button class="jump-item" type="button" data-svc="6" aria-haspopup="dialog" aria-controls="smodal"><span class="jump-item-t">Brand internationalisation</span><span class="jump-plus" aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><path d="M10 5v10M5 10h10"/></svg></span></button></li><li><button class="jump-item" type="button" data-svc="7" aria-haspopup="dialog" aria-controls="smodal"><span class="jump-item-t">Performance &amp; optimisation</span><span class="jump-plus" aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><path d="M10 5v10M5 10h10"/></svg></span></button></li></ul>
@@ -217,7 +223,9 @@
     </div>
     <h3 class="pm-name sm-title" id="sm-title"></h3>
     <p class="pm-bio sm-body"></p>
+    <div class="sm-prog" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
     <div class="pm-act sm-act">
+      <button class="pm-prev" type="button"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M14 8H2M7 3L2 8l5 5"/></svg><span>Previous</span></button>
       <button class="pm-next" type="button"><span class="sm-next"></span><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 8h12M9 3l5 5-5 5"/></svg></button>
     </div>
   </div>
@@ -230,6 +238,7 @@
       <span class="sm-spacer" aria-hidden="true"></span>
       <button class="pm-x" type="button" aria-label="Close"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 3l10 10M13 3L3 13"/></svg></button>
     </div>
+    <img class="pm-av" src="/assets/img/philip.webp" alt="" width="56" height="56" decoding="async">
     <h3 class="pm-name" id="pm-name" data-notr></h3>
     <p class="pm-bio"></p>
     <ul class="pm-contact" role="list">

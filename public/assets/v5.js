@@ -190,7 +190,7 @@
     var arm = function () { hero.removeAttribute("data-run"); void hero.offsetWidth; hero.setAttribute("data-run", ""); };
     /* the cover line hugs the last line of the statement on screen (2 or 3 lines), gliding as they change */
     var tag = $(".hero5-tag", hero);
-    var seatTag = function () { if (!tag) return; var lift = Math.max(0, (hs.offsetHeight - items[cur].offsetHeight) / 2); tag.style.setProperty("--lift", lift.toFixed(1) + "px"); };
+    var seatTag = function () { if (!tag) return; var low = getComputedStyle(items[cur]).alignSelf === "end"; var lift = low ? 0 : Math.max(0, (hs.offsetHeight - items[cur].offsetHeight) / 2); tag.style.setProperty("--lift", lift.toFixed(1) + "px"); };
     var syncPause = function () { hero.classList.toggle("is-paused", userPaused || offscreen || document.hidden); };
 
     var go = function (n, user) {
@@ -209,6 +209,8 @@
       segs.forEach(function (s, k) { if (k === n) s.setAttribute("aria-current", "true"); else s.removeAttribute("aria-current"); s.tabIndex = k === n ? 0 : -1; });
       if (curN) curN.textContent = (n < 9 ? "0" : "") + (n + 1);
       hs.setAttribute("aria-live", user ? "polite" : "off");
+      $$(".hs-pg-d i", hero).forEach(function (d, k) { d.classList.toggle("is-on", k === n); });
+      if (user) hero.classList.add("is-tapped");
       arm();
     };
 
@@ -279,9 +281,15 @@
   /* phones: the headlines sit above the rail, outside the wrap the rail measures */
   var lhls = $(".lhls"), jWrap = $(".jump-wrap");
   if (lhls && jWrap) {
+    var lL5 = $(".lhl--l", lhls), lR5 = $(".lhl--r", lhls), col1 = $(".jump-col--1"), col2 = $(".jump-col--2");
     var seat = function () {
-      if (mqDesk.matches) { if (lhls.parentNode !== jWrap) jWrap.insertBefore(lhls, jWrap.firstChild); }
-      else if (lhls.parentNode === jWrap) jWrap.parentNode.insertBefore(lhls, jWrap);
+      if (mqDesk.matches) {
+        if (lhls.parentNode !== jWrap) jWrap.insertBefore(lhls, jWrap.firstChild);
+        if (lL5.parentNode !== lhls) lhls.appendChild(lL5); if (lR5.parentNode !== lhls) lhls.appendChild(lR5);
+      } else {
+        if (col1 && lL5.parentNode !== col1) col1.appendChild(lL5);
+        if (col2 && lR5.parentNode !== col2) col2.appendChild(lR5);
+      }
     };
     seat(); mqDesk.addEventListener && mqDesk.addEventListener("change", seat);
   }
@@ -355,7 +363,47 @@
     };
     sItems.forEach(function (b) { b.addEventListener("click", function () { requestAnimationFrame(placeSm); }); });
     var snx = sm.querySelector(".pm-next"); if (snx) snx.addEventListener("click", function () { requestAnimationFrame(placeSm); });
+    sm.addEventListener("hop:svc", function () { requestAnimationFrame(placeSm); });
     window.addEventListener("resize", function () { if (sm.open) placeSm(); });
     sm.addEventListener("close", function () { sItems.forEach(function (b) { b.classList.remove("is-active"); }); });
   }
+
+  /* ---------- Phones: How we do it mini-map (sticky arc; the dot travels; the label marks the phase) ---------- */
+  var mmap = $(".mmap"), mPath = $(".mmap-path"), mDot = $(".mmap-dot"), mCols = $(".jump-cols");
+  if (mmap && mPath && mDot && mCols && mPath.getTotalLength) {
+    var mLen = mPath.getTotalLength(), mLinks = $$(".mmap-l a", mmap), mCol = $$(".jump-col"), mTick = false;
+    var mUpd = function () {
+      mTick = false; if (mqDesk.matches) return;
+      var ref = mmap.getBoundingClientRect().bottom + 24, r = mCols.getBoundingClientRect();
+      var p = clamp((ref - r.top) / Math.max(1, r.height - window.innerHeight * .45), 0, 1);
+      var pt = mPath.getPointAtLength(p * mLen); mDot.setAttribute("cx", pt.x.toFixed(1)); mDot.setAttribute("cy", pt.y.toFixed(1));
+      var a = 0; mCol.forEach(function (c, i) { if (c.getBoundingClientRect().top <= ref + 40) a = i; });
+      mLinks.forEach(function (l, i) { if (i === a) l.setAttribute("aria-current", "step"); else l.removeAttribute("aria-current"); });
+    };
+    window.addEventListener("scroll", function () { if (!mTick) { mTick = true; requestAnimationFrame(mUpd); } }, { passive: true });
+    window.addEventListener("resize", mUpd); mUpd();
+  }
+
+  /* ---------- Phones: the sticky CTA steps aside over the footer ---------- */
+  var stk = $("#sticky-cta"), foot = $("#site-foot");
+  if (stk && foot && "IntersectionObserver" in window) new IntersectionObserver(function (es) { stk.classList.toggle("is-foot", es[0].isIntersecting); }, { threshold: 0 }).observe(foot);
+
+  /* ---------- Phones: drag a sheet down to close it ---------- */
+  $$("dialog.pmodal").forEach(function (dlg) {
+    var y0 = null, dy = 0, inner = $(".pm-in", dlg);
+    dlg.addEventListener("touchstart", function (e) {
+      if (window.innerWidth >= 600) return;
+      var t = e.touches[0], top = dlg.getBoundingClientRect().top;
+      if (t.clientY - top > 72 && dlg.scrollTop > 0) return;
+      if (t.clientY - top > 72 && !e.target.closest(".pm-handle, .pm-top")) return;
+      y0 = t.clientY; dy = 0; dlg.style.transition = "none";
+    }, { passive: true });
+    dlg.addEventListener("touchmove", function (e) { if (y0 === null) return; dy = Math.max(0, e.touches[0].clientY - y0); dlg.style.transform = "translateY(" + dy + "px)"; }, { passive: true });
+    dlg.addEventListener("touchend", function () {
+      if (y0 === null) return; y0 = null;
+      dlg.style.transition = "transform .3s cubic-bezier(.16,1,.3,1)";
+      if (dy > 90) { dlg.style.transform = "translateY(100%)"; setTimeout(function () { dlg.close(); dlg.style.transform = dlg.style.transition = ""; }, 260); }
+      else { dlg.style.transform = ""; setTimeout(function () { dlg.style.transition = ""; }, 320); }
+    });
+  });
 })();
