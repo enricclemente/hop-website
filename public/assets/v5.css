@@ -556,3 +556,11 @@ html.i5-on .i5 { display: block; position: fixed; inset: 0; z-index: 1000; point
   .hero5 { padding-top: var(--nav-h); }
   html, body { overscroll-behavior-y: none; }
 }
+
+/* ---------- 23 · Mobile (5 Nov): full-screen opening, no sticky CTA ---------- */
+@media (max-width: 1023px) {
+  .hero5 { min-height: 100svh; }
+  .hero5-body { min-height: 0; }
+  .sticky-cta { display: none !important; }
+  .foot { padding-bottom: calc(40px + env(safe-area-inset-bottom)); }
+}
