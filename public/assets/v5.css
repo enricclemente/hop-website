@@ -476,7 +476,7 @@ html.i5-on .i5 { display: block; position: fixed; inset: 0; z-index: 1000; point
   .sticky-logo { display: none; }
   .sticky-cta { background: rgba(19, 19, 22, .92); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); }
   .btn--sticky { min-height: 52px; padding: 0 20px 0 22px; font-size: 16px; }
-  .sticky-cta.is-on.is-foot, html.pm-open .sticky-cta.is-on { transform: translateY(110%); }
+  html.pm-open .sticky-cta.is-on { transform: translateY(110%); }
 
   /* footer: 44px link rows */
   .fcol a, .fcol li > span { min-height: 44px; }
@@ -529,4 +529,30 @@ html.i5-on .i5 { display: block; position: fixed; inset: 0; z-index: 1000; point
   .glass-l .sm-act { flex-direction: row; align-items: center; justify-content: flex-start; }
   .glass-l .sm-act .pm-prev { order: 1; }
   .glass-l .sm-act .pm-next { order: 2; display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 20px; }
+}
+
+/* ---------- 21 · Mobile tweaks from Figma (5 Nov, node 130:1106) ---------- */
+@media (max-width: 1023px) {
+  /* opening: shorter, so the letter row shows on first load; bigger statement; no tap hint */
+  .hero5 { min-height: 0; height: auto; padding-top: calc(var(--nav-h) + 24px); padding-bottom: 28px; }
+  .hero5-body { min-height: calc(72svh - var(--nav-h) - 52px); display: flex; flex-direction: column; justify-content: flex-end; }
+  .hs { font-size: calc(54px + 50 * var(--t)); }
+  .hs-i { line-height: 1.1; letter-spacing: -0.012em; }
+  .hs-pg { margin-top: 44px; }
+  .hs-hint { display: none; }
+  /* who we are: no hint under the photo; 40px to the next section */
+  .duo-hint { display: none; }
+  .who { padding-bottom: 40px; }
+  /* how we do it: no sticky mini-map */
+  .mmap { display: none; }
+}
+@media (max-width: 1023px) { .hero5-body .hero5-tag { order: 0; } }
+
+/* ---------- 22 · Mobile: 60px header (Figma margins 20 / 12), hero placement, a bottom that stays put ---------- */
+@media (max-width: 1023px) {
+  .nav { padding-top: env(safe-area-inset-top); }
+  .nav .nav-row { width: auto; min-height: 59px; margin: 0; padding: 0 12px 0 20px; }
+  .nav-logo svg { width: 68px; }
+  .hero5 { padding-top: var(--nav-h); }
+  html, body { overscroll-behavior-y: none; }
 }
