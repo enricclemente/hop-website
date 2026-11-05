@@ -21,9 +21,9 @@ def tdot(s): return e(s[:-1]) + '<span class="tdot">.</span>' if s.endswith('.')
 ARTICLES = [
   dict(slug='lorem-ipsum-dolor', n='01', topic='Brand', title='Lorem ipsum dolor.', it='dolor', sub='Sed do eiusmod tempor incididunt ut labore et dolore',
        ex='Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, quis nostrud exercitation.', date='2026-11-11', dlabel='11 November 2026', mins=6, by='Philip Jacobson', seed=1),
-  dict(slug='consectetur-adipiscing-elit', n='02', topic='Strategy', title='Consectetur adipiscing elit.', it='elit', sub='Ut enim ad minim veniam, quis nostrud exercitation',
+  dict(slug='consectetur-adipiscing-elit', n='02', topic='Strategy', title='Consectetur adipiscing elit, sed do eiusmod.', it='eiusmod', sub='Ut enim ad minim veniam, quis nostrud exercitation',
        ex='Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.', date='2026-10-28', dlabel='28 October 2026', mins=4, by='David Anson', seed=2),
-  dict(slug='duis-aute-irure', n='03', topic='Culture', title='Duis aute irure in voluptate.', it='voluptate', sub='Excepteur sint occaecat cupidatat non proident',
+  dict(slug='duis-aute-irure', n='03', topic='Culture', title='Duis aute irure.', it='irure', sub='Excepteur sint occaecat cupidatat non proident',
        ex='Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit.', date='2026-10-14', dlabel='14 October 2026', mins=8, by='Philip Jacobson and David Anson', seed=3),
 ]
 def title_html(a, cls=''):
@@ -94,7 +94,7 @@ for idx, a in enumerate(ARTICLES):
     main = f'''<main id="main" class="art" data-page="articles">
   <header class="s art-cover ink">
     <div class="wrap">
-      <p class="art-crumbs"><a class="lbl" href="/articles">← All articles</a><span class="kdot" aria-hidden="true"></span><span class="lbl lbl--m lbl--red-d">Article No. {a['n']} · {e(a['topic'])}</span></p>
+      <p class="art-crumbs"><a class="lbl" href="/articles">← All articles</a></p>
       <h1 class="h1 art-h">{title_html(a)}</h1>
       <p class="art-dek">{e(a['sub'])}</p>
       <div class="art-meta"><p class="lbl"><span data-notr>{e(a['by'])}</span> · <time datetime="{a['date']}">{e(a['dlabel'])}</time> · {a['mins']} min read · {e(a['topic'])}</p><button class="art-share" type="button" data-share>Share <span aria-hidden="true">→</span></button></div>
@@ -124,7 +124,7 @@ for idx, a in enumerate(ARTICLES):
       <ul class="art-authors" role="list">{''.join(authors)}</ul>
       <div class="art-next">
         <p class="art-share-row"><span>Share the article</span><button class="lbl linkbtn" type="button" data-share>Copy link</button><a class="lbl" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fhoppartners.pl%2Farticles%2F{a['slug']}" rel="noopener" target="_blank">LinkedIn</a><a class="lbl" href="mailto:?subject={html.escape(a['title'])}&amp;body=https%3A%2F%2Fhoppartners.pl%2Farticles%2F{a['slug']}">Email</a></p>
-        <a class="art-nextlink" href="/articles/{nxt['slug']}"><span class="lbl">Next · Article No. {nxt['n']}</span><span class="art-nt">{title_html(nxt)} <span aria-hidden="true">→</span></span></a>
+        <a class="art-nextlink" href="/articles/{nxt['slug']}"><span class="lbl">Next article</span><span class="art-nt">{title_html(nxt)} <span aria-hidden="true">→</span></span></a>
       </div>
     </div>
   </section>
@@ -168,7 +168,7 @@ dl = _d.fromisoformat(L['date']).strftime('%-d %B %Y')
 main = f'''<main id="main" class="art" data-page="articles">
   <header class="s art-cover ink">
     <div class="wrap">
-      <p class="art-crumbs"><a class="lbl" href="/articles">← All articles</a><span class="kdot" aria-hidden="true"></span><span class="lbl lbl--m lbl--red-d">No. {L['number']:02d} · {e(topics)}</span></p>
+      <p class="art-crumbs"><a class="lbl" href="/articles">← All articles</a></p>
       <h1 class="h1 art-h">Say <em>Hop</em><span class="tdot">.</span></h1>
       <p class="art-dek">{e(L['subtitle'])}</p>
       <div class="art-meta"><p class="lbl"><span data-notr>{e(L['authors'])}</span> · <time datetime="{L['date']}">{e(dl)}</time> · {mins} min read · {e(topics)}</p><button class="art-share" type="button" data-share>Share <span aria-hidden="true">→</span></button></div>
@@ -198,7 +198,7 @@ main = f'''<main id="main" class="art" data-page="articles">
       <ul class="art-authors" role="list">{''.join(auth)}</ul>
       <div class="art-next">
         <p class="art-share-row"><span>Share the letter</span><button class="lbl linkbtn" type="button" data-share>Copy link</button><a class="lbl" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fhoppartners.pl%2Farticles%2Fsay-hop" rel="noopener" target="_blank">LinkedIn</a><a class="lbl" href="mailto:?subject=Say%20Hop.&amp;body=https%3A%2F%2Fhoppartners.pl%2Farticles%2Fsay-hop">Email</a></p>
-        <a class="art-nextlink" href="/articles/{nxt['slug']}"><span class="lbl">Next · Article No. {nxt['n']}</span><span class="art-nt">{title_html(nxt)} <span aria-hidden="true">→</span></span></a>
+        <a class="art-nextlink" href="/articles/{nxt['slug']}"><span class="lbl">Next article</span><span class="art-nt">{title_html(nxt)} <span aria-hidden="true">→</span></span></a>
       </div>
     </div>
   </section>

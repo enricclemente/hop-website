@@ -23,14 +23,20 @@
      (same approach as the rest of the site), with the notice at the bottom.
      ------------------------------------------------------------------ */
   var PL_COPY = { /* "English text": "Polski tekst" */ };
-  var LOREM = ("lorem ipsum dolor sit amet źródło łąka zażółć gęślą jaźń consectetur adipiscing świat elit sed miód tempor ręka labore dolore magna wąż aliqua enim minim pióro veniam nostrud ćma laboris nisi aliquip źdźbło commodo duis aute irure mężny reprehenderit voluptate velit esse cillum dolore fugiat nulla pariatur excepteur sint occaecat cupidatat proident sunt culpa officia deserunt mollit anim laborum słowo pewność").split(" ");
+  var LOREM = ("lorem ipsum dolor sit amet źródło łąka zażółć gęślą jaźń consectetur adipiscing świat elit sed miód tempor ręka labore dolore magna wąż aliqua enim minim pióro veniam nostrud ćma laboris nisi aliquip źdźbło commodo duis aute irure mężny reprehenderit voluptate velit esse cillum dolore fugiat nulla pariatur excepteur sint occaecat cupidatat proident sunt culpa officia deserunt mollit anim laborum słowo pewność i w z o a na do że to się jak od po dla przez".split(" "));
+  /* placeholder Polish keeps every word's exact length, so lines, wraps and buttons hold their English shape */
+  var BYLEN = {}; LOREM.forEach(function (w) { (BYLEN[w.length] = BYLEN[w.length] || []).push(w); });
+  function ofLen(L, k) {
+    var b = BYLEN[L]; if (b) return b[k % b.length];
+    var s = "", j = k; while (s.length < L) s += LOREM[j++ % LOREM.length]; return s.slice(0, L);
+  }
   function hash(s) { var h = 2166136261; for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
   function pseudo(text) {
     var t = text.trim(); if (!t) return text;
     if (PL_COPY[t]) return text.replace(t, PL_COPY[t]);
     var seed = hash(t), i = 0;
-    return text.replace(/[A-Za-zÀ-ž’'\-]+/g, function (w) {
-      var r = LOREM[(seed + i++ * 7919) % LOREM.length];
+    return text.replace(/[A-Za-zÀ-ž]+/g, function (w) {
+      var r = ofLen(w.length, seed + i++ * 7919);
       if (w === w.toUpperCase() && w.length > 1) return r.toUpperCase();
       if (w[0] !== w[0].toLowerCase()) return r[0].toUpperCase() + r.slice(1);
       return r;

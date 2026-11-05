@@ -691,3 +691,40 @@ html.i5-on .i5 { display: block; position: fixed; inset: 0; z-index: 1000; point
 .jump-h { font-size: calc(50px + 20 * var(--t)); }
 @media (min-width: 1024px) { .jump-h { font-size: calc(var(--u) * 122 - 2px); } }
 @media (max-width: 1023px) { .jump-h { font-size: 50px; } }
+
+/* ---------- 31. Letter actions: one type system — an outlined primary, a quiet text secondary ---------- */
+.mletter .l5-foot { align-items: center; gap: 14px 32px; }
+.l5-foot .alink {
+  position: relative; isolation: isolate; display: inline-flex; align-items: center; gap: 18px;
+  min-height: 52px; padding: 0 22px 0 24px; border: 1px solid rgba(239, 235, 228, .32); border-radius: 0;
+  font-family: var(--sans); font-style: normal; font-weight: 500; font-size: 15px; letter-spacing: .01em; color: var(--ivory);
+  transition: border-color .5s ease;
+}
+.l5-foot .alink::before { content: ""; position: absolute; inset: 0; z-index: -1; background: rgba(239, 235, 228, .07); opacity: 0; transition: opacity .5s ease; }
+.l5-foot .alink svg { width: 16px; height: 16px; transition: transform .55s cubic-bezier(.65, 0, .35, 1); }
+.l5-foot .letter-close {
+  display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 4px;
+  font-family: var(--sans); font-weight: 400; font-size: 15px; letter-spacing: .01em; text-transform: none; color: rgba(239, 235, 228, .66);
+  transition: color .4s ease;
+}
+.l5-foot .letter-close svg { width: 14px; height: 14px; transition: transform .55s cubic-bezier(.65, 0, .35, 1); }
+@media (hover: hover) {
+  .l5-foot .alink:hover { border-color: rgba(239, 235, 228, .8); }
+  .l5-foot .alink:hover::before { opacity: 1; }
+  .l5-foot .alink:hover svg { transform: translate3d(4px, 0, 0); }
+  .l5-foot .letter-close:hover { color: var(--ivory); }
+  .l5-foot .letter-close:hover svg { transform: translate3d(0, -3px, 0); }
+}
+.l5-foot .alink:focus-visible, .l5-foot .letter-close:focus-visible { outline: 1px solid var(--ivory); outline-offset: 4px; }
+@media (max-width: 599px) {
+  .mletter .l5-foot { align-items: stretch; }
+  .l5-foot .alink { justify-content: space-between; width: 100%; }
+  .l5-foot .letter-close { align-self: flex-start; min-height: 44px; }
+}
+
+/* ---------- 32. Card body copy one step up (15 → 16px) ---------- */
+.smodal.glass-l .sm-body, .glass-d .pm-bio { font-size: 16px; line-height: 1.62; }
+@media (min-width: 1024px) { .glass-d .pm-bio { font-size: 16px; } .pmodal.smodal.glass-l { width: min(440px, calc(100vw - 48px)); } }
+@media (max-width: 599px) { .smodal.glass-l .sm-body, .glass-d .pm-bio { font-size: 16px; line-height: 1.6; } }
+.l5-foot .letter-close, .l5-foot .alink { -webkit-text-stroke: 0; }
+.l5-foot .alink { font-weight: 400; }
