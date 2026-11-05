@@ -789,3 +789,41 @@ html.i5-on .i5 { display: block; position: fixed; inset: 0; z-index: 1000; point
   .smodal.glass-l .pm-next { font-size: 14px; }
 }
 @media (max-width: 599px) { .pmodal.smodal.glass-l { background: rgba(14, 13, 15, .97); } }
+
+/* ---------- 41. Contact form, editorial: open underline fields, eyebrow labels, a red line that draws on focus ---------- */
+.cbody .form { gap: calc(56px + 16 * var(--t)); }
+.cbody .fset-legend .enum { display: none; }
+.cbody .fset-t { font-family: var(--serif); font-style: normal; font-weight: 400; font-size: calc(28px + 8 * var(--t)); line-height: 1.15; letter-spacing: -0.01em; color: var(--ink); }
+.cbody .fset-t::after { content: "."; color: var(--red); }
+.cbody .fset-sub { margin-bottom: 32px; }
+@media (min-width: 600px) { .cbody .group--grid { column-gap: 40px; } }
+.cbody .fld { gap: 4px; padding-bottom: 28px; }
+.cbody .fld > label:not(.check) { font-family: var(--sans); font-size: 11px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: rgba(27, 26, 25, .62); }
+.cbody .fld > label .req { margin-left: 2px; }
+.cbody .opt { margin-left: 6px; font-size: 11px; letter-spacing: .08em; text-transform: none; color: rgba(27, 26, 25, .45); }
+.cbody .fld input:not([type="checkbox"]):not([type="radio"]), .cbody .fld textarea {
+  min-height: 48px; padding: 10px 0 12px; border: 0; border-bottom: 1px solid rgba(27, 26, 25, .26); border-radius: 0;
+  background-color: transparent; background-image: linear-gradient(var(--red), var(--red)); background-repeat: no-repeat;
+  background-position: 0 100%; background-size: 0 2px;
+  font-family: var(--sans); font-size: 18px; line-height: 1.4; color: var(--ink); box-shadow: none; outline: none;
+  transition: border-color .3s ease, background-size .6s cubic-bezier(.65, 0, .35, 1);
+}
+.cbody .fld input:not([type="checkbox"]):not([type="radio"]):hover, .cbody .fld textarea:hover { border-color: rgba(27, 26, 25, .55); }
+.cbody .fld input:not([type="checkbox"]):not([type="radio"]):focus, .cbody .fld textarea:focus { border-color: rgba(27, 26, 25, .55); box-shadow: none; background-size: 100% 2px; }
+.cbody .fld.invalid input:not([type="checkbox"]):not([type="radio"]), .cbody .fld.invalid textarea { border-color: var(--red-on-light); box-shadow: none; background-size: 100% 2px; }
+.cbody .fld textarea { min-height: 120px; resize: vertical; }
+.cbody .fld input:-webkit-autofill { -webkit-text-fill-color: var(--ink); transition: background-color 9999s ease 0s; }
+.cbody .err { font-family: var(--sans); font-style: normal; font-size: 13px; letter-spacing: .01em; }
+.cbody .counter { font-size: 11px; letter-spacing: .12em; color: rgba(27, 26, 25, .45); }
+.cbody .submit-row { border-top: 1px solid rgba(27, 26, 25, .14); padding-top: 32px; gap: 28px; }
+.cbody .check { gap: 14px; color: rgba(27, 26, 25, .8); }
+.cbody .check .box { width: 20px; height: 20px; border-width: 1px; border-color: rgba(27, 26, 25, .5); }
+.cbody .check input:checked + .box { background: var(--ink); border-color: var(--ink); }
+.cbody .check input:checked + .box::after { left: 6px; top: 2px; width: 5px; height: 10px; border-width: 0 1.5px 1.5px 0; }
+.cbody .form-alert { border-top-width: 1px; font-family: var(--sans); font-size: 15px; }
+.cbody .form-alert strong { font-family: var(--serif); font-size: 19px; }
+@media (prefers-reduced-motion: reduce) { .cbody .fld input, .cbody .fld textarea { transition: none; } }
+.cbody .form > .hp { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); margin: 0; }
+.cbody .form { position: relative; }
+.cbody .submit-row { margin-top: calc(-24px - 16 * var(--t)); }
+.cbody .fld[data-field="message"] { padding-bottom: 0; }
