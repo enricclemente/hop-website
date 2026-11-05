@@ -341,9 +341,7 @@
     window.addEventListener("resize", function () { if (pm.open) place(byName()); });
   }
 
-  /* ---------- How we do it: the open service stays marked in the graph; on desktop the
-     glass card sits beside it (Figma: card offset 440px into the stage for a Run-up item,
-     the mirror for Land), so the red item stays visible ---------- */
+  /* ---------- How we do it: the open service stays marked in the graph; the card is always centred ---------- */
   var sm = $("#smodal");
   if (sm) {
     var sItems = $$(".jump-item"), stageEl = $(".jump-wrap");
@@ -354,19 +352,10 @@
     var placeSm = function () {
       var it = current();
       sItems.forEach(function (b) { b.classList.toggle("is-active", sm.open && b === it); });
-      if (!mqDesk.matches || !stageEl || !it) { sm.classList.remove("is-anchored"); sm.style.left = sm.style.top = ""; return; }
-      sm.classList.add("is-anchored");
-      var wr = stageEl.getBoundingClientRect(), u = wr.width / 1200, w = sm.offsetWidth, h = sm.offsetHeight;
-      var col = it.closest(".jump-col"), ci = col ? [].indexOf.call(col.parentNode.children, col) : 0;
-      var left = wr.left + (ci === 0 ? 440 * u : ci === 1 ? wr.width - w : 0);
-      if (ci === 2) left = wr.left + Math.max(0, (wr.width - 340 * u) - w - 40 * u);
-      left = clamp(left, 16, window.innerWidth - w - 16);
-      var vh = window.innerHeight, top = clamp(wr.top + 50 * u, 16, Math.max(16, vh - h - 16));
-      sm.style.left = left + "px"; sm.style.top = top + "px";
     };
     sItems.forEach(function (b) { b.addEventListener("click", function () { requestAnimationFrame(placeSm); }); });
     var snx = sm.querySelector(".pm-next"); if (snx) snx.addEventListener("click", function () { requestAnimationFrame(placeSm); });
     window.addEventListener("resize", function () { if (sm.open) placeSm(); });
-    sm.addEventListener("close", function () { sItems.forEach(function (b) { b.classList.remove("is-active"); }); sm.classList.remove("is-anchored"); sm.style.left = sm.style.top = ""; });
+    sm.addEventListener("close", function () { sItems.forEach(function (b) { b.classList.remove("is-active"); }); });
   }
 })();
