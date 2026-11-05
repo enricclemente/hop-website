@@ -248,7 +248,7 @@ nf_main = '''<main id="main" class="art legal" data-page="404">
       <p class="art-crumbs"><span class="lbl lbl--m lbl--red-d">404</span></p>
       <h1 class="h1 art-h">This page didn’t make the leap<span class="tdot">.</span></h1>
       <p class="art-dek">The link may be old, or the address mistyped.</p>
-      <p class="nf-act"><a class="btn btn--l" href="/"><span class="btn-t">Back to the home page</span><svg class="btn-i" aria-hidden="true" focusable="false"><use href="#i-arrow-r"/></svg></a></p>
+      <p class="nf-act"><a class="btn btn--l" href="/"><span class="btn-t"><span class="btn-r">Back to the home page</span></span><svg class="btn-i" aria-hidden="true" focusable="false"><use href="#i-arrow-r"/></svg></a></p>
     </div>
   </header>
 </main>'''

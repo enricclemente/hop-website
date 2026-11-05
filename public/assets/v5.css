@@ -638,34 +638,25 @@ html.i5-on .i5 { display: block; position: fixed; inset: 0; z-index: 1000; point
 #site-foot .fcol--hop a { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; white-space: normal; text-wrap: balance; max-width: 30ch; }
 #site-foot .fcol-note { margin: 18px 0 0; max-width: 34ch; font-size: 14px; line-height: 1.6; color: var(--muted-d); text-wrap: pretty; }
 
-/* ---------- 28. CTA: deep burgundy; on hover a darker fill glides across, a soft light passes, the arrow loops.
-   Compositor-only motion (transform/opacity) on one easing curve, so it stays smooth at 60-120fps. ---------- */
+/* ---------- 28. CTA: deep burgundy. Hover: the colour deepens in a soft fade, the label rolls up to an
+   identical copy, the arrow glides 4px. One curve, transform/opacity only. ---------- */
 .btn {
-  --cta: #7A1527; --cta-deep: #520C19; --cta-ease: cubic-bezier(.22, .61, .36, 1);
+  --cta: #7A1527; --cta-deep: #5A0F1D; --cta-ease: cubic-bezier(.65, 0, .35, 1);
   position: relative; isolation: isolate; overflow: hidden; background: var(--cta);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08);
   transition: none; -webkit-tap-highlight-color: transparent;
 }
 .btn:hover, .btn:focus-visible { background: var(--cta); }
-.btn::before {
-  content: ""; position: absolute; inset: 0; z-index: -1; background: var(--cta-deep);
-  transform: translate3d(-101%, 0, 0); will-change: transform;
-  transition: transform .55s var(--cta-ease);
-}
-.btn::after {
-  content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 60%; z-index: -1; pointer-events: none;
-  background: linear-gradient(100deg, transparent, rgba(255, 236, 228, .09), transparent);
-  transform: translate3d(-120%, 0, 0); opacity: 0; will-change: transform, opacity;
-}
-.btn:hover::before, .btn:focus-visible::before { transform: translate3d(0, 0, 0); }
-.btn:hover .btn-i, .btn:focus-visible .btn-i { transform: none; }
-.btn:active::before { transition-duration: .2s; }
+.btn::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--cta-deep); opacity: 0; transition: opacity .5s ease; }
+.btn::after { content: none; }
+.btn:hover::before, .btn:focus-visible::before { opacity: 1; }
+.btn-t { display: inline-block; overflow: hidden; vertical-align: top; padding-block: .1em; margin-block: -.1em; }
+.btn-r { display: inline-block; text-shadow: 0 1.7em 0 currentColor; }
+.btn .btn-i { transition: transform .55s var(--cta-ease); }
+.btn:hover .btn-i, .btn:focus-visible .btn-i { transform: translate3d(4px, 0, 0); animation: none; }
 @media (prefers-reduced-motion: no-preference) {
-  .btn:hover::after, .btn:focus-visible::after { opacity: 1; transform: translate3d(220%, 0, 0); transition: transform .9s var(--cta-ease) .05s, opacity .2s linear; }
-  .btn:hover .btn-i, .btn:focus-visible .btn-i { animation: cta-arrow .55s var(--cta-ease); will-change: transform, opacity; }
+  .btn-r { transition: transform .55s var(--cta-ease); }
+  .btn:hover .btn-r, .btn:focus-visible .btn-r { transform: translate3d(0, -1.7em, 0); }
 }
-@keyframes cta-arrow { 0% { transform: translate3d(0, 0, 0); opacity: 1; } 40% { transform: translate3d(10px, 0, 0); opacity: 0; } 41% { transform: translate3d(-10px, 0, 0); opacity: 0; } 100% { transform: translate3d(0, 0, 0); opacity: 1; } }
-@media (prefers-reduced-motion: reduce) { .btn::before { transition-duration: .01s; } }
 /* the header CTA reads as the primary action: a touch larger, more air */
 @media (min-width: 1024px) {
   .nav-cta.btn--s { gap: 18px; min-height: 48px; padding: 14px 24px; font-size: 16px; letter-spacing: .005em; }
