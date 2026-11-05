@@ -762,3 +762,7 @@ html.i5-on .i5 { display: block; position: fixed; inset: 0; z-index: 1000; point
 .smodal.glass-l .pm-top .pm-x { margin-left: auto; }
 .smodal.glass-l .sm-svc::before { content: none; }
 @media (min-width: 1024px) { .smodal.glass-l .sm-title { margin-top: 22px; } }
+
+/* ---------- 37. Letter heading 4px bigger ---------- */
+.l5-h { font-size: calc(34px + 12 * var(--t)); }
+@media (max-width: 1023px) { .l5-h { font-size: 32px; } }
