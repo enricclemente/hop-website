@@ -96,6 +96,11 @@
   ],
   "redirects": [
     {
+      "source": "/house-of-poland/say-hop",
+      "destination": "/articles/say-hop",
+      "permanent": false
+    },
+    {
       "source": "/house-of-poland.html",
       "destination": "/house-of-poland",
       "permanent": true

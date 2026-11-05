@@ -1,149 +1,61 @@
 /* =====================================================================
-   HOP. V5 — client design feedback (4 Nov 2026)
-   Loaded after v2.css. Everything V5 lives here so it can be reviewed,
-   tuned or rolled back as one layer.
+   HOP. V5 — client design feedback (4 Nov 2026), round 2 (5 Nov)
+   Loaded after v2.css. Nav, footer, the rug and the light backgrounds
+   stay exactly as production; everything here is content + motion.
    ===================================================================== */
 
 :root {
-  --leather: url("/assets/tex/leather.webp");
-  --leather-s: 512px 512px;
-  --paper-i: url("/assets/tex/paper-ivory.webp");
-  --paper-l: url("/assets/tex/paper-light.webp");
-  --grain-s: 512px 512px;
-  --ink-l: #171615;
   --glass-d: rgba(20, 19, 18, .56);
   --glass-l: rgba(251, 250, 248, .74);
-  --hold: 3.4s;
-  /* every dark surface that used the old rug now uses the leather */
-  --rug-c: #171615; --rug-i: url("/assets/tex/leather.webp"); --rug-s: 512px 512px;
+  --hold: 3.6s;
 }
 
-/* ---------- 1 · Surfaces: one leather run (credentials cover) + paper grain ---------- */
-html { background: var(--ink-l) var(--leather) 0 0 / var(--leather-s) repeat; }
-.inkrun, .chead.ink {
-  position: relative; color: var(--ivory);
-  background-color: var(--ink-l);
-  background-image:
-    radial-gradient(130% 70% at 50% 35%, transparent 55%, rgba(0, 0, 0, .38) 100%),
-    linear-gradient(180deg, rgba(0, 0, 0, .32), transparent 18%, transparent 80%, rgba(0, 0, 0, .3)),
-    var(--leather);
-  background-size: auto, auto, var(--leather-s);
-  background-repeat: no-repeat, no-repeat, repeat;
-}
+/* ---------- 1 · Surfaces: the production rug, one run for hero + letter ---------- */
+.inkrun { position: relative; color: var(--ivory); background-color: var(--rug-c); background-image: var(--rug-i); background-size: var(--rug-s); background-repeat: repeat; }
 .inkrun > .s { background: none; }
 .inkrun :focus-visible { outline-color: var(--ivory); }
-.s.paper5 { background: var(--ivory) var(--paper-i) 0 0 / var(--grain-s) repeat; }
-.s.paper5b { background: var(--paper) var(--paper-l) 0 0 / var(--grain-s) repeat; }
 
-/* ---------- 2 · Nav: three links, the red dot marks where you are ---------- */
-@media (min-width: 1024px) {
-  .nav-links { gap: 36px; font-family: var(--sans); font-size: 14px; font-weight: 500; letter-spacing: .01em; align-items: center; }
-  .nav-links .nav-ln { position: relative; display: inline-block; padding-block: 12px; color: rgba(239, 235, 228, .78); transition: color .25s ease; }
-  .nav-links .nav-ln::after { display: none; }
-  .nav-links .nav-ln:hover, .nav-links .nav-ln:focus-visible, .nav-links .nav-ln[aria-current] { color: var(--ivory); }
-  .nav-ln-dot { position: absolute; left: 50%; bottom: 1px; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 50%; background: var(--red); opacity: 0; transform: translateY(-6px) scale(.4); transition: opacity .2s ease, transform .35s var(--expo); pointer-events: none; }
-  .nav-ln[aria-current] .nav-ln-dot { opacity: 1; transform: none; }
-}
-@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
-  /* the dot hops in on an arc from the link before it */
-  .nav-ln[aria-current] .nav-ln-dot { animation: nd-hop .7s var(--expo) both; }
-  .nav-ln:hover .nav-ln-dot { opacity: .45; transform: none; }
-  .nav-ln[aria-current]:hover .nav-ln-dot { opacity: 1; }
-}
-@keyframes nd-hop {
-  0% { opacity: 0; transform: translate(-26px, -2px) scale(.5); }
-  40% { opacity: 1; transform: translate(-11px, -15px) scale(.95, 1.08); }
-  78% { transform: translate(0, 1px) scale(1.25, .78); }
-  100% { opacity: 1; transform: none; }
-}
-/* logo dot: a real leap out of the logo (replaces the up-and-down bounce).
-   Percentages are of the dot itself (fill-box). */
-.nav-logo svg, .menu-logo svg { overflow: visible; }
-.nav-dot { transform-box: fill-box; transform-origin: 50% 100%; }
-@media (prefers-reduced-motion: no-preference) {
-  .nav-logo .nav-dot, .menu-logo .nav-dot { animation: logo-leap 7s cubic-bezier(.45, .05, .3, 1) 3s infinite; }
-  .nav-logo:hover .nav-dot, .nav-logo:focus-visible .nav-dot { animation: logo-leap-once 1.15s cubic-bezier(.45, .05, .3, 1); }
-}
-@keyframes logo-leap {
-  0%, 30%, 100% { transform: none; }
-  2.5% { transform: translateY(4%) scale(1.24, .76); }
-  9% { transform: translate(95%, -300%) scale(.92, 1.1); }
-  15% { transform: translate(190%, 0) scale(1.2, .8); }
-  17.5% { transform: translate(190%, 0); }
-  23% { transform: translate(95%, -110%) scale(.96, 1.05); }
-  27.5% { transform: translateY(0) scale(1.12, .88); }
-}
-@keyframes logo-leap-once {
-  0%, 100% { transform: none; }
-  8% { transform: translateY(4%) scale(1.24, .76); }
-  30% { transform: translate(95%, -300%) scale(.92, 1.1); }
-  50% { transform: translate(190%, 0) scale(1.2, .8); }
-  58% { transform: translate(190%, 0); }
-  78% { transform: translate(95%, -110%) scale(.96, 1.05); }
-  92% { transform: translateY(0) scale(1.12, .88); }
-}
-
-/* ---------- 3 · CTA “Let’s make the leap”: glass pill, the dot leaps on hover ---------- */
-.cta5 {
-  position: relative; display: inline-flex; align-items: center; gap: 12px;
-  height: 46px; padding: 0 20px 0 18px; border-radius: 999px;
-  border: 1px solid rgba(239, 235, 228, .3); background: rgba(239, 235, 228, .05);
-  -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
-  color: var(--ivory); font-family: var(--sans); font-weight: 500; font-size: 14px; letter-spacing: .01em; line-height: 1;
-  white-space: nowrap; text-decoration: none; cursor: pointer;
-  transition: background-color .35s var(--expo), border-color .35s var(--expo), color .35s ease;
-}
-.cta5-d, .cta5-d2 { width: 7px; height: 7px; flex: none; border-radius: 50%; background: var(--red); }
-.cta5-d2 { position: absolute; right: 23.5px; top: 50%; margin-top: -3.5px; background: var(--ivory); opacity: 0; }
-.cta5-a { width: 14px; height: 14px; flex: none; fill: none; stroke: currentColor; transition: opacity .2s ease, transform .35s var(--expo); }
-.cta5:focus-visible { outline: 2px solid var(--ivory); outline-offset: 3px; }
-@media (hover: hover) {
-  .cta5:hover { background: var(--red); border-color: var(--red); }
-  .cta5:hover .cta5-a { opacity: 0; transform: translateX(6px); }
-  .cta5:hover .cta5-d { opacity: 0; }
-  .cta5:hover .cta5-d2 { opacity: 1; }
-}
-@media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .cta5:hover .cta5-d { animation: cta-out .45s var(--expo) forwards; }
-  .cta5:hover .cta5-d2 { animation: cta-in .7s .05s var(--expo) both; }
-}
-@keyframes cta-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: translate(16px, -20px) scale(.4); } }
-@keyframes cta-in {
-  0% { opacity: 0; transform: translate(-64px, -6px) scale(.5); }
-  45% { opacity: 1; transform: translate(-26px, -18px) scale(1); }
-  82% { transform: translate(0, 1px) scale(1.2, .8); }
-  100% { opacity: 1; transform: none; }
-}
-.cta5.nav-cta { display: none; }
-@media (min-width: 1024px) { .cta5.nav-cta { display: inline-flex; } }
-.cta5--full { width: 100%; height: 56px; justify-content: center; font-size: 16px; }
-.cta5--full .cta5-d2 { right: calc(50% - 90px); }
-.cta5--sticky { flex: 1; height: 52px; justify-content: center; font-size: 15px; background: rgba(239, 235, 228, .06); }
-.cta5--full .cta5-a, .cta5--sticky .cta5-a { margin-left: 2px; }
-
-/* ---------- 4 · Hero: the six statements ---------- */
-.hero5 { min-height: 100svh; display: flex; flex-direction: column; justify-content: space-between; padding: calc(var(--nav-h) + 24px) 0 calc(24px + 20 * var(--t)); overflow: clip; }
+/* ---------- 4 · Hero: six statements — kinetic type, punctuated by the dot ----------
+   Choreography per change (≈1.3s):
+   0ms      old statement exhales: words lift .16em, letters blur out in reading order
+   60ms     the dot crouches, then leaps a long arc with a 3-dot motion trail
+   240ms    new statement writes itself: words rise on a soft spring, letters
+            resolve from blur left→right, timed so the last letter lands with the dot
+   ~1040ms  the dot lands as the full stop: squash, a ripple, the line takes the hit
+   Pointer: the type and the dot sit on two depths (subtle parallax).
+   Scroll:  the statement pulls out of focus as you leave; the dot stays sharp.
+   Click/tap the statement to leap to the next one. */
+.hero5 { --px: 0; --py: 0; --sp: 0; min-height: 100svh; display: flex; flex-direction: column; justify-content: space-between; padding: calc(var(--nav-h) + 24px) 0 calc(24px + 20 * var(--t)); overflow: clip; }
 .hero5-body { margin-block: auto; padding-block: calc(32px + 24 * var(--t)); }
 .hs { position: relative; display: grid; font-family: var(--serif); font-size: calc(46px + 58 * var(--t)); }
 @media (min-width: 1441px) { .hs { font-size: min(128px, calc((100vw - 2 * var(--pad)) / 11.6)); } }
-.hs-i {
-  grid-area: 1 / 1; margin: 0; max-width: 12.4em;
-  font-size: 1em; font-weight: 400; line-height: 1.02; letter-spacing: -0.018em; color: var(--ivory);
-  text-wrap: balance; font-optical-sizing: auto;
-}
+.hs-i { grid-area: 1 / 1; margin: 0; max-width: 12.4em; font-size: 1em; font-weight: 400; line-height: 1.02; letter-spacing: -0.018em; color: var(--ivory); text-wrap: balance; font-optical-sizing: auto; }
 .hs-i em { font-style: italic; font-weight: 300; letter-spacing: -0.01em; }
 .hs-i:not(.is-on) { visibility: hidden; }
+.hs-v { display: block; }
+.hs .w { display: inline-block; white-space: nowrap; }
 .hs-stop { color: var(--red); }
+.hs-base { display: inline-block; width: 0; height: 0; vertical-align: baseline; }
 html.hs-live .hs-stop { color: transparent; }
-.hs-dot { position: absolute; left: 0; top: 0; width: .155em; height: .155em; border-radius: 50%; background: var(--red); opacity: 0; pointer-events: none; will-change: transform; }
+html.hs-live .hs-i.is-on { cursor: pointer; }
+.hs-fx { position: absolute; inset: 0; pointer-events: none; }
+.hs-dot, .hs-ghost, .hs-ring { position: absolute; left: 0; top: 0; width: .155em; height: .155em; border-radius: 50%; opacity: 0; will-change: transform, opacity; }
+.hs-dot, .hs-ghost { background: var(--red); }
+.hs-ring { border: 1.5px solid var(--red-on-dark); box-sizing: border-box; }
 html.hs-live .hs-dot.is-placed { opacity: 1; }
-/* word masks: each word rises out of its own line */
-.hs .w { display: inline-block; vertical-align: top; overflow: hidden; padding: 0 .07em .14em 0; margin: 0 -.07em -.14em 0; }
-.hs .wi { display: inline-block; }
 @media (prefers-reduced-motion: no-preference) {
-  html.hs-live .hs-i .wi { transform: translateY(112%); }
-  html.hs-live .hs-i.is-in .wi { transform: none; transition: transform 1s var(--expo) calc(var(--i, 0) * 42ms); }
-  html.hs-live .hs-i.is-out { opacity: 0; transform: translateY(-.22em); transition: opacity .42s ease, transform .55s var(--ease-in); }
+  /* depth: type and dot on two planes; the type pulls out of focus on scroll */
+  html.hs-live .hs-v { transform: translate3d(calc(var(--px) * -6px), calc(var(--py) * -4px + var(--sp) * -48px), 0); opacity: calc(1 - var(--sp) * .7); filter: blur(calc(var(--sp) * 6px)); }
+  html.hs-live .hs-fx { transform: translate3d(calc(var(--px) * 12px), calc(var(--py) * 9px + var(--sp) * -84px), 0); }
+  /* resting (hidden) state */
+  html.hs-live .hs-i .w { transform: translateY(.24em); }
+  html.hs-live .hs-i .c { opacity: 0; filter: blur(.16em); }
+  /* write in */
+  html.hs-live .hs-i.is-in .w { transform: none; transition: transform 1.1s cubic-bezier(.16, 1, .3, 1) var(--wd, 0ms); transition-timing-function: linear(0, .22 5%, .52 11%, .76 18%, .91 26%, 1.004 35%, 1.028 43%, 1.02 54%, 1.004 70%, 1); }
+  html.hs-live .hs-i.is-in .c { opacity: 1; filter: blur(0); transition: opacity .5s ease var(--cd, 0ms), filter .62s cubic-bezier(.16, 1, .3, 1) var(--cd, 0ms); }
+  /* exhale */
+  html.hs-live .hs-i.is-out .w { transform: translateY(-.16em); transition: transform .5s cubic-bezier(.55, 0, .75, .25) var(--wo, 0ms); }
+  html.hs-live .hs-i.is-out .c { opacity: 0; filter: blur(.12em); transition: opacity .3s ease var(--co, 0ms), filter .36s ease var(--co, 0ms); }
 }
 @media (prefers-reduced-motion: reduce) {
   html.hs-live .hs-i { opacity: 0; transition: opacity .6s ease; }
@@ -328,17 +240,8 @@ html:not(.hs-live) .hs-ctl { display: none; }
   @media (prefers-reduced-motion: no-preference) { .pmodal.glass-d[open], .pmodal.glass-l[open] { animation: pm-up .5s var(--expo); } }
 }
 
-/* ---------- 10 · Footer: LinkedIn + Instagram ---------- */
-.foot-socials { display: flex; gap: 12px; margin-top: 24px; }
-.foot-socials .foot-social { margin-top: 0; }
-.foot-social .li-f { fill: currentColor; stroke: none; }
-.foot-social svg { width: 18px; height: 18px; }
-
 /* ---------- 11 · Contact ---------- */
 .chead .sign--d .sign-l { color: var(--ivory); }
 .chead-h em { font-style: italic; font-weight: 300; color: var(--ivory); }
 .chead-h .tdot { color: var(--red); }
-.cpage .btn--l { border-radius: 999px; padding-inline: 28px 26px; }
-.cpage .btn--l .btn-i { transition: transform .35s var(--expo); }
-@media (hover: hover) { .cpage .btn--l:hover .btn-i { transform: translateX(4px); } }
 .jump-inner > .lhls { width: var(--content); margin-inline: auto; }

@@ -1,20 +1,16 @@
-/* HOP. V5 — client design feedback (4 Nov 2026)
-   Loaded after v2.js. Hero statements + the leaping dot, nav "you are here",
-   signposts, leap headlines, glass overlays. CSP-safe: no inline styles in
-   markup; JS only sets CSSOM properties. */
+/* HOP. V5 — client design feedback (4 Nov 2026), round 2 (5 Nov)
+   Loaded after v2.js. Hero statements (kinetic type punctuated by the dot),
+   signposts, leap headlines, glass overlays. Nav and footer are untouched.
+   CSP-safe: no inline styles in markup; JS only sets CSSOM properties. */
 (function () {
   "use strict";
   var doc = document.documentElement;
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var mqDesk = window.matchMedia("(min-width: 1024px)");
+  var fine = window.matchMedia("(hover: hover) and (pointer: fine)");
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); };
-
-  /* ---------- Nav: House of Poland is "current" on its own pages ---------- */
-  if (/^\/(articles|house-of-poland)(\/|$)/.test(location.pathname)) {
-    $$('[data-page-link="articles"]').forEach(function (a) { a.setAttribute("aria-current", "page"); });
-  }
 
   /* ---------- Signposts: rule draws in, the dot drops on it ---------- */
   var signs = $$(".sign:not(.sign--d)");
@@ -26,81 +22,116 @@
     }
   }
 
-  /* ---------- Hero: six statements, the red full stop leaps between them ---------- */
+  /* ---------- Hero: six statements — kinetic type, punctuated by the dot ---------- */
   var hero = $(".hero5"), hs = $("#hs");
-  if (hero && hs) {
-    var items = $$(".hs-i", hs), segs = $$(".hs-seg", hero), dot = $(".hs-dot", hs),
+  if (hero && hs && "animate" in Element.prototype) {
+    var items = $$(".hs-i", hs), segs = $$(".hs-seg", hero), fx = $(".hs-fx", hs),
+        dot = $(".hs-dot", hs), ring = $(".hs-ring", hs), ghosts = $$(".hs-ghost", hs),
         curN = $(".hs-cur", hero), pauseBtn = $(".hs-pause", hero), body = $(".hero5-body", hero);
-    var cur = 0, userPaused = false, hover = false, offscreen = false, flight = null, hideT = null;
+    var EN = items.map(function (p) { return p.innerHTML; });
+    var cur = 0, userPaused = false, offscreen = false, flight = [], hideT = null, busy = false;
     doc.classList.add("hs-live");
 
-    /* split each statement into words, each inside its own mask; the stop rides with the last word */
-    items.forEach(function (p) {
-      var i = 0;
-      (function walk(node) {
-        Array.prototype.slice.call(node.childNodes).forEach(function (n) {
+    /* Build a statement: an sr-only sentence for assistive tech, and a visual copy
+       split into words (inline-blocks that rise) and letters (inline spans that
+       resolve from blur, so kerning survives). The full stop rides with the last word. */
+    var build = function (p, html) {
+      var tmp = document.createElement("p"); tmp.innerHTML = html;
+      if (window.HOPv2 && HOPv2.lang && HOPv2.lang() === "pl") HOPv2.translate(tmp);
+      var text = tmp.textContent.replace(/\s+/g, " ").trim();
+      var vis = document.createElement("span"); vis.className = "hs-v"; vis.setAttribute("aria-hidden", "true");
+      var words = [], chars = [];
+      (function walk(src, dest) {
+        Array.prototype.slice.call(src.childNodes).forEach(function (n) {
           if (n.nodeType === 3) {
-            var frag = document.createDocumentFragment();
             n.nodeValue.split(/(\s+)/).forEach(function (part) {
               if (!part) return;
-              if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(" ")); return; }
+              if (/^\s+$/.test(part)) { dest.appendChild(document.createTextNode(" ")); return; }
               var w = document.createElement("span"); w.className = "w";
-              var wi = document.createElement("span"); wi.className = "wi"; wi.style.setProperty("--i", i++); wi.textContent = part;
-              w.appendChild(wi); frag.appendChild(w);
+              for (var k = 0; k < part.length; k++) { var c = document.createElement("span"); c.className = "c"; c.textContent = part[k]; w.appendChild(c); chars.push(c); }
+              dest.appendChild(w); words.push(w);
             });
-            node.replaceChild(frag, n);
-          } else if (n.nodeType === 1 && !n.classList.contains("hs-stop")) walk(n);
+          } else if (n.nodeType === 1) {
+            if (n.classList.contains("hs-stop")) { var st = n.cloneNode(true); var b = document.createElement("span"); b.className = "hs-base"; st.appendChild(b); dest.appendChild(st); return; }
+            var e = n.cloneNode(false); dest.appendChild(e); walk(n, e);
+          }
         });
-      })(p);
-      var stop = $(".hs-stop", p), words = $$(".w", p), last = words[words.length - 1];
+      })(tmp, vis);
+      var stop = vis.querySelector(".hs-stop"), last = words[words.length - 1];
       if (stop && last) last.appendChild(stop);
-    });
+      /* timing: the line writes itself over ~360ms; the last letter resolves as the dot lands */
+      var wn = Math.max(1, words.length - 1), cn = Math.max(1, chars.length - 1);
+      words.forEach(function (w, i) { w.style.setProperty("--wd", Math.round(i / wn * 300) + "ms"); w.style.setProperty("--wo", Math.round(i / wn * 120) + "ms"); });
+      chars.forEach(function (c, i) { c.style.setProperty("--cd", Math.round(i / cn * 380) + "ms"); c.style.setProperty("--co", Math.round(i / cn * 160) + "ms"); });
+      var sr = document.createElement("span"); sr.className = "sr-only"; sr.textContent = text;
+      p.textContent = ""; p.appendChild(sr); p.appendChild(vis);
+    };
+    items.forEach(function (p, i) { build(p, EN[i]); });
 
-    /* where the full stop sits, relative to the statements box */
+    /* the full stop's centre, from layout (ignores transforms, so parallax and rises never skew it) */
     var at = function (i) {
-      var st = $(".hs-stop", items[i]); if (!st) return { x: 0, y: 0 };
-      var r = st.getBoundingClientRect(), h = hs.getBoundingClientRect();
-      var fs = parseFloat(getComputedStyle(items[i]).fontSize) || 80;
-      return { x: r.left - h.left + r.width * .42, y: r.top - h.top + fs * .705 };
+      var st = $(".hs-stop", items[i]), base = st && $(".hs-base", st);
+      if (!st || !base) return { x: 0, y: 0 };
+      var x = 0, y = 0, n = base;
+      while (n && n !== hs) { x += n.offsetLeft; y += n.offsetTop; n = n.offsetParent; }
+      var sx = 0, m = st; while (m && m !== hs) { sx += m.offsetLeft; m = m.offsetParent; }
+      var fs = parseFloat(getComputedStyle(hs).fontSize) || 80;
+      var it = st.closest("em") || (st.parentNode && st.parentNode.closest && st.parentNode.closest("em"));
+      return { x: sx + st.offsetWidth * .46 + (it ? fs * .035 : 0), y: y - fs * .078 };
     };
-    var put = function (p) {
-      var d = dot.offsetWidth / 2;
-      dot.style.transform = "translate(" + (p.x - d).toFixed(1) + "px," + (p.y - d).toFixed(1) + "px)";
-      dot.classList.add("is-placed");
-    };
-    /* a leap, not a bounce: crouch, a long arc, a squash on landing */
-    var leap = function (a, b, dur, delay, done) {
-      if (flight) flight.cancel();
-      var d = dot.offsetWidth / 2, ax = a.x - d, ay = a.y - d, bx = b.x - d, by = b.y - d;
-      var span = Math.hypot(bx - ax, by - ay);
-      var cx = (ax + bx) / 2, cy = Math.min(ay, by) - clamp(span * .38, 70, 260);
-      var T = function (x, y, s) { return "translate(" + x.toFixed(1) + "px," + y.toFixed(1) + "px)" + (s || ""); };
-      var kf = [{ offset: 0, transform: T(ax, ay) }, { offset: .1, transform: T(ax, ay + 3, " scale(1.22,.8)") }];
-      for (var k = 1; k <= 16; k++) {
-        var t = k / 16, e = t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2, u = 1 - e;
-        kf.push({ offset: .14 + .72 * t, transform: T(u * u * ax + 2 * u * e * cx + e * e * bx, u * u * ay + 2 * u * e * cy + e * e * by, k === 8 ? " scale(.94,1.07)" : "") });
+    var T = function (x, y, s) { return "translate(" + x.toFixed(1) + "px," + y.toFixed(1) + "px)" + (s || ""); };
+    var half = function () { return dot.offsetWidth / 2; };
+    var put = function (p) { var d = half(); dot.style.transform = T(p.x - d, p.y - d); dot.classList.add("is-placed"); };
+    var stopAll = function () { flight.forEach(function (a) { a.cancel(); }); flight = []; };
+
+    /* the leap: crouch → long arc (eased in time, not just in space) → squash on landing.
+       Three trailing dots smear the motion; a ripple marks the landing. */
+    var leap = function (a, b, dur, delay, opts) {
+      stopAll(); opts = opts || {};
+      var d = half(), ax = a.x - d, ay = a.y - d, bx = b.x - d, by = b.y - d;
+      var span = Math.hypot(bx - ax, by - ay), fs = parseFloat(getComputedStyle(hs).fontSize) || 80;
+      var cx = (ax + bx) / 2 + (bx - ax) * .08, cy = Math.min(ay, by) - clamp(span * .42, fs * .9, fs * 3.2);
+      var kf = [{ offset: 0, transform: T(ax, ay), opacity: opts.fadeIn ? 0 : 1 },
+                { offset: .1, transform: T(ax, ay + d * .3, " scale(1.28,.74)"), opacity: 1 }];
+      for (var k = 1; k <= 20; k++) {
+        var t = k / 20, e = t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2, u = 1 - e;
+        var x = u * u * ax + 2 * u * e * cx + e * e * bx, y = u * u * ay + 2 * u * e * cy + e * e * by;
+        var st = t < .25 ? " scale(.9,1.14)" : t > .8 ? " scale(.94,1.08)" : "";
+        kf.push({ offset: .14 + .74 * t, transform: T(x, y, st), opacity: 1 });
       }
-      kf.push({ offset: .92, transform: T(bx, by + 2, " scale(1.2,.82)") }, { offset: 1, transform: T(bx, by) });
+      kf.push({ offset: .93, transform: T(bx, by + d * .25, " scale(1.3,.72)"), opacity: 1 }, { offset: 1, transform: T(bx, by), opacity: 1 });
       dot.classList.add("is-placed");
-      flight = dot.animate(kf, { duration: dur, delay: delay || 0, easing: "linear", fill: "forwards" });
-      flight.onfinish = function () { put(b); flight.cancel(); flight = null; if (done) done(); };
+      var main = dot.animate(kf, { duration: dur, delay: delay || 0, easing: "linear", fill: "both" });
+      flight.push(main);
+      ghosts.forEach(function (g, i) {
+        var o = [.32, .2, .1][i], s = [" scale(.82)", " scale(.66)", " scale(.5)"][i];
+        var gk = kf.map(function (f) { return { offset: f.offset, transform: f.transform.replace(/ scale\([^)]*\)/, "") + s, opacity: f.offset > .14 && f.offset < .88 ? o : 0 }; });
+        flight.push(g.animate(gk, { duration: dur, delay: (delay || 0) + 34 * (i + 1), easing: "linear", fill: "both" }));
+      });
+      main.onfinish = function () {
+        put(b); stopAll();
+        ring.animate([{ transform: T(bx, by, " scale(.8)"), opacity: .75 }, { transform: T(bx, by, " scale(4.2)"), opacity: 0 }], { duration: 760, easing: "cubic-bezier(.16,1,.3,1)" });
+        var v = $(".hs-v", items[cur]);
+        if (v) v.animate([{ transform: "translateY(0)" }, { transform: "translateY(" + (fs * .028).toFixed(1) + "px)", offset: .3 }, { transform: "translateY(0)" }], { duration: 420, easing: "cubic-bezier(.3,.7,.3,1)", composite: "add" });
+        if (opts.done) opts.done();
+      };
     };
 
     var arm = function () { hero.removeAttribute("data-run"); void hero.offsetWidth; hero.setAttribute("data-run", ""); };
-    var syncPause = function () { hero.classList.toggle("is-paused", userPaused || hover || offscreen || document.hidden); };
+    var syncPause = function () { hero.classList.toggle("is-paused", userPaused || offscreen || document.hidden); };
 
     var go = function (n, user) {
       if (n === cur) { if (user) arm(); return; }
       var prev = cur, a = at(prev); cur = n;
       clearTimeout(hideT);
       items.forEach(function (p, k) { if (k !== prev && k !== n) { p.classList.remove("is-on", "is-in", "is-out"); p.setAttribute("aria-hidden", "true"); } });
-      items[prev].classList.remove("is-in"); items[prev].classList.add("is-out"); items[prev].setAttribute("aria-hidden", "true");
-      hideT = setTimeout(function () { items[prev].classList.remove("is-on", "is-out"); }, reduce ? 0 : 520);
+      var po = items[prev]; po.classList.remove("is-in"); po.classList.add("is-out"); po.setAttribute("aria-hidden", "true");
+      hideT = setTimeout(function () { po.classList.remove("is-on", "is-out"); }, reduce ? 0 : 700);
       var ni = items[n]; ni.classList.remove("is-out", "is-in"); ni.classList.add("is-on"); ni.removeAttribute("aria-hidden");
       void ni.offsetWidth;
-      setTimeout(function () { ni.classList.add("is-in"); }, reduce ? 0 : 300);
       var b = at(n);
-      if (reduce) put(b); else leap(a, b, 1150, 80);
+      if (reduce) { ni.classList.add("is-in"); put(b); }
+      else { setTimeout(function () { ni.classList.add("is-in"); }, 240); leap(a, b, 980, 60); }
       segs.forEach(function (s, k) { if (k === n) s.setAttribute("aria-current", "true"); else s.removeAttribute("aria-current"); s.tabIndex = k === n ? 0 : -1; });
       if (curN) curN.textContent = (n < 9 ? "0" : "") + (n + 1);
       hs.setAttribute("aria-live", user ? "polite" : "off");
@@ -118,49 +149,56 @@
         if (e.animationName === "segfill" && s.getAttribute("aria-current") === "true") go((cur + 1) % items.length);
       });
     });
+    /* tap/click the statement: leap to the next one */
+    hs.addEventListener("click", function (e) { if (e.target.closest(".hs-i.is-on")) go((cur + 1) % items.length, true); });
     if (pauseBtn) pauseBtn.addEventListener("click", function () {
       userPaused = !userPaused;
       pauseBtn.setAttribute("aria-pressed", String(userPaused));
       pauseBtn.setAttribute("aria-label", userPaused ? "Play the statements" : "Pause the statements");
       syncPause();
     });
-    if (body && window.matchMedia("(hover: hover)").matches) {
-      body.addEventListener("mouseenter", function () { hover = true; syncPause(); });
-      body.addEventListener("mouseleave", function () { hover = false; syncPause(); });
-    }
     if ("IntersectionObserver" in window) new IntersectionObserver(function (es) { offscreen = !es[0].isIntersecting; syncPause(); }, { threshold: .15 }).observe(hero);
     document.addEventListener("visibilitychange", syncPause);
     if (reduce) doc.style.setProperty("--hold", "5s");
 
-    /* first statement: the dot leaps out of the logo and lands as its full stop */
+    /* depth: pointer parallax (fine pointers only), eased; scroll focus-pull */
+    if (!reduce) {
+      var tx = 0, ty = 0, px = 0, py = 0, raf = 0;
+      var tick = function () {
+        px += (tx - px) * .08; py += (ty - py) * .08;
+        hero.style.setProperty("--px", px.toFixed(3)); hero.style.setProperty("--py", py.toFixed(3));
+        raf = Math.abs(tx - px) + Math.abs(ty - py) > .002 ? requestAnimationFrame(tick) : 0;
+      };
+      if (fine.matches) {
+        hero.addEventListener("pointermove", function (e) { var r = hero.getBoundingClientRect(); tx = clamp((e.clientX - r.left) / r.width * 2 - 1, -1, 1); ty = clamp((e.clientY - r.top) / r.height * 2 - 1, -1, 1); if (!raf) raf = requestAnimationFrame(tick); });
+        hero.addEventListener("pointerleave", function () { tx = ty = 0; if (!raf) raf = requestAnimationFrame(tick); });
+      }
+      var sTick = false;
+      var onScroll = function () { sTick = false; var h = hero.offsetHeight || 1; var sp = clamp(window.scrollY / (h * .85), 0, 1); hero.style.setProperty("--sp", sp.toFixed(3)); };
+      window.addEventListener("scroll", function () { if (!sTick) { sTick = true; requestAnimationFrame(onScroll); } }, { passive: true });
+      onScroll();
+    }
+
+    /* first statement: it writes itself, and the dot drops in from above to end it */
     var start = function () {
-      var first = items[0], b = at(0);
+      var first = items[0], b = at(0), fs = parseFloat(getComputedStyle(hs).fontSize) || 80;
       first.classList.add("is-on");
-      var logoDot = $(".nav-logo .logo-dot"), lr = logoDot && logoDot.getBoundingClientRect();
-      var fromLogo = !reduce && window.scrollY < 40 && lr && lr.width > 0;
+      if (reduce || window.scrollY > 40) { first.classList.add("is-in"); put(b); arm(); return; }
       requestAnimationFrame(function () {
-        first.classList.add("is-in");
-        if (!fromLogo) { put(b); arm(); return; }
-        var h = hs.getBoundingClientRect();
-        var a = { x: lr.left + lr.width / 2 - h.left, y: lr.top + lr.height / 2 - h.top };
-        dot.style.width = dot.style.height = Math.max(6, lr.width) + "px";
-        put(a); logoDot.style.opacity = "0";
-        setTimeout(function () {
-          /* grow to the statement's size mid-flight */
-          dot.style.transition = "width .9s cubic-bezier(.16,1,.3,1), height .9s cubic-bezier(.16,1,.3,1)";
-          dot.style.width = dot.style.height = "";
-          var b2 = at(0);
-          leap(a, b2, 1300, 0, function () { dot.style.transition = ""; });
-          setTimeout(function () { logoDot.style.transition = "opacity .8s ease"; logoDot.style.opacity = ""; }, 1500);
-          arm();
-        }, 520);
+        setTimeout(function () { first.classList.add("is-in"); }, 120);
+        leap({ x: b.x - fs * 1.6, y: b.y - fs * 2.4 }, b, 1000, 300, { fadeIn: true });
+        arm();
       });
     };
     var ready = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
     ready.then(start, start);
-    /* language switch rewrites the text: re-seat the dot on the new full stop */
-    document.addEventListener("click", function (e) { if (e.target.closest && e.target.closest(".lang button")) setTimeout(function () { if (!flight) put(at(cur)); }, 80); });
-    var rz; window.addEventListener("resize", function () { clearTimeout(rz); rz = setTimeout(function () { if (!flight) put(at(cur)); }, 120); });
+
+    /* language switch: rebuild every statement in the new language, keep state */
+    document.addEventListener("click", function (e) {
+      if (!(e.target.closest && e.target.closest(".lang button"))) return;
+      setTimeout(function () { items.forEach(function (p, i) { build(p, EN[i]); }); if (!flight.length) put(at(cur)); }, 0);
+    });
+    var rz; window.addEventListener("resize", function () { clearTimeout(rz); rz = setTimeout(function () { if (!flight.length) put(at(cur)); }, 120); });
   }
 
   /* ---------- How we do it: the leap headlines land as the dot passes ---------- */

@@ -131,3 +131,78 @@ for idx, a in enumerate(ARTICLES):
 </main>'''
     open(os.path.join(PUB, 'articles', a['slug'] + '.html'), 'w', encoding='utf8').write(page(a['title'][:-1] + ' · House of Poland · HOP.', a['ex'], main))
 print('hub + %d articles written' % len(ARTICLES))
+
+# ---------- the letter (Say Hop.) on the same article template ----------
+import json, subprocess
+_js = "const vm=require('vm'),fs=require('fs');const sb={window:{}};vm.runInNewContext(fs.readFileSync(process.argv[1],'utf8'),sb);process.stdout.write(JSON.stringify(sb.window.HOP_ARTICLES.find(x=>x.slug==='say-hop')))"
+L = json.loads(subprocess.check_output(['node', '-e', _js, os.path.join(PUB, 'assets', 'articles.js')]).decode('utf8'))
+def nt(b): return ' data-notr' if b.get('notr') else ''
+blocks, heads, closer = [], [], None
+for b in L['body']:
+    if 'lede' in b: blocks.append(f'<p class="art-lede"{nt(b)}>{e(b["lede"])}</p>')
+    elif 'p' in b: blocks.append(f'<p{nt(b)}>{e(b["p"])}</p>')
+    elif 'h' in b:
+        heads.append(b['h']); k = len(heads)
+        blocks.append(f'<h2 class="art-sub" id="s{k}"><span class="lbl lbl--m lbl--red">{k:02d}</span><span{nt(b)}>{tdot(b["h"])}</span></h2>')
+    elif 'pull' in b: blocks.append(f'<blockquote class="art-pull"><p{nt(b)}>{tdot(b["pull"])}</p></blockquote>')
+    elif 'ol' in b:
+        items = ''.join(f'<li><span class="lbl lbl--m lbl--red">{j:02d}</span><span><strong>{e(t)}</strong>{e(d or "")}</span></li>' for j, (t, d) in enumerate(b['ol'], 1))
+        blocks.append(f'<ol class="art-list" role="list">{items}</ol>')
+    elif 'strong' in b: blocks.append(f'<p class="art-strong"{nt(b)}>{tdot(b["strong"])}</p>')
+    elif 'closer' in b: closer = b['closer']
+words = len(' '.join(json.dumps(b, ensure_ascii=False) for b in L['body']).split())
+mins = max(1, round(words / 230))
+toc = ''.join(f'<li><a href="#s{k}"><span class="lbl">{k:02d}</span><span>{e(h[:-1] if h.endswith(".") else h)}</span></a></li>' for k, h in enumerate(heads, 1))
+def close_html(c):
+    parts = [x.strip() for x in c.split('.') if x.strip()]
+    if len(parts) < 2: return tdot(c)
+    return e('. '.join(parts[:-1]) + '. ') + '<em>' + e(parts[-1]) + '</em><span class="tdot">.</span>'
+nxt = ARTICLES[0]
+auth = []
+for name, img, bio in [('Philip Jacobson', 'philip', 'Chief Brand Officer at Vimergy. Brand-led growth at Tylko, Autry and Chilly’s; a decade at Nike EMEA; Global Head of Brand Creative at Maserati.'),
+                       ('David Anson', 'david', 'Brand Creative Lead at Nike; Head of Business Leadership at BBH Singapore. Led Nike, Samsung, Meta, Netflix and HSBC.')]:
+    auth.append(f'<li class="art-author"><img src="/assets/img/{img}.webp" alt="" width="96" height="96" loading="lazy" decoding="async"><span><span class="lbl lbl--m lbl--red">Senior partner</span><span class="art-an">{name}</span><span class="art-ab">{e(bio)}</span></span></li>')
+topics = ' · '.join(L['topics'])
+from datetime import date as _d
+dl = _d.fromisoformat(L['date']).strftime('%-d %B %Y')
+main = f'''<main id="main" class="art" data-page="articles">
+  <header class="s art-cover ink">
+    <div class="wrap">
+      <p class="art-crumbs"><a class="lbl" href="/articles">← All articles</a><span class="kdot" aria-hidden="true"></span><span class="lbl lbl--m lbl--red-d">No. {L['number']:02d} · {e(topics)}</span></p>
+      <h1 class="h1 art-h">Say <em>Hop</em><span class="tdot">.</span></h1>
+      <p class="art-dek">{e(L['subtitle'])}</p>
+      <div class="art-meta"><p class="lbl"><span data-notr>{e(L['authors'])}</span> · <time datetime="{L['date']}">{e(dl)}</time> · {mins} min read · {e(topics)}</p><button class="art-share" type="button" data-share>Share <span aria-hidden="true">→</span></button></div>
+    </div>
+  </header>
+  <div class="s art-body">
+    <div class="wrap art-grid">
+      <nav class="art-toc" aria-label="In this letter">
+        <p class="lbl">In this letter</p>
+        <ol role="list">{toc}</ol>
+        <div class="art-prog" aria-hidden="true"><span></span></div>
+      </nav>
+      <article class="art-col">
+        {chr(10).join('        ' + b for b in blocks).strip()}
+      </article>
+    </div>
+  </div>
+  <section class="s art-close ink" aria-label="In short">
+    <div class="wrap">
+      <p class="lbl">In short</p>
+      <p class="h2 art-close-h">{close_html(closer) if closer else ''}</p>
+    </div>
+  </section>
+  <section class="s art-by" aria-label="Written by">
+    <div class="wrap">
+      <p class="lbl">Written by</p>
+      <ul class="art-authors" role="list">{''.join(auth)}</ul>
+      <div class="art-next">
+        <p class="art-share-row"><span>Share the letter</span><button class="lbl linkbtn" type="button" data-share>Copy link</button><a class="lbl" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fhoppartners.pl%2Farticles%2Fsay-hop" rel="noopener" target="_blank">LinkedIn</a><a class="lbl" href="mailto:?subject=Say%20Hop.&amp;body=https%3A%2F%2Fhoppartners.pl%2Farticles%2Fsay-hop">Email</a></p>
+        <a class="art-nextlink" href="/articles/{nxt['slug']}"><span class="lbl">Next · Article No. {nxt['n']}</span><span class="art-nt">{title_html(nxt)} <span aria-hidden="true">→</span></span></a>
+      </div>
+    </div>
+  </section>
+</main>'''
+open(os.path.join(PUB, 'articles', 'say-hop.html'), 'w', encoding='utf8').write(page('Say Hop. · House of Poland · HOP.', L['summary'], main))
+print('letter written: /articles/say-hop (%d sections, %d min read)' % (len(heads), mins))
+

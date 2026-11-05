@@ -1,5 +1,0 @@
-/* V5 footer for the older pages (they load v2-foot.css only) */
-#site-foot .foot-socials { display: flex; gap: 12px; margin-top: 24px; }
-#site-foot .foot-socials .foot-social { margin-top: 0; }
-#site-foot .foot-social .li-f { fill: currentColor; stroke: none; }
-#site-foot .foot-social svg { width: 18px; height: 18px; }
