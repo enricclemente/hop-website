@@ -591,7 +591,7 @@
     var leapSvcs = [
       ["Run-up", "Brand audit", "Know what you stand for.", "Find out what everyone thinks of your brand, from leadership, to entry level employees, to customers. Finding the gaps and re-defining it from the inside out first is non-negotiable. It makes everything else work."],
       ["Run-up", "Audience & segmentation research", "Know who you\u2019re for. Give them a reason.", "Anchor your brand strategy in the customer: understand their needs deeply and solve their problems better than anyone else."],
-      ["Leap", "Brand positioning", "Be the best solution.", "A clear customer value proposition that makes you the only choice in your market."],
+      ["Leap", "De-positioning", "Be the best solution.", "A clear customer value proposition that makes you the only choice in your market."],
       ["Leap", "Brand strategy", "Who you are. Where you\u2019re going.", "A framework that directs your effort and energy, focusing every action on what delivers competitive advantage that galvanises and inspires your team."],
       ["Leap", "Brand creative platform", "One big idea. Everything behind it.", "A single, memorable idea, expressed across every touchpoint, that becomes your identity and drives growth."],
       ["Land", "Brand identity & messaging", "An identity that matches your ambition. Words that sell it.", "Every message and experience, aligned to one consistent voice that builds coherence and trust."],
