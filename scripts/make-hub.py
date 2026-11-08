@@ -90,7 +90,7 @@ for idx, a in enumerate(ARTICLES):
     for name, img, bio in [('Philip Jacobson', 'philip', 'Chief Brand Officer at Vimergy. Brand-led growth at Tylko, Autry and Chilly’s; a decade at Nike EMEA; Global Head of Brand Creative at Maserati.'),
                            ('David Anson', 'david', 'Brand Creative Lead at Nike; Head of Business Leadership at BBH Singapore. Led Nike, Samsung, Meta, Netflix and HSBC.')]:
         if name in a['by']:
-            authors.append(f'<li class="art-author"><img src="/assets/img/{img}.webp" alt="" width="96" height="96" loading="lazy" decoding="async"><span><span class="lbl lbl--m lbl--red">Senior partner</span><span class="art-an">{name}</span><span class="art-ab">{e(bio)}</span></span></li>')
+            authors.append(f'<li class="art-author"><img src="/assets/img/{img}.webp?v=2" alt="" width="96" height="96" loading="lazy" decoding="async"><span><span class="lbl lbl--m lbl--red">Senior partner</span><span class="art-an">{name}</span><span class="art-ab">{e(bio)}</span></span></li>')
     main = f'''<main id="main" class="art" data-page="articles">
   <header class="s art-cover ink">
     <div class="wrap">
@@ -162,7 +162,7 @@ nxt = ARTICLES[0]
 auth = []
 for name, img, bio in [('Philip Jacobson', 'philip', 'Chief Brand Officer at Vimergy. Brand-led growth at Tylko, Autry and Chilly’s; a decade at Nike EMEA; Global Head of Brand Creative at Maserati.'),
                        ('David Anson', 'david', 'Brand Creative Lead at Nike; Head of Business Leadership at BBH Singapore. Led Nike, Samsung, Meta, Netflix and HSBC.')]:
-    auth.append(f'<li class="art-author"><img src="/assets/img/{img}.webp" alt="" width="96" height="96" loading="lazy" decoding="async"><span><span class="lbl lbl--m lbl--red">Senior partner</span><span class="art-an">{name}</span><span class="art-ab">{e(bio)}</span></span></li>')
+    auth.append(f'<li class="art-author"><img src="/assets/img/{img}.webp?v=2" alt="" width="96" height="96" loading="lazy" decoding="async"><span><span class="lbl lbl--m lbl--red">Senior partner</span><span class="art-an">{name}</span><span class="art-ab">{e(bio)}</span></span></li>')
 topics = ' · '.join(L['topics'])
 from datetime import date as _d
 dl = _d.fromisoformat(L['date']).strftime('%-d %B %Y')
