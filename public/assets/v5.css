@@ -1245,3 +1245,7 @@ html #site-foot, html #site-foot.ink { background: var(--charcoal) !important; }
 .cperson-av { object-position: 50% 50%; }
 /* footer wordmark: small, under the social icons */
 #site-foot .foot-brand .f-mark { width: calc(88px + 24 * var(--t)); margin: 8px 0 0; }
+/* contact: portrait spans the full card width, flush with the divider lines and the copy column */
+.cperson-n { justify-items: stretch; }
+.cperson-av { width: 100%; max-width: none; }
+@media (max-width: 599px) { .cperson-av { max-width: none; } }
