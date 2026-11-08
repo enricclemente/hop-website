@@ -827,3 +827,81 @@ html.i5-on .i5 { display: block; position: fixed; inset: 0; z-index: 1000; point
 .cbody .form { position: relative; }
 .cbody .submit-row { margin-top: calc(-24px - 16 * var(--t)); }
 .cbody .fld[data-field="message"] { padding-bottom: 0; }
+
+/* ---------- 42. How we do it: each service opens in place (accordion), one at a time ---------- */
+.jump-acc { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .55s cubic-bezier(.65, 0, .35, 1); }
+.jump-acc.is-open { grid-template-rows: 1fr; }
+.jump-acc-in { min-height: 0; overflow: hidden; }
+.jump-acc-h, .jump-acc-p { opacity: 0; transform: translate3d(0, -6px, 0); transition: opacity .25s ease, transform .4s cubic-bezier(.22, 1, .36, 1); }
+.jump-acc.is-open .jump-acc-h, .jump-acc.is-open .jump-acc-p { opacity: 1; transform: none; transition-delay: .14s; }
+.jump-acc.is-open .jump-acc-p { transition-delay: .2s; }
+.jump-acc-h { margin: 2px 0 8px 36px; font-family: var(--serif); font-weight: 400; font-size: 21px; line-height: 1.22; letter-spacing: -0.005em; color: var(--ink); text-wrap: balance; }
+.jump-acc-h .tdot { color: var(--red); }
+.jump-acc-p { margin: 0 0 22px 36px; max-width: 42ch; font-family: var(--sans); font-size: 15px; line-height: 1.6; color: var(--muted-l); text-wrap: pretty; }
+.jump-item[aria-expanded="true"] .jump-plus { transform: rotate(45deg); }
+@media (hover: hover) { .jump-item[aria-expanded="true"]:hover .jump-plus { transform: rotate(45deg); } }
+@media (max-width: 1023px) {
+  .jump-acc-h { margin-left: 34px; font-size: 20px; }
+  .jump-acc-p { margin-left: 34px; margin-bottom: 20px; }
+  .jump-plus::before { transform: rotate(90deg); transition: transform .4s cubic-bezier(.65, 0, .35, 1); }
+  .jump-item[aria-expanded="true"] .jump-plus { transform: none; }
+  .jump-item[aria-expanded="true"] .jump-plus::before { transform: rotate(-90deg); }
+}
+@media (prefers-reduced-motion: reduce) { .jump-acc, .jump-acc-h, .jump-acc-p { transition: none; } }
+@media (min-width: 1024px) { .jump-acc-p { max-width: none; } }
+
+/* ---------- 43. Footer: House of Poland heading is the link; closing statement above the bottom bar ---------- */
+#site-foot .fcol--hop { display: block; }
+#site-foot .fcol--hop .fcol-hl { display: inline-flex; align-items: center; gap: 10px; overflow: visible; -webkit-line-clamp: none; max-width: none; white-space: nowrap; color: var(--ivory); text-decoration: none; transition: color .3s ease; }
+#site-foot .fcol-hl svg { width: 14px; height: 14px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; transition: transform .45s cubic-bezier(.65, 0, .35, 1); }
+@media (hover: hover) {
+  #site-foot .fcol-hl:hover { color: #fff; }
+  #site-foot .fcol-hl:hover svg { transform: translate3d(4px, 0, 0); }
+}
+#site-foot .fcol--hop .fcol-note { margin-top: 10px; }
+#site-foot .foot-score {
+  margin: calc(56px + 32 * var(--t)) 0 0; padding-top: calc(32px + 16 * var(--t)); border-top: 1px solid rgba(239, 235, 228, .12);
+  max-width: 24em; font-family: var(--serif); font-style: normal; font-weight: 400;
+  font-size: calc(30px + 22 * var(--t)); line-height: 1.12; letter-spacing: -0.012em; color: var(--ivory); text-wrap: balance;
+}
+#site-foot .foot-score .tdot { color: var(--red); }
+#site-foot .foot-score + .foot-bottom { margin-top: calc(40px + 24 * var(--t)); border-top: 0; padding-top: 0; }
+@media (max-width: 1023px) {
+  #site-foot .fcol--hop { margin-top: 8px; }
+  #site-foot .fcol--hop .fcol-h { font-size: 17px; }
+}
+
+/* ---------- 44. Contact: each partner's city beside their name ---------- */
+.cperson-n { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
+.cperson-c { flex: none; font-family: var(--sans); font-size: 11px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: rgba(27, 26, 25, .55); }
+@media (max-width: 1023px) { #site-foot .fcol--hop { grid-column: 1 / -1; } #site-foot .fcol--hop .fcol-note { max-width: 40ch; } }
+#site-foot .fc-city { display: block; margin-top: 2px; font-family: var(--sans); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted-d); }
+
+/* ---------- 45. Letter: one full-width image, linking to the letter ---------- */
+.l5 { display: block; }
+.l5-link { display: block; position: relative; overflow: hidden; }
+.l5-link img { transition: transform 1.2s cubic-bezier(.22, 1, .36, 1); }
+@media (hover: hover) { .l5-link:hover img { transform: scale(1.025); } }
+.l5-link:focus-visible { outline: 1px solid var(--ivory); outline-offset: 6px; }
+@media (min-width: 1024px) { .l5 { padding-top: 48px; } .l5-fig { aspect-ratio: 21 / 9; } }
+
+/* ---------- 46. Solid modern black replaces the rug texture everywhere ---------- */
+:root { --rug-c: #121214; --rug-i: none; --black: #121214; }
+html { background: var(--black); }
+.nav.is-scrolled { background: var(--black); }
+
+/* ---------- 47. Articles: a full-width image under the title; cards without categories ---------- */
+.art-hero-w { padding-top: calc(32px + 24 * var(--t)); }
+.art-hero { margin: 0; overflow: hidden; background: #2A2927; aspect-ratio: 16 / 10; }
+.art-hero picture, .art-hero img { display: block; width: 100%; height: 100%; }
+.art-hero img { object-fit: cover; }
+@media (min-width: 1024px) { .art-hero { aspect-ratio: 21 / 9; } }
+.acard-topic { display: none; }
+
+/* ---------- 48. Contact: a square headshot leads each partner's name ---------- */
+.cperson-n { justify-content: flex-start; align-items: center; gap: 16px; }
+.cperson-av { flex: none; width: 56px; height: 56px; object-fit: cover; background: #DCD6CC; filter: grayscale(.15); }
+.cperson-nm { flex: 1; min-width: 0; }
+.cperson-c { align-self: center; }
+@media (max-width: 599px) { .cperson-av { width: 48px; height: 48px; } .cperson-n { gap: 14px; } }
+html .letter-panel .l5, html.js .letter-panel:not(.is-closed) .l5 { display: block; grid-template-columns: none; }

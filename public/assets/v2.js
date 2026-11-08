@@ -523,11 +523,11 @@
         jLen = jPath.getTotalLength(), jTick = false;
     var clamp = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
     doc.classList.add("jump-live");
-    var jTrack = jump.querySelector(".jump-track"), jPin = jump.querySelector(".jump-pin");
+    var jTrack = jump.querySelector(".jump-track"), jPin = jump.querySelector(".jump-pin"), jBase = 0;
     var jUpdate = function () {
       jTick = false;
       var vh = window.innerHeight, p;
-      var navH = (document.getElementById("nav") || {}).offsetHeight || 84, pinH = jPin.offsetHeight;
+      var navH = (document.getElementById("nav") || {}).offsetHeight || 84, pinH = window.HOPacc && jBase ? jBase : (jBase = jPin.offsetHeight);
       /* sit 128px down when there is room, otherwise just under the nav, so laptops pin too */
       var topPx = Math.max(navH + 8, Math.min(128, vh - pinH - 16));
       var canPin = mqWide.matches && pinH + navH + 16 <= vh;
@@ -591,9 +591,9 @@
     pm.addEventListener("close", function () { doc.classList.remove("pm-open"); if (pmOpener) pmOpener.focus({ preventScroll: true }); });
   }
 
-  /* How we work: each service line opens its detail */
-  var sm = document.getElementById("smodal"), sItems = [].slice.call(document.querySelectorAll(".jump-item"));
-  if (sm && sItems.length && typeof sm.showModal === "function") {
+  /* How we work: each service line expands in place to show its detail (one open at a time) */
+  var sItems = [].slice.call(document.querySelectorAll(".jump-item"));
+  if (sItems.length) {
     var leapSvcs = [
       ["Run-up", "Brand audit", "Know what you stand for.", "Find out what everyone thinks of your brand, from leadership, to entry level employees, to customers. Finding the gaps and re-defining it from the inside out first is non-negotiable. It makes everything else work."],
       ["Run-up", "Audience & segmentation research", "Know who you\u2019re for. Give them a reason.", "Anchor your brand strategy in the customer: understand their needs deeply and solve their problems better than anyone else."],
@@ -604,44 +604,40 @@
       ["Land", "Brand internationalisation", "Built to travel.", "A strategy for localising and globalising who you are, so you can win new markets and recruit new audiences."],
       ["Land", "Performance & optimisation", "Know what works. Spend on that.", "Brand and performance optimised in real time, cutting inefficient spend and maximising effectiveness."]
     ];
-    var smSvc = sm.querySelector(".sm-svc"), smTitle = sm.querySelector(".sm-title"),
-        smBody = sm.querySelector(".sm-body"), smNext = sm.querySelector(".sm-next"), smCur = 0, smOpener = null;
-    var pad2 = function (n) { return (n < 10 ? "0" : "") + n; };
-    var smFill = function (i) {
-      var d = leapSvcs[i]; smCur = i;
-      smSvc.textContent = d[0] + " \u00b7 " + d[1];
-      var ico = sm.querySelector(".sm-ico"), src = sItems[i] && sItems[i].querySelector(".jump-ico svg");
-      if (ico) { ico.textContent = ""; if (src) ico.appendChild(src.cloneNode(true)); }
-      smTitle.textContent = d[2].slice(0, -1); var dot = document.createElement("span"); dot.className = "tdot"; dot.textContent = d[2].slice(-1); smTitle.appendChild(dot);
-      smBody.textContent = d[3];
-      var last = i === leapSvcs.length - 1;
-      smNext.textContent = ""; var nf = document.createElement("span"); nf.className = "pm-f"; nf.textContent = (last ? "Back to: " : "Next: ") + leapSvcs[(i + 1) % leapSvcs.length][1];
-      var ns = document.createElement("span"); ns.className = "pm-s"; ns.textContent = last ? "Start again" : "Next"; smNext.appendChild(nf); smNext.appendChild(ns);
-      [].forEach.call(sm.querySelectorAll(".sm-prog i"), function (b, k) { b.classList.toggle("is-on", k === i); });
-      var pv = sm.querySelector(".pm-prev"); if (pv) pv.disabled = i === 0;
+    var accCur = null, accTimer = null;
+    var setOpen = function (b, open) {
+      var panel = document.getElementById(b.getAttribute("aria-controls"));
+      b.setAttribute("aria-expanded", open ? "true" : "false");
+      b.classList.toggle("is-active", open);
+      b.parentNode.classList.toggle("is-open", open);
+      if (panel) { panel.classList.toggle("is-open", open); if (open) panel.removeAttribute("inert"); else panel.setAttribute("inert", ""); }
+    };
+    var settle = function () {
+      /* the pinned graph keeps its closed height while a row is open or animating, so it never jumps */
+      window.HOPacc = true; clearTimeout(accTimer);
+      accTimer = setTimeout(function () { window.HOPacc = !!accCur; window.dispatchEvent(new Event("resize")); }, 650);
     };
     sItems.forEach(function (b) {
+      var i = parseInt(b.getAttribute("data-svc"), 10) || 0, d = leapSvcs[i];
+      if (!d) return;
+      if (!b.id) b.id = "svc-b-" + i;
+      var panel = document.createElement("div"); panel.className = "jump-acc"; panel.id = "svc-" + i;
+      panel.setAttribute("role", "region"); panel.setAttribute("aria-labelledby", b.id); panel.setAttribute("inert", "");
+      var inner = document.createElement("div"); inner.className = "jump-acc-in";
+      var h = document.createElement("p"); h.className = "jump-acc-h"; h.textContent = d[2].slice(0, -1);
+      var dot = document.createElement("span"); dot.className = "tdot"; dot.textContent = d[2].slice(-1); h.appendChild(dot);
+      var t = document.createElement("p"); t.className = "jump-acc-p"; t.textContent = d[3];
+      inner.appendChild(h); inner.appendChild(t); panel.appendChild(inner);
+      b.parentNode.appendChild(panel);
+      b.removeAttribute("aria-haspopup"); b.setAttribute("aria-controls", panel.id); b.setAttribute("aria-expanded", "false");
       b.addEventListener("click", function () {
-        smOpener = b; smFill(parseInt(b.getAttribute("data-svc"), 10) || 0);
-        sm.showModal(); doc.classList.add("pm-open");
-        var x = sm.querySelector(".pm-x"); if (x) x.focus({ preventScroll: true });
+        settle();
+        if (accCur === b) { setOpen(b, false); accCur = null; return; }
+        if (accCur) setOpen(accCur, false);
+        setOpen(b, true); accCur = b;
       });
     });
-    sm.querySelector(".pm-next").addEventListener("click", function () { smFill((smCur + 1) % leapSvcs.length); smOpener = sItems[smCur] || smOpener; });
-    var smPrev = sm.querySelector(".pm-prev");
-    if (smPrev) smPrev.addEventListener("click", function () { if (smCur > 0) { smFill(smCur - 1); smOpener = sItems[smCur] || smOpener; sm.dispatchEvent(new Event("hop:svc")); } });
-    sm.querySelector(".pm-next").addEventListener("click", function () { sm.dispatchEvent(new Event("hop:svc")); });
-    /* phones: swipe sideways to browse the services */
-    var sx = null, sy = null;
-    sm.addEventListener("touchstart", function (e) { var t = e.touches[0]; sx = t.clientX; sy = t.clientY; }, { passive: true });
-    sm.addEventListener("touchend", function (e) {
-      if (sx === null) return; var t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy; sx = null;
-      if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
-      if (dx < 0) sm.querySelector(".pm-next").click(); else if (smPrev && !smPrev.disabled) smPrev.click();
-    }, { passive: true });
-    sm.querySelector(".pm-x").addEventListener("click", function () { sm.close(); });
-    sm.addEventListener("click", function (e) { if (e.target === sm) sm.close(); });
-    sm.addEventListener("close", function () { doc.classList.remove("pm-open"); if (smOpener) smOpener.focus({ preventScroll: true }); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && accCur) { var b = accCur; settle(); setOpen(b, false); accCur = null; b.focus(); } });
   }
 
   /* Who we are title: each line fills in as you scroll */

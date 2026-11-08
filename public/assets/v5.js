@@ -23,9 +23,9 @@
   }
 
   /* ---------- Intro: hop. → into the nav, curtain lifts ----------
-     ≈2.3s, homepage, once per visit (decided in <head> by intro5.js). Click or any key skips.
+     ≈2.8s, homepage, once per visit (decided in <head> by intro5.js). Click or any key skips.
      Beats: 0 the hop. letters resolve from blur while the red dot hops down onto its place ·
-     1.25s the logo flies into the nav while the rug curtain lifts · ~2.3s site. */
+     1.05s the wordmark hops · 1.75s it flies into the nav while the rug curtain lifts · ~2.8s site. */
   var introDone = Promise.resolve();
   var i5 = $("#i5");
   if (i5 && doc.classList.contains("i5-on") && "animate" in Element.prototype) {
@@ -54,7 +54,7 @@
         logo.style.transformOrigin = "50% 50%";
         /* the letters resolve; the dot drops onto its place with a small hop */
         A(logo, [{ opacity: 0, filter: "blur(16px)", transform: "scale(1.08)" }, { opacity: 1, filter: "blur(0px)", transform: "scale(1)" }], { duration: 800, easing: "cubic-bezier(.16,1,.3,1)" });
-        var ds = lw * 61 / 516, bx = -lw / 2 + lw * (504.94 - 22) / 516, by = -lh / 2 + lh * (196.78 - 18) / 268, up = Math.max(lh * .9, 70);
+        var ds = lw * 61 / 516, bx = -lw / 2 + lw * (504.94 - 22) / 516, by = -lh / 2 + lh * (196.78 - 18) / 268, up = Math.max(lh * 1.35, 96);
         idot.style.width = idot.style.height = ds + "px";
         var T = function (y, sx, sy) { return "translate(" + (bx - ds / 2).toFixed(1) + "px," + (y - ds / 2).toFixed(1) + "px) scale(" + sx + "," + sy + ")"; };
         A(idot, [
@@ -62,11 +62,20 @@
           { offset: .18, transform: T(by - up, .9, 1.1), opacity: 1 },
           { offset: .55, transform: T(by, .92, 1.08), opacity: 1, easing: "cubic-bezier(.5,0,.75,0)" },
           { offset: .64, transform: T(by + 2, 1.28, .76), opacity: 1 },
-          { offset: .8, transform: T(by - up * .16, .96, 1.04), opacity: 1 },
+          { offset: .8, transform: T(by - up * .26, .94, 1.06), opacity: 1 },
           { offset: .92, transform: T(by + 1, 1.1, .9), opacity: 1 },
           { offset: 1, transform: T(by, 1, 1), opacity: 1 }
         ], { duration: 900, delay: 180, easing: "cubic-bezier(.33,0,.2,1)" });
-        later(function () { fly(lw, lh); }, 1250);
+        /* then the whole wordmark hops: crouch, spring up, land with a squash */
+        var j = Math.max(lh * .3, 26), hop = [
+          { offset: 0, transform: "translate(0,0) scale(1,1)" },
+          { offset: .16, transform: "translate(0," + (lh * .03).toFixed(1) + "px) scale(1.04,.93)" },
+          { offset: .5, transform: "translate(0," + (-j).toFixed(1) + "px) scale(.98,1.04)", easing: "cubic-bezier(.4,0,.8,.4)" },
+          { offset: .8, transform: "translate(0," + (lh * .02).toFixed(1) + "px) scale(1.05,.92)" },
+          { offset: 1, transform: "translate(0,0) scale(1,1)" }];
+        var hopOpts = { duration: 640, delay: 1050, easing: "cubic-bezier(.33,0,.25,1)", composite: "add" };
+        try { A(logo, hop, hopOpts); A(idot, hop.map(function (k) { return { offset: k.offset, transform: k.transform.replace(/ scale\([^)]*\)/, ""), easing: k.easing }; }), hopOpts); } catch (e) {}
+        later(function () { fly(lw, lh); }, 1760);
       };
       var fly = function (lw, lh) {
         var nl = $(".nav-logo svg"), cx = window.innerWidth / 2, cy = window.innerHeight / 2;
