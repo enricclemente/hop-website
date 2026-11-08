@@ -1104,3 +1104,108 @@ html #site-foot, html #site-foot.ink { background: var(--charcoal) !important; }
 .globes.ink, .globes { background: var(--warm); }
 .globe-l { font-size: 13px; letter-spacing: .18em; color: rgba(232, 222, 206, .7); }
 @media (max-width: 1023px) { .globe-l { font-size: 12px; } }
+
+/* ---------- 59. Nav CTA — "Let's make the leap (premium)", from Figma 109:961, in the brand palette ----------
+   Glass pill: ivory 4% fill, ivory 30% hairline, 16px backdrop blur, 14/22/14/20 padding, 12px gap,
+   7px HOP-red dot, Instrument Sans Medium 14 (+1%), 14px arrow at 1.3 stroke. */
+.pcta {
+  display: none; align-items: center; gap: 12px; padding: 14px 22px 14px 20px; border-radius: 999px;
+  background: rgba(232, 222, 206, .04); border: 1px solid rgba(232, 222, 206, .3);
+  -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+  color: var(--ivory); font-family: var(--sans); font-style: normal; font-weight: 500; font-size: 14px; line-height: 1.2; letter-spacing: .01em;
+  text-decoration: none; white-space: nowrap; -webkit-tap-highlight-color: transparent;
+  transition: background-color .45s ease, border-color .45s ease;
+}
+@media (min-width: 1024px) { .pcta.nav-cta { display: inline-flex; } }
+.pcta-dot { flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--red); transform-origin: 50% 100%; }
+.pcta-t { display: block; }
+.pcta-i { flex: none; width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; transition: transform .5s cubic-bezier(.65, 0, .35, 1); }
+.pcta:hover, .pcta:focus-visible { background: rgba(232, 222, 206, .09); border-color: rgba(232, 222, 206, .6); }
+.pcta:hover .pcta-i, .pcta:focus-visible .pcta-i { transform: translate3d(3px, 0, 0); }
+.pcta:focus-visible { outline: 1px solid var(--ivory); outline-offset: 4px; }
+.pcta:active { background: rgba(232, 222, 206, .14); }
+@media (prefers-reduced-motion: no-preference) {
+  /* the dot answers the logo: a tiny hop half a second after the logo's dot lands, on the same 4.5s beat */
+  .pcta-dot { animation: pcta-hop 4.5s linear 1.95s infinite both; }
+  /* and hops right away on hover */
+  .pcta:hover .pcta-dot, .pcta:focus-visible .pcta-dot { animation: pcta-hop-now .75s linear both; }
+}
+@keyframes pcta-hop {
+  0%    { transform: translate3d(0, 0, 0) scale(1, 1);        animation-timing-function: cubic-bezier(.45, 0, .55, 1); }
+  3%    { transform: translate3d(0, 0, 0) scale(1.25, .78);   animation-timing-function: cubic-bezier(.2, .7, .3, 1); }
+  8%    { transform: translate3d(0, -130%, 0) scale(.9, 1.1); animation-timing-function: cubic-bezier(.55, 0, .85, .4); }
+  12.5% { transform: translate3d(0, 0, 0) scale(1.25, .78);   animation-timing-function: cubic-bezier(.3, .7, .4, 1); }
+  15%   { transform: translate3d(0, -12%, 0) scale(.96, 1.04); animation-timing-function: cubic-bezier(.5, 0, .5, 1); }
+  17%, 100% { transform: translate3d(0, 0, 0) scale(1, 1); }
+}
+@keyframes pcta-hop-now {
+  0%   { transform: translate3d(0, 0, 0) scale(1, 1);        animation-timing-function: cubic-bezier(.45, 0, .55, 1); }
+  18%  { transform: translate3d(0, 0, 0) scale(1.25, .78);   animation-timing-function: cubic-bezier(.2, .7, .3, 1); }
+  48%  { transform: translate3d(0, -130%, 0) scale(.9, 1.1); animation-timing-function: cubic-bezier(.55, 0, .85, .4); }
+  74%  { transform: translate3d(0, 0, 0) scale(1.25, .78);   animation-timing-function: cubic-bezier(.3, .7, .4, 1); }
+  88%  { transform: translate3d(0, -12%, 0) scale(.96, 1.04); animation-timing-function: cubic-bezier(.5, 0, .5, 1); }
+  100% { transform: translate3d(0, 0, 0) scale(1, 1); }
+}
+
+/* ==========================================================================
+   60. Footer, modernised: statement + CTA first, a quiet sans grid, the wordmark as the closing image
+   ========================================================================== */
+#site-foot { padding-top: calc(72px + 56 * var(--t)); padding-bottom: 0; overflow: hidden; }
+#site-foot .f-statement { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px 48px; flex-wrap: wrap; padding-bottom: calc(48px + 32 * var(--t)); border-bottom: 1px solid rgba(232, 222, 206, .12); }
+#site-foot .f-statement .foot-score { margin: 0; padding: 0; border: 0; max-width: 15em; font-size: calc(34px + 30 * var(--t)); line-height: 1.04; letter-spacing: -0.02em; }
+#site-foot .f-cta { display: inline-flex; flex: none; }
+/* the grid */
+#site-foot .foot-top { display: grid; grid-template-columns: 1.3fr 2.7fr; gap: 48px; margin: 0; padding: calc(40px + 24 * var(--t)) 0; }
+#site-foot .foot-brand { display: flex; flex-direction: column; gap: 24px; }
+#site-foot .foot-say { margin: 0; max-width: 18em; font-family: var(--sans); font-size: 15px; line-height: 1.5; color: var(--muted-d); }
+#site-foot .foot-socials { gap: 10px; }
+#site-foot .foot-social { width: 40px; height: 40px; border-color: rgba(232, 222, 206, .2); transition: border-color .3s ease, background-color .3s ease; }
+#site-foot .foot-social svg { width: 16px; height: 16px; }
+#site-foot .foot-social:hover, #site-foot .foot-social:focus-visible { border-color: rgba(232, 222, 206, .6); background: rgba(232, 222, 206, .06); }
+#site-foot .foot-links { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin: 0; }
+#site-foot .fcol { min-width: 0; }
+#site-foot .fcol-h, #site-foot .fcol--hop .fcol-h { margin: 0 0 18px; font-family: var(--sans); font-style: normal; font-weight: 500; font-size: 11px; line-height: 1.4; letter-spacing: .18em; text-transform: uppercase; color: var(--muted-d); }
+#site-foot .fcol ul { display: grid; gap: 12px; margin: 0; padding: 0; }
+#site-foot .fcol a { font-family: var(--sans); font-style: normal; font-size: 15px; line-height: 1.4; color: var(--ivory); text-decoration: none;
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size .45s cubic-bezier(.65, 0, .35, 1); padding-bottom: 2px; }
+#site-foot .fcol a:hover, #site-foot .fcol a:focus-visible { color: var(--ivory); text-decoration: none; background-size: 100% 1px; }
+#site-foot .fcol li { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+#site-foot .fc-city { display: inline; margin: 0; font-size: 10px; letter-spacing: .18em; }
+/* House of Poland heading is a link: keep it a label with an arrow */
+#site-foot .fcol--hop .fcol-hl { display: inline-flex; gap: 8px; font-size: 11px; letter-spacing: .18em; color: var(--ivory); background: none; padding: 0; }
+#site-foot .fcol--hop .fcol-hl:hover svg { transform: translate3d(3px, 0, 0); }
+#site-foot .fcol-note { margin: 0; font-family: var(--sans); font-size: 14px; line-height: 1.55; color: var(--muted-d); max-width: 30ch; }
+/* bottom bar */
+#site-foot .foot-score + .foot-bottom, #site-foot .foot-bottom { margin: 0; padding: 20px 0; border-top: 1px solid rgba(232, 222, 206, .12); }
+#site-foot .foot-legal, #site-foot .to-top { font-size: 11px; letter-spacing: .16em; color: var(--muted-d); }
+#site-foot .foot-legal a, #site-foot .foot-legal .linkbtn, #site-foot .to-top { transition: color .3s ease; }
+#site-foot .foot-legal a:hover, #site-foot .foot-legal .linkbtn:hover, #site-foot .to-top:hover { color: var(--ivory); }
+#site-foot .foot-thanks { font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--ivory); }
+/* the closing wordmark, edge to edge, sitting on the bottom of the page */
+#site-foot .f-mark { display: block; margin: calc(8px + 16 * var(--t)) 0 calc(-0.14 * (100vw - 2 * var(--pad)) * 268 / 516); line-height: 0; }
+#site-foot .f-mark svg { display: block; width: 100%; height: auto; fill: var(--ivory); }
+#site-foot .f-mark:focus-visible { outline: 1px solid var(--ivory); outline-offset: 8px; }
+/* old pieces the new layout replaces */
+#site-foot .foot-logo { display: none; }
+@media (max-width: 1023px) {
+  #site-foot .foot-top { grid-template-columns: 1fr; gap: 40px; }
+  #site-foot .foot-links { grid-template-columns: 1fr 1fr; gap: 32px 24px; }
+  #site-foot .fcol--hop { grid-column: 1 / -1; }
+  #site-foot .f-statement .foot-score { font-size: 34px; }
+}
+@media (max-width: 599px) {
+  #site-foot .f-statement { align-items: flex-start; flex-direction: column; }
+  #site-foot .foot-links { grid-template-columns: 1fr; }
+  #site-foot .fcol li { justify-content: flex-start; }
+  #site-foot .foot-bottom { display: grid; gap: 14px; }
+}
+#site-foot .foot-say { max-width: 24em; }
+#site-foot .fcol .fcol-h { display: block; }
+@media (max-width: 1023px) {
+  #site-foot .fcol ul { gap: 0; }
+  #site-foot .fcol li { min-height: 44px; align-items: center; border: 0; padding: 0; }
+  #site-foot .fcol a { min-height: 0; padding: 4px 0; font-size: 16px; }
+  #site-foot .fcol a::after { content: none; }
+  #site-foot .fcol-h { margin-bottom: 6px; }
+}
+#site-foot .fcol li > .fc-city { display: inline-block; align-self: center; margin: 0; min-height: 0; line-height: 1; }
