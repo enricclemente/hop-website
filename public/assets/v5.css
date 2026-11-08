@@ -966,3 +966,13 @@ html.js .globes.is-in .globe:nth-child(3) { transition-delay: .24s; }
   .globe-stage { width: min(78vw, 340px); }
   .globes-h { font-size: 40px; }
 }
+.globe-tip {
+  position: absolute; left: 0; top: 0; z-index: 2; pointer-events: none; display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 12px 8px 10px; white-space: nowrap; background: rgba(18, 18, 20, .94); border: 1px solid rgba(239, 235, 228, .16);
+  color: var(--ivory); font-family: var(--serif); font-size: 15px; line-height: 1; box-shadow: 0 10px 24px rgba(0, 0, 0, .35);
+  opacity: 0; transition: opacity .2s ease;
+}
+.globe-tip::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--red); flex: none; }
+.globe-tip::after { content: ""; position: absolute; left: 50%; bottom: -5px; width: 8px; height: 8px; margin-left: -4px; background: inherit; border-right: inherit; border-bottom: inherit; transform: rotate(45deg); }
+.globe-tip.is-on { opacity: 1; }
+.globe-c.is-pointing { cursor: pointer; }
