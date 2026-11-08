@@ -523,19 +523,38 @@
         jLen = jPath.getTotalLength(), jTick = false;
     var clamp = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
     doc.classList.add("jump-live");
-    var jTrack = jump.querySelector(".jump-track"), jPin = jump.querySelector(".jump-pin"), jBase = 0;
+    var jTrack = jump.querySelector(".jump-track"), jPin = jump.querySelector(".jump-pin"), jBase = 0, jOver = -1, jPrevAcc = 0;
     var jUpdate = function () {
       jTick = false;
       var vh = window.innerHeight, p;
       var navH = (document.getElementById("nav") || {}).offsetHeight || 84, pinH = window.HOPacc && jBase ? jBase : (jBase = jPin.offsetHeight);
+      /* the side quotes sit a little above the pin's box: count them so nothing tucks under the nav */
+      if (jOver < 0) {
+        var pt0 = jPin.getBoundingClientRect().top, mt = pt0;
+        [].forEach.call(jPin.querySelectorAll(".lhl"), function (e) { var t = e.getBoundingClientRect().top; if (t < mt) mt = t; });
+        jOver = Math.max(0, Math.ceil(pt0 - mt));
+      }
+      var minTop = navH + 32 + jOver, padB = 48;
       /* sit 128px down when there is room, otherwise just under the nav, so laptops pin too */
-      var topPx = Math.max(navH + 8, Math.min(128, vh - pinH - 16));
-      var canPin = mqWide.matches && pinH + navH + 16 <= vh;
-      /* an open service row: the pinned graph slides up just enough to show it whole, with room below */
+      var topPx = Math.max(minTop, Math.min(128 + jOver, vh - pinH - padB));
+      var canPin = mqWide.matches && minTop + pinH + padB <= vh;
+      /* an open service row: the pinned graph slides up just enough to show it whole, with room above and
+         below; if the screen is too short for that, it lets go and scrolls like the page, holding the row in place */
       var accX = window.HOPaccExtra || 0;
-      if (accX && canPin) topPx = Math.min(topPx, vh - (pinH + accX) - 40);
-      jPin.style.top = topPx + "px";
-      doc.classList.toggle("jump-pinned", canPin);
+      if (accX && canPin) {
+        if (minTop + pinH + accX + padB <= vh) topPx = Math.max(minTop, Math.min(topPx, vh - (pinH + accX) - padB));
+        else canPin = false;
+      }
+      var was = doc.classList.contains("jump-pinned");
+      var accChanged = accX !== jPrevAcc; jPrevAcc = accX;
+      if (was !== canPin && accChanged) {
+        var anc = jump.querySelector("[aria-expanded='true']") || document.activeElement, a0 = anc ? anc.getBoundingClientRect().top : 0;
+        jPin.style.top = topPx + "px"; doc.classList.toggle("jump-pinned", canPin);
+        if (anc) window.scrollBy(0, anc.getBoundingClientRect().top - a0);
+      } else {
+        jPin.style.top = topPx + "px";
+        doc.classList.toggle("jump-pinned", canPin);
+      }
       if (mqWide.matches) {
         if (canPin) { var tr = jTrack.getBoundingClientRect(); p = clamp((topPx - tr.top) / Math.max(1, tr.height - jPin.offsetHeight) * 1.08); }
         else {
@@ -554,7 +573,7 @@
     };
     var jReq = function () { if (!jTick) { jTick = true; requestAnimationFrame(jUpdate); } };
     window.addEventListener("scroll", jReq, { passive: true });
-    window.addEventListener("resize", jReq);
+    window.addEventListener("resize", function () { jOver = -1; jReq(); });
     jUpdate();
   }
   /* Who we are: a dot on each partner opens their bio */
