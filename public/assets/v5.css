@@ -922,3 +922,11 @@ html .letter-panel .l5, html.js .letter-panel:not(.is-closed) .l5 { display: blo
   .cperson-n { column-gap: 16px; }
   .cperson-av { width: 88px; height: 110px; }
 }
+
+/* ---------- 51. New partners photo (3:2, shown whole on desktop); dots on each partner ---------- */
+@media (min-width: 1024px) {
+  .duo { aspect-ratio: 3 / 2; }
+  .pdot--david { --x: 34.5%; --y: 57%; }
+  .pdot--philip { --x: 63%; --y: 59.5%; }
+}
+@media (max-width: 1023px) { .duo img { object-position: 50% 45%; } }
