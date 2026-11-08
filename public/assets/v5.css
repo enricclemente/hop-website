@@ -930,3 +930,39 @@ html .letter-panel .l5, html.js .letter-panel:not(.is-closed) .l5 { display: blo
   .pdot--philip { --x: 63%; --y: 59.5%; }
 }
 @media (max-width: 1023px) { .duo img { object-position: 50% 45%; } }
+
+/* ---------- 52. The globe: three turning globes on black ---------- */
+.globes { position: relative; padding-block: calc(96px + 72 * var(--t)); color: var(--ivory); overflow: hidden; }
+.globes-h { margin: 0 0 calc(56px + 40 * var(--t)); max-width: 18em; font-family: var(--serif); font-weight: 400; font-size: calc(40px + 32 * var(--t)); line-height: 1.06; letter-spacing: -0.015em; color: var(--ivory); text-wrap: balance; }
+.globes-h em { font-style: italic; }
+.globes-h .tdot { color: var(--red); }
+.globes-row { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(24px + 40 * var(--t)); }
+.globe { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.globe-stage { position: relative; width: min(100%, 360px); aspect-ratio: 1; transition: transform .7s cubic-bezier(.22, 1, .36, 1); }
+.globe-stage::after { /* contact shadow */
+  content: ""; position: absolute; left: 14%; right: 14%; bottom: -9%; height: 9%; border-radius: 50%; z-index: -1;
+  background: radial-gradient(closest-side, rgba(0, 0, 0, .55), rgba(0, 0, 0, 0)); transition: transform .7s cubic-bezier(.22, 1, .36, 1), opacity .7s ease;
+}
+.globe-c { display: block; width: 100%; height: 100%; border-radius: 50%; touch-action: pan-y; cursor: grab; -webkit-tap-highlight-color: transparent; }
+.globes.is-dragging .globe-c { cursor: grabbing; }
+.globe-c:focus-visible { outline: 1px solid var(--ivory); outline-offset: 8px; }
+.globe-l { margin-top: calc(28px + 8 * var(--t)); font-size: 11px; letter-spacing: .2em; color: rgba(239, 235, 228, .6); transition: color .4s ease; }
+@media (hover: hover) {
+  .globe:hover .globe-stage { transform: translate3d(0, -6px, 0); }
+  .globe:hover .globe-stage::after { transform: scale(.92); opacity: .7; }
+  .globe:hover .globe-l { color: var(--ivory); }
+}
+.globes-hint { margin: calc(40px + 16 * var(--t)) 0 0; text-align: center; font-size: 11px; letter-spacing: .16em; color: rgba(239, 235, 228, .4); }
+.globes-hint .d-only { display: inline; } .globes-hint .m-only { display: none; }
+@media (hover: none) { .globes-hint .d-only { display: none; } .globes-hint .m-only { display: inline; } }
+/* entrance: the globes rise in, one after another (they spin in from the script) */
+html.js .globe { opacity: 0; transform: translate3d(0, 28px, 0); transition: opacity .9s ease, transform 1.1s cubic-bezier(.22, 1, .36, 1); }
+html.js .globes.is-in .globe { opacity: 1; transform: none; }
+html.js .globes.is-in .globe:nth-child(2) { transition-delay: .12s; }
+html.js .globes.is-in .globe:nth-child(3) { transition-delay: .24s; }
+@media (prefers-reduced-motion: reduce) { html.js .globe { opacity: 1; transform: none; transition: none; } }
+@media (max-width: 1023px) {
+  .globes-row { grid-template-columns: minmax(0, 1fr); gap: 56px; }
+  .globe-stage { width: min(78vw, 340px); }
+  .globes-h { font-size: 40px; }
+}
