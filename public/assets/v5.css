@@ -1209,3 +1209,35 @@ html #site-foot, html #site-foot.ink { background: var(--charcoal) !important; }
   #site-foot .fcol-h { margin-bottom: 6px; }
 }
 #site-foot .fcol li > .fc-city { display: inline-block; align-self: center; margin: 0; min-height: 0; line-height: 1; }
+
+/* ==========================================================================
+   61. Nov 8 polish: article hero gap, partner cards stacked, red key phrases, send button as the nav pill, smaller footer mark
+   ========================================================================== */
+/* individual articles: breathing room between the hero image and the text */
+.art-hero-w { padding-bottom: calc(48px + 40 * var(--t)); }
+/* contact: portrait first, then name and city beneath it */
+.cperson-n {
+  grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto auto; grid-template-areas: "av" "name" "city";
+  row-gap: 0; align-items: start; justify-items: start; margin-bottom: 20px;
+}
+.cperson-av { width: 100%; max-width: 240px; height: auto; aspect-ratio: 4 / 5; margin-bottom: 20px; }
+.cperson-nm { align-self: start; }
+.cperson-c { align-self: start; margin-top: 8px; }
+@media (max-width: 599px) { .cperson-av { width: 100%; max-width: 200px; height: auto; } }
+/* the two key phrases read in HOP red */
+#who-h .red, #jump-title .red { color: var(--red); }
+/* send button: the nav pill, on paper */
+.pcta.pcta--light, #c-submit.pcta--light {
+  display: inline-flex; gap: 12px; padding: 18px 28px 18px 24px; min-height: 0; width: auto;
+  background: rgba(10, 10, 10, .03); border: 1px solid rgba(10, 10, 10, .28); color: var(--ink);
+  font-size: 15px; cursor: pointer;
+}
+.pcta--light:hover, .pcta--light:focus-visible { background: rgba(10, 10, 10, .06); border-color: rgba(10, 10, 10, .6); }
+.pcta--light:active { background: rgba(10, 10, 10, .1); }
+.pcta--light:focus-visible { outline: 1px solid var(--ink); outline-offset: 4px; }
+#c-submit.pcta--light .spinner { width: 14px; height: 14px; border: 1.5px solid rgba(10, 10, 10, .25); border-top-color: var(--ink); }
+#c-submit.pcta--light.busy .pcta-i { display: none; }
+#c-submit.pcta--light[disabled] { opacity: .55; cursor: default; }
+@media (max-width: 620px) { #c-submit.pcta--light { width: auto; } }
+/* footer wordmark: a signature, not a billboard */
+#site-foot .f-mark { width: calc(120px + 80 * var(--t)); margin: calc(32px + 24 * var(--t)) 0 calc(40px + 24 * var(--t)); }
