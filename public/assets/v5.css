@@ -1243,3 +1243,5 @@ html #site-foot, html #site-foot.ink { background: var(--charcoal) !important; }
 #site-foot .f-mark { width: calc(120px + 80 * var(--t)); margin: calc(32px + 24 * var(--t)) 0 calc(40px + 24 * var(--t)); }
 .pmodal .pm-av { object-position: 50% 26%; }
 .cperson-av { object-position: 50% 50%; }
+/* footer wordmark: small, under the social icons */
+#site-foot .foot-brand .f-mark { width: calc(88px + 24 * var(--t)); margin: 8px 0 0; }
