@@ -236,7 +236,7 @@
     document.addEventListener("visibilitychange", syncPause);
     if (reduce) doc.style.setProperty("--hold", "5s");
 
-    /* depth: pointer parallax (fine pointers only), eased; scroll focus-pull */
+    /* depth: scroll focus-pull */
     if (!reduce) {
       var tx = 0, ty = 0, px = 0, py = 0, raf = 0;
       var tick = function () {
@@ -244,10 +244,7 @@
         hero.style.setProperty("--px", px.toFixed(3)); hero.style.setProperty("--py", py.toFixed(3));
         raf = Math.abs(tx - px) + Math.abs(ty - py) > .002 ? requestAnimationFrame(tick) : 0;
       };
-      if (fine.matches) {
-        hero.addEventListener("pointermove", function (e) { var r = hero.getBoundingClientRect(); tx = clamp((e.clientX - r.left) / r.width * 2 - 1, -1, 1); ty = clamp((e.clientY - r.top) / r.height * 2 - 1, -1, 1); if (!raf) raf = requestAnimationFrame(tick); });
-        hero.addEventListener("pointerleave", function () { tx = ty = 0; if (!raf) raf = requestAnimationFrame(tick); });
-      }
+      /* (pointer parallax removed: the statement stays still under the cursor) */
       var sTick = false;
       var onScroll = function () { sTick = false; var h = hero.offsetHeight || 1; var sp = clamp(window.scrollY / (h * .85), 0, 1); hero.style.setProperty("--sp", sp.toFixed(3)); };
       window.addEventListener("scroll", function () { if (!sTick) { sTick = true; requestAnimationFrame(onScroll); } }, { passive: true });

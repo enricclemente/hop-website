@@ -531,6 +531,9 @@
       /* sit 128px down when there is room, otherwise just under the nav, so laptops pin too */
       var topPx = Math.max(navH + 8, Math.min(128, vh - pinH - 16));
       var canPin = mqWide.matches && pinH + navH + 16 <= vh;
+      /* an open service row: the pinned graph slides up just enough to show it whole, with room below */
+      var accX = window.HOPaccExtra || 0;
+      if (accX && canPin) topPx = Math.min(topPx, vh - (pinH + accX) - 40);
       jPin.style.top = topPx + "px";
       doc.classList.toggle("jump-pinned", canPin);
       if (mqWide.matches) {
@@ -632,12 +635,13 @@
       b.removeAttribute("aria-haspopup"); b.setAttribute("aria-controls", panel.id); b.setAttribute("aria-expanded", "false");
       b.addEventListener("click", function () {
         settle();
-        if (accCur === b) { setOpen(b, false); accCur = null; return; }
+        if (accCur === b) { setOpen(b, false); accCur = null; window.HOPaccExtra = 0; window.dispatchEvent(new Event("resize")); return; }
         if (accCur) setOpen(accCur, false);
         setOpen(b, true); accCur = b;
+        window.HOPaccExtra = inner.scrollHeight; window.dispatchEvent(new Event("resize"));
       });
     });
-    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && accCur) { var b = accCur; settle(); setOpen(b, false); accCur = null; b.focus(); } });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && accCur) { var b = accCur; settle(); setOpen(b, false); accCur = null; window.HOPaccExtra = 0; window.dispatchEvent(new Event("resize")); b.focus(); } });
   }
 
   /* Who we are title: each line fills in as you scroll */

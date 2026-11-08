@@ -905,3 +905,20 @@ html { background: var(--black); }
 .cperson-c { align-self: center; }
 @media (max-width: 599px) { .cperson-av { width: 48px; height: 48px; } .cperson-n { gap: 14px; } }
 html .letter-panel .l5, html.js .letter-panel:not(.is-closed) .l5 { display: block; grid-template-columns: none; }
+
+/* ---------- 49. Pinned graph glides when a service row opens or closes ---------- */
+@media (prefers-reduced-motion: no-preference) { html.js.jump-pinned .jump-pin { transition: top .55s cubic-bezier(.65, 0, .35, 1); } }
+.hs, .hs-i, .hs-v { --px: 0; --py: 0; }
+
+/* ---------- 50. Contact: partner cards led by a portrait ---------- */
+.cperson-n {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: 1fr auto; grid-template-areas: "av city" "av name";
+  column-gap: 20px; row-gap: 6px; align-items: end; margin-bottom: 20px;
+}
+.cperson-av { grid-area: av; width: 104px; height: 130px; object-fit: cover; object-position: 50% 20%; filter: none; background: #DCD6CC; }
+.cperson-nm { grid-area: name; font-size: calc(24px + 4 * var(--t)); line-height: 1.1; }
+.cperson-c { grid-area: city; align-self: end; justify-self: start; }
+@media (max-width: 599px) {
+  .cperson-n { column-gap: 16px; }
+  .cperson-av { width: 88px; height: 110px; }
+}
