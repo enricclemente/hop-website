@@ -1272,3 +1272,11 @@ html #site-foot, html #site-foot.ink { background: var(--charcoal) !important; }
 /* brands: about 15% smaller */
 .logo img { height: calc((var(--k0) + (var(--h) - 22) * var(--k1)) * .85); }
 .logos-list, .logos-track { height: calc((var(--k0) + 36 * var(--k1)) * .85 + 24px); }
+/* footer contact: city sits under its email */
+#site-foot .fcol li:has(> .fc-city) { flex-direction: column; align-items: flex-start; justify-content: flex-start; gap: 6px; }
+#site-foot .fcol li > .fc-city { align-self: flex-start; }
+#site-foot .fcol ul:has(.fc-city) { gap: 20px; }
+@media (max-width: 1023px) {
+  #site-foot .fcol li:has(> .fc-city) { min-height: 0; padding: 6px 0; gap: 2px; }
+  #site-foot .fcol ul:has(.fc-city) { gap: 8px; }
+}
