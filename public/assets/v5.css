@@ -1241,3 +1241,5 @@ html #site-foot, html #site-foot.ink { background: var(--charcoal) !important; }
 @media (max-width: 620px) { #c-submit.pcta--light { width: auto; } }
 /* footer wordmark: a signature, not a billboard */
 #site-foot .f-mark { width: calc(120px + 80 * var(--t)); margin: calc(32px + 24 * var(--t)) 0 calc(40px + 24 * var(--t)); }
+.pmodal .pm-av { object-position: 50% 26%; }
+.cperson-av { object-position: 50% 50%; }
