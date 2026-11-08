@@ -1085,3 +1085,22 @@ html .nav.is-scrolled, html .menu { background: var(--charcoal) !important; }
   19.1%  { transform: translate3d(0, -9%, 0) scale(.96, 1.05);   animation-timing-function: cubic-bezier(.5, 0, .5, 1); }   /* recovery bounce */
   22.2%, 100% { transform: translate3d(0, 0, 0) scale(1, 1); }
 }
+
+/* ---------- 56. Palette roles, refined: charcoal frames the page (nav, menu, footer), warm charcoal carries dark content ---------- */
+html #site-foot, html #site-foot.ink { background: var(--charcoal) !important; }
+.globes.ink, .globes { background: var(--warm); }
+.globe-tip { background: rgba(21, 21, 21, .96); }
+::selection { background: var(--ivory); color: var(--ink); }
+.ink ::selection, .inkrun ::selection, #site-foot ::selection, .globes ::selection, .nav ::selection, .menu ::selection { background: var(--ivory); color: var(--charcoal); }
+
+/* ---------- 57. Tighter hand-off from the logos into How we do it ---------- */
+.who { padding-bottom: calc(24px + 16 * var(--t)); }
+#approach.jump { padding-top: calc(72px + 48 * var(--t)); }
+
+/* ---------- 58. Hero, covers and intro in charcoal (one black with the nav and footer); globe labels a step larger ---------- */
+:root { --rug-c: var(--charcoal); }
+.inkrun, .ink { background-color: var(--charcoal); }
+.i5-bg { background-color: var(--charcoal); }
+.globes.ink, .globes { background: var(--warm); }
+.globe-l { font-size: 13px; letter-spacing: .18em; color: rgba(232, 222, 206, .7); }
+@media (max-width: 1023px) { .globe-l { font-size: 12px; } }

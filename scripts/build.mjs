@@ -125,7 +125,13 @@ applySEO(dist, ARTICLES)
   const walk = (d) => readdirSync(d, { withFileTypes: true }).flatMap((e) => e.isDirectory() ? walk(join(d, e.name)) : e.name.endsWith('.html') ? [join(d, e.name)] : [])
   for (const f of walk(dist)) {
     const html = readFileSync(f, 'utf8')
-    const out = html.replace(/(href|src)="\/(assets\/[^"?#]+\.(?:css|js))"/g, (m, a, path) => { const h = v(path); return h ? `${a}="/${path}?v=${h}"` : m })
+    /* House rule: a title that ends with a full stop ends with the red dot */
+    const dotted = html.replace(/(<h[1-4]\b[^>]*>)([\s\S]*?)(<\/h[1-4]>)/g, (m, open, inner, close) => {
+      if (/class="(?:tdot|hs-stop|i5-stop)"/.test(inner)) return m
+      const r = inner.replace(/\.((?:\s*<\/[a-z0-9]+>)*\s*)$/i, (mm, tail) => '<span class="tdot">.</span>' + tail)
+      return open + r + close
+    })
+    const out = dotted.replace(/(href|src)="\/(assets\/[^"?#]+\.(?:css|js))"/g, (m, a, path) => { const h = v(path); return h ? `${a}="/${path}?v=${h}"` : m })
     if (out !== html) writeFileSync(f, out)
   }
 }
