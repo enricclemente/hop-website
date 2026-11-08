@@ -1280,3 +1280,10 @@ html #site-foot, html #site-foot.ink { background: var(--charcoal) !important; }
   #site-foot .fcol li:has(> .fc-city) { min-height: 0; padding: 6px 0; gap: 2px; }
   #site-foot .fcol ul:has(.fc-city) { gap: 8px; }
 }
+/* partners photo: a slightly wider crop (top and bottom trimmed) so it takes less of the screen; dots re-placed on the chests */
+@media (min-width: 1024px) {
+  .duo { aspect-ratio: 16 / 9; }
+  .duo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+  .pdot--david { --y: 58.3%; }
+  .pdot--philip { --y: 61.3%; }
+}
