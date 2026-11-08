@@ -1249,3 +1249,26 @@ html #site-foot, html #site-foot.ink { background: var(--charcoal) !important; }
 .cperson-n { justify-items: stretch; }
 .cperson-av { width: 100%; max-width: none; }
 @media (max-width: 599px) { .cperson-av { max-width: none; } }
+
+/* ---------- 62. Phones: service rows use the same + / x as desktop; no sticky tap colour; menu CTA is the nav pill; logos a touch smaller ---------- */
+@media (max-width: 1023px) {
+  .jump-plus { width: 32px; height: 32px; }
+  .jump-plus svg { display: block; }
+  .jump-plus::before { content: none; }
+  .jump-item[aria-expanded="true"] .jump-plus { transform: rotate(45deg); }
+}
+/* touch screens keep :hover after a tap, which left closed rows with a filled circle and a hidden icon */
+@media (hover: none) {
+  .jump-item:hover:not(.is-active) .jump-plus { background: transparent; border-color: rgba(10, 10, 10, .25); transform: none; }
+  .jump-item:hover:not(.is-active) .jump-plus svg { stroke: var(--ink); }
+  .jump-item:hover:not(.is-active) .jump-ico { color: rgba(10, 10, 10, .55); }
+  .jump-item:hover:not(.is-active) .jump-item-t { color: inherit; }
+  .jump-item.is-active .jump-plus svg { stroke: var(--ivory); }
+  .jump-item { -webkit-tap-highlight-color: transparent; }
+}
+/* menu: the nav pill, full width */
+.menu-bottom .pcta--menu { display: flex; justify-content: center; width: 100%; padding: 18px 24px; font-size: 16px; gap: 14px; }
+.menu-bottom .pcta--menu .pcta-dot { width: 8px; height: 8px; }
+/* brands: about 15% smaller */
+.logo img { height: calc((var(--k0) + (var(--h) - 22) * var(--k1)) * .85); }
+.logos-list, .logos-track { height: calc((var(--k0) + 36 * var(--k1)) * .85 + 24px); }
