@@ -1,6 +1,6 @@
 /* HOP — brands marquee under the partners photo.
    The HTML is an accessible list of all logos (and the no-JS fallback). This script builds an
-   aria-hidden visual track that streams logos endlessly: Nike after every three others, the
+   aria-hidden visual track that streams logos endlessly: Nike once in every ten, the
    others in order, recycling items at the edge so the pattern never breaks at a seam and the DOM
    stays small. Pauses on hover, on tap (touch), off screen and in background tabs; reduced
    motion shows a still, scrollable row instead. */
@@ -17,7 +17,7 @@
   var others = src.filter(function (li) { return li !== nike; });
   var k = 0, o = 0;
   var next = function () {
-    var li = (nike && k % 4 === 0) ? nike : others[o++ % others.length];
+    var li = (nike && k % 10 === 0) ? nike : others[o++ % others.length];
     k++;
     var c = li.cloneNode(true), img = c.querySelector("img");
     img.alt = ""; img.loading = "eager";
