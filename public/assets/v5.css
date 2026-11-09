@@ -1303,3 +1303,8 @@ html #site-foot, html #site-foot.ink { background: var(--charcoal) !important; }
 @media (max-width: 620px) { .sent-actions { flex-direction: column; align-items: flex-start; } }
 .sent-again { font-family: var(--sans); font-style: normal; font-size: 15px; min-height: 0; padding-bottom: 3px; border-bottom-color: rgba(10, 10, 10, .4); }
 .sent-again:hover { border-bottom-color: var(--ink); }
+/* footer wordmark: the nav version, with the leaping full stop */
+#site-foot .f-mark .nav-dot { transform-box: fill-box; transform-origin: 50% 100%; }
+@media (prefers-reduced-motion: no-preference) {
+  #site-foot .f-mark .nav-dot { animation: hop-leap 4.5s linear 1.2s infinite both; }
+}
