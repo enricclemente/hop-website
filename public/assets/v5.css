@@ -1287,3 +1287,19 @@ html #site-foot, html #site-foot.ink { background: var(--charcoal) !important; }
   .pdot--david { --y: 58.3%; }
   .pdot--philip { --y: 61.3%; }
 }
+
+/* ---------- 63. Contact: sent state replaces the form ---------- */
+.form[hidden], #contact-form[hidden] { display: none !important; }
+.sent { gap: 0; padding: calc(32px + 16 * var(--t)) 0 0; border-top: 1px solid rgba(10, 10, 10, .14); }
+.sent-k { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 calc(20px + 8 * var(--t)); }
+.sent .sent-dot { position: static; width: 8px; height: 8px; border-radius: 50%; background: var(--red); flex: none; animation: none; }
+.sent-h { font-size: calc(40px + 24 * var(--t)); line-height: 1.04; letter-spacing: -.025em; margin: 0; }
+.sent-lead { margin: calc(16px + 4 * var(--t)) 0 0; font-family: var(--sans); font-size: calc(17px + 2 * var(--t)); line-height: 1.5; color: var(--muted-l); max-width: 36ch; }
+.sent-lead strong { font-weight: 400; font-style: normal; color: var(--ink); overflow-wrap: anywhere; }
+.sent-demo { margin-top: 12px; }
+.sent-actions { margin-top: calc(32px + 8 * var(--t)); gap: 16px 28px; align-items: center; }
+.sent-actions .pcta--light { display: inline-flex; }
+.sent-again { font-size: 15px; }
+@media (max-width: 620px) { .sent-actions { flex-direction: column; align-items: flex-start; } }
+.sent-again { font-family: var(--sans); font-style: normal; font-size: 15px; min-height: 0; padding-bottom: 3px; border-bottom-color: rgba(10, 10, 10, .4); }
+.sent-again:hover { border-bottom-color: var(--ink); }

@@ -1267,6 +1267,8 @@
         sent.querySelector('[data-sent="email"]').textContent = payload.email;
         sent.querySelector(".sent-demo").hidden = !res.demo;
         form.hidden = true;
+        document.getElementById("draft-note").hidden = true;
+        var fa = document.querySelector(".form-alert"); if (fa) fa.hidden = true;
         sent.hidden = false;
         translateTree(sent, currentLang);
         sent.focus();
