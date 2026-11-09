@@ -8,6 +8,7 @@
       RESEND_API_KEY  API key from resend.com
       CONTACT_TO      e.g. "philip@hoppartners.pl,david@hoppartners.pl"
       CONTACT_FROM    sender on your verified domain, e.g. "HOP. Website <website@hoppartners.pl>"
+      CONTACT_CC      optional, comma-separated addresses copied on every message
       The visitor's address is set as Reply-To.
 
    The visitor sees success if at least one of the two worked. */
@@ -111,7 +112,7 @@ async function saveToSanity(d) {
 }
 
 async function sendEmail(d) {
-  const { RESEND_API_KEY, CONTACT_TO, CONTACT_FROM } = process.env
+  const { RESEND_API_KEY, CONTACT_TO, CONTACT_FROM, CONTACT_CC } = process.env
   if (!RESEND_API_KEY || !CONTACT_TO || !CONTACT_FROM) return null
 
   const rows = [
@@ -128,12 +129,13 @@ async function sendEmail(d) {
     const pick = to.find((a) => a.toLowerCase().startsWith(d.partner.toLowerCase()))
     if (pick) to = [pick, ...to.filter((a) => a !== pick)]
   }
+  const cc = String(CONTACT_CC || '').split(',').map((s) => s.trim()).filter((a) => a && !to.includes(a))
   try {
     const r = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: { Authorization: `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        from: CONTACT_FROM, to, reply_to: d.email,
+        from: CONTACT_FROM, to, ...(cc.length ? { cc } : {}), reply_to: d.email,
         subject: `Website: ${d.name}${d.company ? ` (${d.company})` : ''}`,
         text, html,
       }),
