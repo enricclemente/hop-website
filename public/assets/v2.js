@@ -585,9 +585,9 @@
   var pm = document.getElementById("pmodal"), pdots = [].slice.call(document.querySelectorAll(".pdot"));
   if (pm && pdots.length && typeof pm.showModal === "function") {
     var partners = [
-      { name: "Philip Jacobson", img: "/assets/img/philip-av.webp?v=1", email: "philip@hoppartners.com", phone: "+48 571 357 205", li: "https://www.linkedin.com/in/philip-jacobson-2276556/",
+      { name: "Philip Jacobson", img: "/assets/img/philip-av.webp?v=1", email: "philip@hoppartners.pl", phone: "+48 571 357 205", li: "https://www.linkedin.com/in/philip-jacobson-2276556/",
         bio: "Philip was Chief Brand Officer at PE-backed Vimergy. For the last five years he has driven brand-led growth at scale-ups across categories, including Tylko, Autry and Chilly\u2019s. Before that, he spent a decade leading brand communication for Nike EMEA and was Global Head of Brand Creative at Maserati." },
-      { name: "David Anson", img: "/assets/img/david-av.webp?v=1", email: "david@hoppartners.com", phone: "+48 602 638 219", li: "https://www.linkedin.com/in/david-anson-9a08334/",
+      { name: "David Anson", img: "/assets/img/david-av.webp?v=1", email: "david@hoppartners.pl", phone: "+48 602 638 219", li: "https://www.linkedin.com/in/david-anson-9a08334/",
         bio: "David has led business at some of the world’s best agencies, most recently at BBH Singapore, and before that Saatchi & Saatchi London and Wieden+Kennedy Amsterdam, on brands like Samsung, Meta, Netflix and HSBC. He was also a brand creative lead at Nike UK." }
     ];
     var pmName = pm.querySelector(".pm-name"), pmBio = pm.querySelector(".pm-bio"),
