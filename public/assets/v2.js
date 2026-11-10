@@ -23,24 +23,22 @@
      (same approach as the rest of the site), with the notice at the bottom.
      ------------------------------------------------------------------ */
   var PL_COPY = { /* "English text": "Polski tekst" */ };
-  var LOREM = ("lorem ipsum dolor sit amet źródło łąka zażółć gęślą jaźń consectetur adipiscing świat elit sed miód tempor ręka labore dolore magna wąż aliqua enim minim pióro veniam nostrud ćma laboris nisi aliquip źdźbło commodo duis aute irure mężny reprehenderit voluptate velit esse cillum dolore fugiat nulla pariatur excepteur sint occaecat cupidatat proident sunt culpa officia deserunt mollit anim laborum słowo pewność i w z o a na do że to się jak od po dla przez".split(" "));
-  /* placeholder Polish keeps every word's exact length, so lines, wraps and buttons hold their English shape */
-  var BYLEN = {}; LOREM.forEach(function (w) { (BYLEN[w.length] = BYLEN[w.length] || []).push(w); });
-  function ofLen(L, k) {
-    var b = BYLEN[L]; if (b) return b[k % b.length];
-    var s = "", j = k; while (s.length < L) s += LOREM[j++ % LOREM.length]; return s.slice(0, L);
-  }
   function hash(s) { var h = 2166136261; for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+  /* Real Polish comes from /assets/pl.js (window.HOP_PL), keyed by the English text. A heading whose
+     full stop became the red dot is found by its key with the stop. Anything not yet translated
+     stays in English (never placeholder text), and the note at the bottom says so. */
+  var missing = 0;
+  function plOf(t) {
+    var D = window.HOP_PL || PL_COPY, has = Object.prototype.hasOwnProperty;
+    if (has.call(D, t)) return D[t];
+    if (has.call(D, t + ".")) return D[t + "."].replace(/\.$/, "");
+    return null;
+  }
   function pseudo(text) {
     var t = text.trim(); if (!t) return text;
-    if (PL_COPY[t]) return text.replace(t, PL_COPY[t]);
-    var seed = hash(t), i = 0;
-    return text.replace(/[A-Za-zÀ-ž]+/g, function (w) {
-      var r = ofLen(w.length, seed + i++ * 7919);
-      if (w === w.toUpperCase() && w.length > 1) return r.toUpperCase();
-      if (w[0] !== w[0].toLowerCase()) return r[0].toUpperCase() + r.slice(1);
-      return r;
-    });
+    var r = plOf(t);
+    if (r == null) { if (/[A-Za-z]{3,}/.test(t)) { missing++; if (window.HOP_PL_DEBUG) (window.HOP_PL_MISS = window.HOP_PL_MISS || []).push(t); } return text; }
+    return text.replace(t, r);
   }
   var originals = new WeakMap();
   var SKIP = "script, style, svg, [data-notr], time, .lang";
@@ -50,7 +48,13 @@
       var p = n.parentElement; return !p || p.closest(SKIP) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
     } });
     var nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode);
-    nodes.forEach(function (n) { if (!originals.has(n)) originals.set(n, n.nodeValue); var en = originals.get(n); n.nodeValue = lang === "pl" ? pseudo(en) : en; });
+    nodes.forEach(function (n) {
+      if (!originals.has(n)) originals.set(n, n.nodeValue);
+      var en = originals.get(n); n.nodeValue = lang === "pl" ? pseudo(en) : en;
+      /* a Polish line that ends in ':' or '?' keeps its own mark: the red full stop steps aside */
+      var nx = n.nextSibling;
+      if (nx && nx.nodeType === 1 && nx.classList.contains("tdot")) nx.hidden = lang === "pl" && /[:?!]\s*$/.test(n.nodeValue);
+    });
     $$("[aria-label]", root).forEach(function (el) {
       if (el.closest("[data-notr]")) return;
       if (!el.dataset.labelEn) el.dataset.labelEn = el.getAttribute("aria-label");
@@ -62,8 +66,9 @@
   function applyLang(l) {
     lang = l; doc.setAttribute("lang", l); store("hop-lang", l);
     $$(".lang button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.lang === l)); });
+    missing = 0;
     translate(document.body, l);
-    if (langNote) langNote.hidden = l !== "pl";
+    if (langNote) langNote.hidden = !(l === "pl" && missing > 0);
     placeLangDot(true);
     try { document.dispatchEvent(new CustomEvent("hop:lang", { detail: l })); } catch (e) {}
   }
@@ -599,6 +604,7 @@
       var av = pm.querySelector(".pm-av"); if (av && p.img) av.src = p.img;
       pmLi.href = p.li;
       pmNextN.textContent = partners[(i + 1) % partners.length].name;
+      if (lang === "pl") translate(pm, "pl");
     };
     pdots.forEach(function (b) {
       b.addEventListener("click", function () {
@@ -690,5 +696,8 @@
       rises.forEach(function (el) { rio.observe(el); });
     }
   }
+
+  /* content built after the first language pass (service panels, letter) gets its Polish too */
+  if (lang === "pl") { missing = 0; translate(document.body, "pl"); if (langNote) langNote.hidden = !(missing > 0); }
 
 })();

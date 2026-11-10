@@ -1360,3 +1360,15 @@ html.cb-wait .consent-bar { opacity: 0; transform: translate3d(0, 16px, 0); poin
 @media (max-width: 1023px) { .who { padding-bottom: 56px; } }
 .clients { padding-block: calc(24px + 24 * var(--t)) calc(24px + 16 * var(--t)); }
 #site-foot .foot-score em { font-style: italic; }
+
+/* ---------- 67. Real articles: founders' note layout, bullet list, sign-off ---------- */
+@media (min-width: 1024px) { .art-grid--solo { grid-template-columns: minmax(0, 720px); justify-content: center; } }
+.art-bullets { list-style: none; margin: 8px 0 calc(28px + 8 * var(--t)); padding: 0; }
+.art-bullets li { position: relative; padding: 14px 0 14px 28px; border-top: 1px solid rgba(10, 10, 10, .12); font-size: calc(17px + 2 * var(--t)); line-height: 1.55; color: var(--ink); }
+.art-bullets li:last-child { border-bottom: 1px solid rgba(10, 10, 10, .12); }
+.art-bullets li::before { content: ""; position: absolute; left: 2px; top: calc(14px + .72em); width: 7px; height: 7px; border-radius: 50%; background: var(--red); }
+.art-sign { display: flex; flex-direction: column; gap: 6px; margin-top: calc(40px + 16 * var(--t)); }
+.art-sign-h { font-family: var(--serif); font-style: italic; font-size: calc(34px + 14 * var(--t)); line-height: 1; color: var(--ink); }
+.art-sign-n { font-family: var(--sans); font-size: 15px; color: var(--muted-l); }
+.art-sign-tag { margin-top: 20px; font-family: var(--sans); font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: rgba(10, 10, 10, .62); }
+.lang-note[hidden] { display: none !important; }
