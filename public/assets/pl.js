@@ -190,6 +190,7 @@ window.HOP_PL = {
 "Get their attention. Be remembered.": "Przyciągnij uwagę. Zostań zapamiętany.",
 "Ideas people see, touch and taste, built to travel and proven to work.": "Idee, które ludzie mogą zobaczyć, dotknąć i posmakować – stworzone, by podróżować, i sprawdzone w działaniu.",
 "David was a Brand Creative Lead at Nike and Head of Business Leadership and Client Service at BBH Singapore. Across BBH Singapore, Wieden+Kennedy Amsterdam and Saatchi & Saatchi London, he has led the Nike, Samsung, Meta, Netflix and HSBC business.": "David był liderem kreacji marki w Nike oraz szefem obsługi klientów i rozwoju biznesu w BBH Singapore. W BBH Singapore, Wieden+Kennedy Amsterdam i Saatchi & Saatchi London prowadził klientów takich jak Nike, Samsung, Meta, Netflix i HSBC.",
+"Our message to Poland’s best companies": "Nasze przesłanie do najlepszych polskich firm",
 "Say": "Powiedzcie",
 "Why we’re": "Dlaczego tu",
 "here": "jesteśmy",

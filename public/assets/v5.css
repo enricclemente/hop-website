@@ -1389,3 +1389,6 @@ html.cb-wait .consent-bar { opacity: 0; transform: translate3d(0, 16px, 0); poin
 @media (prefers-reduced-motion: no-preference) { html.hs-live .hs-i.is-in .c { filter: none; } }
 /* the same room for the line-by-line headline reveals (their masks are overflow:hidden) */
 .intro-l, .rl-w { padding-inline: .12em; margin-inline: -.12em; }
+/* letter: the artwork carries its own type, so show it whole: wide on tablet/desktop, portrait on phones */
+.l5-fig { aspect-ratio: 2400 / 1032; background: #E60001; }
+@media (max-width: 759px) { .l5-fig { aspect-ratio: 1200 / 2134; } }
