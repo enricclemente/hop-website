@@ -44,7 +44,7 @@ def words_of(x): return len(json.dumps(x, ensure_ascii=False).split())
 SAY_MINS = max(1, round(words_of(C['say']['en']) / 230))
 ABOUT_MINS = max(1, round(words_of(C['about']['en']) / 230))
 REAL = [
-  dict(slug='say-hop', n='01', topic='Letter', title='Say hop.', it='hop', ex='Relax. You’ve already done the hard part. A letter to the founders, CEOs and boards of Poland’s best companies.',
+  dict(slug='say-hop', n='01', img='founders', ih=533, topic='Letter', title='Say hop.', it='hop', ex='Relax. You’ve already done the hard part. A letter to the founders, CEOs and boards of Poland’s best companies.',
        ex_pl='Wyluzuj. Najtrudniejsze masz już za sobą. List do założycieli, prezesów i zarządów najlepszych polskich firm.', date='2026-11-11', dlabel='11 November 2026', dlabel_pl='11 listopada 2026', mins=SAY_MINS),
   dict(slug='why-were-here', n='02', topic='About', title='Why we’re here.', it='here', ex='Two brand strategists who married into Poland, and why we think Poland is next.',
        ex_pl='Dwóch strategów marki, którzy wżenili się w Polskę, i dlaczego uważamy, że teraz kolej na Polskę.', date='2026-11-11', dlabel='11 November 2026', dlabel_pl='11 listopada 2026', mins=ABOUT_MINS),
@@ -60,7 +60,7 @@ cards = []
 for a in CARDS:
     cards.append(f'''        <li class="acard">
           <a class="acard-a" href="/articles/{a['slug']}">
-            <span class="acard-img acard-img--{a['n']}" aria-hidden="true"><picture><source type="image/avif" srcset="/assets/img/r/intro-krakow-800.avif 800w, /assets/img/r/intro-krakow-1200.avif 1200w" sizes="(min-width: 1024px) 34vw, 100vw"><source type="image/webp" srcset="/assets/img/r/intro-krakow-800.webp 800w, /assets/img/r/intro-krakow-1200.webp 1200w" sizes="(min-width: 1024px) 34vw, 100vw"><img class="acard-pic" src="/assets/img/r/intro-krakow-800.jpg" srcset="/assets/img/r/intro-krakow-800.jpg 800w, /assets/img/r/intro-krakow-1200.jpg 1200w" sizes="(min-width: 1024px) 34vw, 100vw" alt="" width="800" height="413" loading="lazy" decoding="async"></picture></span>
+            <span class="acard-img acard-img--{a['n']}" aria-hidden="true"><picture><source type="image/avif" srcset="/assets/img/r/{a.get('img','intro-krakow')}-800.avif 800w, /assets/img/r/{a.get('img','intro-krakow')}-1200.avif 1200w" sizes="(min-width: 1024px) 34vw, 100vw"><source type="image/webp" srcset="/assets/img/r/{a.get('img','intro-krakow')}-800.webp 800w, /assets/img/r/{a.get('img','intro-krakow')}-1200.webp 1200w" sizes="(min-width: 1024px) 34vw, 100vw"><img class="acard-pic" src="/assets/img/r/{a.get('img','intro-krakow')}-800.jpg" srcset="/assets/img/r/{a.get('img','intro-krakow')}-800.jpg 800w, /assets/img/r/{a.get('img','intro-krakow')}-1200.jpg 1200w" sizes="(min-width: 1024px) 34vw, 100vw" alt="" width="800" height="{a.get('ih',413)}" loading="lazy" decoding="async"></picture></span>
             <span class="acard-t">
               <span class="lbl lbl--m acard-topic">{e(a['topic'])}</span>
               <span class="acard-h">{title_html(a)}</span>
@@ -151,6 +151,11 @@ for idx, a in enumerate(ARTICLES):
 print('hub + %d articles written' % len(ARTICLES))
 
 # ---------- the letter (Say hop.) and the founders' note (Why we're here.) ----------
+def hero(name, w, h, alt):
+    srcs = lambda ext: ', '.join(f'/assets/img/r/{name}-{x}.{ext} {x}w' for x in (800, 1200, 1600))
+    sz = '(min-width: 1440px) 1200px, calc(100vw - 48px)'
+    return f'<div class="wrap art-hero-w"><figure class="art-hero"><picture><source type="image/avif" srcset="{srcs("avif")}" sizes="{sz}"><source type="image/webp" srcset="{srcs("webp")}" sizes="{sz}"><img src="/assets/img/r/{name}-1200.jpg" srcset="{srcs("jpg")}" sizes="{sz}" alt="{html.escape(alt)}" width="{w}" height="{h}" decoding="async" fetchpriority="high"></picture></figure></div>'
+HERO_FOUNDERS = hero('founders', 1600, 1067, 'Philip Jacobson and David Anson, the two senior partners of HOP, in Poznań')
 HERO = '<div class="wrap art-hero-w"><figure class="art-hero"><picture><source type="image/avif" srcset="/assets/img/r/intro-krakow-800.avif 800w, /assets/img/r/intro-krakow-1200.avif 1200w, /assets/img/r/intro-krakow-1600.avif 1600w" sizes="(min-width: 1440px) 1200px, calc(100vw - 48px)"><source type="image/webp" srcset="/assets/img/r/intro-krakow-800.webp 800w, /assets/img/r/intro-krakow-1200.webp 1200w, /assets/img/r/intro-krakow-1600.webp 1600w" sizes="(min-width: 1440px) 1200px, calc(100vw - 48px)"><img src="/assets/img/r/intro-krakow-1200.jpg" srcset="/assets/img/r/intro-krakow-800.jpg 800w, /assets/img/r/intro-krakow-1200.jpg 1200w, /assets/img/r/intro-krakow-1600.jpg 1600w" sizes="(min-width: 1440px) 1200px, calc(100vw - 48px)" alt="Kraków from the air: the Old Town and Wawel Castle by the Vistula" width="1600" height="827" decoding="async" fetchpriority="high"></picture></figure></div>'
 def nt(b): return ' data-notr' if b.get('notr') else ''
 SHORT_BIO = {'Philip Jacobson': ('philip', 'Chief Brand Officer at Vimergy. Brand-led growth at Tylko, Autry and Chilly’s; a decade at Nike EMEA; Global Head of Brand Creative at Maserati.',
@@ -215,7 +220,7 @@ main = f"""<main id="main" class="art" data-page="articles">
     </div>
   </header>
   <div class="s art-body">
-    {HERO}
+    {HERO_FOUNDERS}
     <div class="wrap art-grid">
       <nav class="art-toc" aria-label="In this letter">
         <p class="lbl">In this letter</p>

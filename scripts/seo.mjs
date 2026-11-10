@@ -207,7 +207,9 @@ function articleHead(html, slug, origin, indexable) {
   const description = ((html.match(/<meta name="description" content="([^"]*)"/) || [])[1] || ORG_DESC).replace(/&amp;/g, '&').replace(/&quot;/g, '"')
   const placeholder = PLACEHOLDER.test(title + ' ' + description)
   const path = '/articles/' + slug
-  const img = {src: '/assets/img/r/intro-krakow-1200.jpg', w: 1200, h: 620, alt: 'Kraków, Poland'}
+  const img = slug === 'say-hop'
+    ? {src: '/assets/og-founders.jpg', w: 1200, h: 630, alt: 'Philip Jacobson and David Anson, the two senior partners of HOP'}
+    : {src: '/assets/img/r/intro-krakow-1200.jpg', w: 1200, h: 620, alt: 'Kraków, Poland'}
   const data = {
     '@context': 'https://schema.org',
     '@graph': [
