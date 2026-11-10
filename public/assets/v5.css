@@ -1308,3 +1308,26 @@ html #site-foot, html #site-foot.ink { background: var(--charcoal) !important; }
 @media (prefers-reduced-motion: no-preference) {
   #site-foot .f-mark .nav-dot { animation: hop-leap 4.5s linear 1.2s infinite both; }
 }
+
+/* ---------- 64. Phones: a mini run-up / leap / land line before the phases ---------- */
+.jmini { display: none; }
+@media (max-width: 1023px) {
+  .jmini { display: block; margin: calc(48px + 8 * var(--t)) 0 0; }
+  .jmini-svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .jmini-path, .jmini-land { fill: none; stroke: var(--ink); stroke-width: 1.4; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+  .jmini-dot { fill: var(--red); }
+  .jmini-l { display: grid; grid-template-columns: 30% 1fr auto; margin-top: 14px; font-family: var(--sans); font-weight: 500; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: rgba(10, 10, 10, .55); }
+  .jmini-l span:nth-child(2) { justify-self: center; }
+  /* draws itself in once, then the full stop lands */
+  html.js .jmini .jmini-path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  html.js .jmini .jmini-land { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  html.js .jmini .jmini-dot { opacity: 0; transform: translateY(-10px); transform-box: fill-box; transform-origin: 50% 100%; }
+  html.js .jmini.in .jmini-path { transition: stroke-dashoffset 1.3s cubic-bezier(.45, 0, .2, 1) .2s; stroke-dashoffset: 0; }
+  html.js .jmini.in .jmini-land { transition: stroke-dashoffset .5s ease-out 1.55s; stroke-dashoffset: 0; }
+  html.js .jmini.in .jmini-dot { transition: opacity .2s ease 1.4s, transform .45s cubic-bezier(.3, 1.6, .5, 1) 1.4s; opacity: 1; transform: none; }
+  html.js .jmini[data-reveal] { transform: none; }
+}
+@media (max-width: 1023px) and (prefers-reduced-motion: reduce) {
+  html.js .jmini .jmini-path, html.js .jmini .jmini-land { stroke-dashoffset: 0; }
+  html.js .jmini .jmini-dot { opacity: 1; transform: none; }
+}
