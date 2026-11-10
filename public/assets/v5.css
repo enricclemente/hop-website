@@ -1354,3 +1354,9 @@ html #site-foot, html #site-foot.ink { background: var(--charcoal) !important; }
 .i5-bg, .i5-stage { will-change: transform; }
 .consent-bar { transition: opacity .5s ease, transform .6s cubic-bezier(.2, .8, .2, 1); }
 html.cb-wait .consent-bar { opacity: 0; transform: translate3d(0, 16px, 0); pointer-events: none; transition: none; }
+
+/* ---------- 66. Order: profiles, then the globe, then the client ticker; footer line in italic ---------- */
+.who { padding-bottom: calc(96px + 72 * var(--t)); }
+@media (max-width: 1023px) { .who { padding-bottom: 56px; } }
+.clients { padding-block: calc(24px + 24 * var(--t)) calc(24px + 16 * var(--t)); }
+#site-foot .foot-score em { font-style: italic; }
