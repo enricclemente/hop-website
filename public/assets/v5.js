@@ -365,6 +365,35 @@
   }
 
   /* ---------- Phones: How we do it mini-map (sticky arc; the dot travels; the label marks the phase) ---------- */
+  /* ---------- Phones: mini run-up / leap / land, drawn by scroll ---------- */
+  var jm = $(".jmini"), jmPath = jm && $(".jmini-path", jm), jmLand = jm && $(".jmini-land", jm), jmDot = jm && $(".jmini-dot", jm);
+  if (jm && jmPath && jmPath.getTotalLength && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    var jmL = jmPath.getTotalLength(), jmLabs = $$(".jmini-l span", jm), jmTick = false, jmVis = false, jmLanded = false;
+    var jmMq = window.matchMedia("(max-width: 1023px)");
+    var jmSet = function () {
+      jmTick = false;
+      if (!jmMq.matches) return;
+      var r = jm.getBoundingClientRect(), vh = window.innerHeight;
+      var p = Math.max(0, Math.min(1, (vh * .92 - r.top) / (vh * .5)));
+      var e = p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+      var p1 = Math.min(1, e / .86), p2 = Math.max(0, Math.min(1, (e - .86) / .14));
+      jmPath.style.strokeDashoffset = (1 - p1).toFixed(4);
+      jmLand.style.strokeDashoffset = (1 - p2).toFixed(4);
+      var pt = jmPath.getPointAtLength(jmL * p1);
+      jmDot.setAttribute("cx", pt.x.toFixed(2)); jmDot.setAttribute("cy", (pt.y - 1).toFixed(2));
+      var k = p1 < .3 ? 0 : p1 < .985 ? 1 : 2;
+      jmLabs.forEach(function (l, i) { l.classList.toggle("is-on", i === k); });
+      var landed = p1 >= .985;
+      if (landed !== jmLanded) { jmLanded = landed; jm.classList.toggle("is-landed", landed); }
+    };
+    var jmReq = function () { if (jmVis && !jmTick) { jmTick = true; requestAnimationFrame(jmSet); } };
+    doc.classList.add("jm-live");
+    new IntersectionObserver(function (es) { jmVis = es[0].isIntersecting; jmReq(); }, { rootMargin: "120px 0px" }).observe(jm);
+    window.addEventListener("scroll", jmReq, { passive: true });
+    window.addEventListener("resize", jmReq);
+    jmVis = true; jmSet(); jmVis = false;
+  }
+
   var mmap = $(".mmap"), mPath = $(".mmap-path"), mDot = $(".mmap-dot"), mCols = $(".jump-cols");
   if (mmap && mPath && mDot && mCols && mPath.getTotalLength) {
     var mLen = mPath.getTotalLength(), mLinks = $$(".mmap-l a", mmap), mCol = $$(".jump-col"), mTick = false;
