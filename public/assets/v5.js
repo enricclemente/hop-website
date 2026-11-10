@@ -53,13 +53,13 @@
       var lw, lh;
       var run = function () {
         var cx = window.innerWidth / 2, cy = window.innerHeight / 2;
-        lw = Math.min(window.innerWidth * .5, 340); lh = lw * 268 / 516;
+        lw = Math.min(window.innerWidth * .5, 340) * 544 / 516; lh = lw * 284 / 544;
         logo.style.width = lw + "px"; logo.style.height = lh + "px";
         logo.style.left = (-lw / 2) + "px"; logo.style.top = (-lh / 2) + "px";
         logo.style.transformOrigin = "50% 50%";
         /* the letters resolve; the dot drops onto its place with a small hop */
         A(logo, [{ opacity: 0, transform: "translate(0,10px) scale(1.035)" }, { opacity: 1, transform: "translate(0,0) scale(1)" }], { duration: 760, easing: "cubic-bezier(.16,1,.3,1)" });
-        var ds = lw * 61 / 516, bx = -lw / 2 + lw * (504.94 - 22) / 516, by = -lh / 2 + lh * (196.78 - 18) / 268, up = Math.max(lh * 1.35, 96);
+        var ds = lw * 61 / 544, bx = -lw / 2 + lw * (504.94 - 8) / 544, by = -lh / 2 + lh * (196.78 - 10) / 284, up = Math.max(lh * 1.35, 96);
         idot.style.width = idot.style.height = ds + "px";
         var T = function (y, sx, sy) { return "translate(" + (bx - ds / 2).toFixed(1) + "px," + (y - ds / 2).toFixed(1) + "px) scale(" + sx + "," + sy + ")"; };
         A(idot, [

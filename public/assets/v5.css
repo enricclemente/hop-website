@@ -552,7 +552,7 @@ html.i5-on .i5 { display: block; position: fixed; inset: 0; z-index: 1000; point
 @media (max-width: 1023px) {
   .nav { padding-top: env(safe-area-inset-top); }
   .nav .nav-row { width: auto; min-height: 59px; margin: 0; padding: 0 12px 0 20px; }
-  .nav-logo svg { width: 68px; }
+  .nav-logo svg { width: 71.7px; }
   .hero5 { padding-top: var(--nav-h); }
   html, body { overscroll-behavior-y: none; }
 }
@@ -1240,11 +1240,11 @@ html #site-foot, html #site-foot.ink { background: var(--charcoal) !important; }
 #c-submit.pcta--light[disabled] { opacity: .55; cursor: default; }
 @media (max-width: 620px) { #c-submit.pcta--light { width: auto; } }
 /* footer wordmark: a signature, not a billboard */
-#site-foot .f-mark { width: calc(120px + 80 * var(--t)); margin: calc(32px + 24 * var(--t)) 0 calc(40px + 24 * var(--t)); }
+#site-foot .f-mark { width: calc((120px + 80 * var(--t)) * 544 / 516); margin: calc(32px + 24 * var(--t)) 0 calc(40px + 24 * var(--t)); }
 .pmodal .pm-av { object-position: 50% 26%; }
 .cperson-av { object-position: 50% 50%; }
 /* footer wordmark: small, under the social icons */
-#site-foot .foot-brand .f-mark { width: calc(88px + 24 * var(--t)); margin: 8px 0 0; }
+#site-foot .foot-brand .f-mark { width: calc((88px + 24 * var(--t)) * 544 / 516); margin: 8px 0 0; }
 /* contact: portrait spans the full card width, flush with the divider lines and the copy column */
 .cperson-n { justify-items: stretch; }
 .cperson-av { width: 100%; max-width: none; }
