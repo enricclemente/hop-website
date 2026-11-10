@@ -24,13 +24,14 @@
     us: ["United States", "Stany Zjednoczone"], uk: ["United Kingdom", "Wielka Brytania"], nl: ["Netherlands", "Holandia"],
     pl: ["Poland", "Polska"], ru: ["Russia", "Rosja"], es: ["Spain", "Hiszpania"], it: ["Italy", "Włochy"],
     tr: ["Türkiye", "Turcja"], ae: ["United Arab Emirates", "Zjednoczone Emiraty Arabskie"],
-    kr: ["South Korea", "Korea Południowa"], jp: ["Japan", "Japonia"], cn: ["China", "Chiny"], sg: ["Singapore", "Singapur"]
+    kr: ["South Korea", "Korea Południowa"], jp: ["Japan", "Japonia"], cn: ["China", "Chiny"], sg: ["Singapore", "Singapur"],
+    th: ["Thailand", "Tajlandia"], ph: ["Philippines", "Filipiny"], za: ["South Africa", "Republika Południowej Afryki"], au: ["Australia", "Australia"]
   };
   /* regions: home view [lon, lat]; places [lon, lat, country, home?] (positions from the design) */
   var REGIONS = {
     na: { home: [-97, 33], dots: [[-122.7, 45.5, "us"], [-81.4, 27.8, "us"]] },
-    emea: { home: [16, 30], dots: [[-0.1, 51.5, "uk"], [4.9, 52.4, "nl"], [18.6, 52.3, "pl", 1], [31.5, 55.2, "ru"], [-3.7, 40.4, "es"], [10.2, 45.2, "it"], [28.9, 41.0, "tr"], [55.3, 25.2, "ae"]] },
-    apac: { home: [117, 17], dots: [[127.0, 37.6, "kr"], [139.7, 35.7, "jp"], [121.5, 31.2, "cn"], [103.8, 1.35, "sg"]] }
+    emea: { home: [18, 22], dots: [[-0.1, 51.5, "uk"], [4.9, 52.4, "nl"], [18.6, 52.3, "pl", 1], [31.5, 55.2, "ru"], [-3.7, 40.4, "es"], [10.2, 45.2, "it"], [28.9, 41.0, "tr"], [55.3, 25.2, "ae"], [28.0, -26.2, "za"]] },
+    apac: { home: [122, 6], dots: [[127.0, 37.6, "kr"], [139.7, 35.7, "jp"], [121.5, 31.2, "cn"], [103.8, 1.35, "sg"], [100.5, 13.75, "th"], [121.0, 14.6, "ph"], [151.2, -33.9, "au"]] }
   };
   var lang = function () { try { return window.HOPv2 && HOPv2.lang && HOPv2.lang() === "pl" ? 1 : 0; } catch (e) { return 0; } };
 
