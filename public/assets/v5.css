@@ -999,7 +999,7 @@ html.js .globes.is-in .globe:nth-child(3) { transition-delay: .24s; }
 .lg-chivas { --h: 25.5; }
 .lg-cocacola { --h: 35.6; }
 .lg-hsbc { --h: 32.2; }
-.lg-maserati { --h: 45.1; }
+.lg-maserati { --h: 40; }
 .lg-mastercard { --h: 26.2; }
 .lg-meta { --h: 28.7; }
 .lg-netflix { --h: 30.8; }
