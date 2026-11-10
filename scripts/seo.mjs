@@ -19,7 +19,7 @@ const PEOPLE = [
   {name: 'Philip Jacobson', city: 'Poznań', li: 'https://www.linkedin.com/in/philip-jacobson-2276556/'},
   {name: 'David Anson', city: 'Warsaw', li: 'https://www.linkedin.com/in/david-anson-9a08334/'},
 ]
-const SERVICES = ['Brand strategy', 'Brand positioning', 'Brand audit', 'Audience research', 'Brand identity and messaging', 'Brand internationalisation']
+const SERVICES = ['Brand strategy', 'Brand positioning', 'Brand audit', 'Audience research', 'Brand identity and messaging', 'Brand experiences and activations', 'Brand internationalisation', 'Performance and optimisation']
 const PROD = 'https://hoppartners.pl'
 /* placeholder articles stay out of search until they carry real text */
 const PLACEHOLDER = /lorem|ipsum|consectetur|eiusmod|duis aute/i

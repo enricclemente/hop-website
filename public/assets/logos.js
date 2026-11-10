@@ -30,7 +30,7 @@
   root.classList.add("is-live");
 
   var x = 0, raf = 0, last = 0, visible = false, hover = false, tapped = false;
-  var speed = function () { return window.innerWidth < 600 ? 34 : 46; }; /* px per second */
+  var speed = function () { return window.innerWidth < 600 ? 39 : 53; }; /* px per second (15% quicker) */
   var fill = function () {
     var need = root.clientWidth * 2 + 400;
     while (track.scrollWidth < need) track.appendChild(next());

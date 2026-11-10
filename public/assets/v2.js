@@ -629,6 +629,7 @@
       ["Leap", "Brand strategy", "Who you are. Where you\u2019re going.", "A framework that directs your effort and energy, focusing every action on what delivers competitive advantage that galvanises and inspires your team."],
       ["Leap", "Brand creative platform", "One big idea. Everything behind it.", "A single, memorable idea, expressed across every touchpoint, that becomes your identity and drives growth."],
       ["Land", "Brand identity & messaging", "An identity that matches your ambition. Words that sell it.", "Every message and experience, aligned to one consistent voice that builds coherence and trust."],
+      ["Land", "The big idea made real", "Get their attention. Be remembered.", "Ideas people see, touch and taste, built to travel and proven to work."],
       ["Land", "Brand internationalisation", "Built to travel.", "A strategy for localising and globalising who you are, so you can win new markets and recruit new audiences."],
       ["Land", "Performance & optimisation", "Know what works. Spend on that.", "Brand and performance optimised in real time, cutting inefficient spend and maximising effectiveness."]
     ];
