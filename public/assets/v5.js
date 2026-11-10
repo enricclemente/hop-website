@@ -245,8 +245,8 @@
     document.addEventListener("visibilitychange", syncPause);
     if (reduce) doc.style.setProperty("--hold", "5s");
 
-    /* depth: scroll focus-pull */
-    if (!reduce) {
+    /* depth: scroll focus-pull (desktop only: on touch screens a scroll-linked blur on the headline fights momentum scrolling) */
+    if (!reduce && !window.matchMedia("(hover: none), (max-width: 1023px)").matches) {
       var tx = 0, ty = 0, px = 0, py = 0, raf = 0;
       var tick = function () {
         px += (tx - px) * .08; py += (ty - py) * .08;
