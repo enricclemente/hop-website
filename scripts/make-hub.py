@@ -41,16 +41,17 @@ def words_of(x): return len(json.dumps(x, ensure_ascii=False).split())
 SAY_MINS = max(1, round(words_of(C['say']['en']) / 230))
 ABOUT_MINS = max(1, round(words_of(C['about']['en']) / 230))
 REAL = [
-  dict(slug='say-hop', n='01', img='hop-jump', ih=533, topic='Letter', title='Say hop.', it='hop', ex='Relax. You’ve already done the hard part. A letter to the founders, CEOs and boards of Poland’s best companies.',
-       ex_pl='Wyluzuj. Najtrudniejsze masz już za sobą. List do założycieli, prezesów i zarządów najlepszych polskich firm.', date='2026-11-11', dlabel='11 November 2026', dlabel_pl='11 listopada 2026', mins=SAY_MINS),
-  dict(slug='why-were-here', n='02', img='founders', ih=533, topic='About', title='Why we’re here.', it='here', ex='Two brand strategists who married into Poland, and why we think Poland is next.',
+  dict(slug='why-were-here', n='01', img='founders', ih=533, topic='About', title='Why we’re here.', it='here', ex='Two brand strategists who married into Poland, and why we think Poland is next.',
        ex_pl='Dwóch strategów marki, którzy wżenili się w Polskę, i dlaczego uważamy, że teraz kolej na Polskę.', date='2026-11-11', dlabel='11 November 2026', dlabel_pl='11 listopada 2026', mins=ABOUT_MINS),
+  dict(slug='say-hop', n='02', img='hop-jump', ih=533, topic='Letter', title='Say hop.', it='hop', ex='Relax. You’ve already done the hard part. A letter to the founders, CEOs and boards of Poland’s best companies.',
+       ex_pl='Wyluzuj. Najtrudniejsze masz już za sobą. List do założycieli, prezesów i zarządów najlepszych polskich firm.', date='2026-11-11', dlabel='11 November 2026', dlabel_pl='11 listopada 2026', mins=SAY_MINS),
 ]
 pl('Say', 'Powiedzcie'); pl('Why we’re', 'Dlaczego tu'); pl('here', 'jesteśmy')
 for r in REAL:
     pl(r['ex'], r['ex_pl'])
     pl(f"{r['dlabel']} · {r['mins']} min read", f"{r['dlabel_pl']} · {r['mins']} min czytania")
 CARDS = REAL + ARTICLES
+BY = {r['slug']: r for r in REAL}
 
 # ---------- hub ----------
 cards = []
@@ -248,7 +249,7 @@ main = f"""<main id="main" class="art" data-page="articles">
   </section>
 </main>"""
 pl(f' · {SAY_MINS} min read', f' · {SAY_MINS} min czytania')
-open(os.path.join(PUB, 'articles', 'say-hop.html'), 'w', encoding='utf8').write(page('Say hop. A letter to Poland’s best companies · HOP.', REAL[0]['ex'], main, robots=False))
+open(os.path.join(PUB, 'articles', 'say-hop.html'), 'w', encoding='utf8').write(page('Say hop. A letter to Poland’s best companies · HOP.', BY['say-hop']['ex'], main, robots=False))
 
 # Why we're here.
 A, AP = C['about']['en'], C['about']['pl']
@@ -287,7 +288,7 @@ main = f"""<main id="main" class="art art--note" data-page="articles">
   </section>
 </main>"""
 pl(f' · {ABOUT_MINS} min read', f' · {ABOUT_MINS} min czytania')
-open(os.path.join(PUB, 'articles', 'why-were-here.html'), 'w', encoding='utf8').write(page('Why we’re here. The founders of HOP · HOP.', REAL[1]['ex'], main, robots=False))
+open(os.path.join(PUB, 'articles', 'why-were-here.html'), 'w', encoding='utf8').write(page('Why we’re here. The founders of HOP · HOP.', BY['why-were-here']['ex'], main, robots=False))
 for old in ('lorem-ipsum-dolor', 'consectetur-adipiscing-elit', 'duis-aute-irure'):
     f = os.path.join(PUB, 'articles', old + '.html')
     if os.path.exists(f): os.remove(f)
