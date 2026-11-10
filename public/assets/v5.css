@@ -1375,3 +1375,10 @@ html.cb-wait .consent-bar { opacity: 0; transform: translate3d(0, 16px, 0); poin
 /* client ticker sits under the partners' headline, before the photo */
 .who .logos-tag { margin-top: calc(56px + 24 * var(--t)); }
 .who .logos + .duo { margin-top: calc(56px + 32 * var(--t)); }
+/* desktop: wider partners photo (less tall); phones keep the street crop */
+@media (min-width: 1024px) {
+  .duo { aspect-ratio: 3200 / 1646; }
+  .duo img { object-position: 50% 50%; }
+  .pdot--david { --x: 35.5%; --y: 46%; }
+  .pdot--philip { --x: 63.5%; --y: 47%; }
+}
