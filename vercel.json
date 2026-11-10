@@ -149,6 +149,11 @@
       "source": "/index",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/articles/duis-aute-irure",
+      "destination": "/articles",
+      "permanent": true
     }
   ]
 }

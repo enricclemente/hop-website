@@ -18,10 +18,7 @@ def para(r, k): return ' '.join(sent(r, r.randint(7, 15)) for _ in range(k))
 def e(s): return html.escape(s, quote=False)
 def tdot(s): return e(s[:-1]) + '<span class="tdot">.</span>' if s.endswith('.') else e(s)
 
-ARTICLES = [
-  dict(slug='duis-aute-irure', n='03', topic='Culture', title='Duis aute irure.', it='irure', sub='Excepteur sint occaecat cupidatat non proident',
-       ex='Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit.', date='2026-10-14', dlabel='14 October 2026', mins=8, by='Philip Jacobson and David Anson', seed=3),
-]
+ARTICLES = []
 def title_html(a, cls=''):
     t = a['title']; i = t.find(a['it']); body = t[:-1]
     s = e(body[:i]) + '<em>' + e(a['it']) + '</em>' + e(body[i+len(a['it']):]) + '<span class="tdot">.</span>'
@@ -44,9 +41,9 @@ def words_of(x): return len(json.dumps(x, ensure_ascii=False).split())
 SAY_MINS = max(1, round(words_of(C['say']['en']) / 230))
 ABOUT_MINS = max(1, round(words_of(C['about']['en']) / 230))
 REAL = [
-  dict(slug='say-hop', n='01', img='founders', ih=533, topic='Letter', title='Say hop.', it='hop', ex='Relax. You’ve already done the hard part. A letter to the founders, CEOs and boards of Poland’s best companies.',
+  dict(slug='say-hop', n='01', img='hop-jump', ih=533, topic='Letter', title='Say hop.', it='hop', ex='Relax. You’ve already done the hard part. A letter to the founders, CEOs and boards of Poland’s best companies.',
        ex_pl='Wyluzuj. Najtrudniejsze masz już za sobą. List do założycieli, prezesów i zarządów najlepszych polskich firm.', date='2026-11-11', dlabel='11 November 2026', dlabel_pl='11 listopada 2026', mins=SAY_MINS),
-  dict(slug='why-were-here', n='02', topic='About', title='Why we’re here.', it='here', ex='Two brand strategists who married into Poland, and why we think Poland is next.',
+  dict(slug='why-were-here', n='02', img='founders', ih=533, topic='About', title='Why we’re here.', it='here', ex='Two brand strategists who married into Poland, and why we think Poland is next.',
        ex_pl='Dwóch strategów marki, którzy wżenili się w Polskę, i dlaczego uważamy, że teraz kolej na Polskę.', date='2026-11-11', dlabel='11 November 2026', dlabel_pl='11 listopada 2026', mins=ABOUT_MINS),
 ]
 pl('Say', 'Powiedzcie'); pl('Why we’re', 'Dlaczego tu'); pl('here', 'jesteśmy')
@@ -155,6 +152,7 @@ def hero(name, w, h, alt):
     srcs = lambda ext: ', '.join(f'/assets/img/r/{name}-{x}.{ext} {x}w' for x in (800, 1200, 1600))
     sz = '(min-width: 1440px) 1200px, calc(100vw - 48px)'
     return f'<div class="wrap art-hero-w"><figure class="art-hero"><picture><source type="image/avif" srcset="{srcs("avif")}" sizes="{sz}"><source type="image/webp" srcset="{srcs("webp")}" sizes="{sz}"><img src="/assets/img/r/{name}-1200.jpg" srcset="{srcs("jpg")}" sizes="{sz}" alt="{html.escape(alt)}" width="{w}" height="{h}" decoding="async" fetchpriority="high"></picture></figure></div>'
+HERO_JUMP = hero('hop-jump', 1600, 1067, 'A ski jumper in full flight, in ivory on HOP red')
 HERO_FOUNDERS = hero('founders', 1600, 1067, 'Philip Jacobson and David Anson, the two senior partners of HOP, in Poznań')
 HERO = '<div class="wrap art-hero-w"><figure class="art-hero"><picture><source type="image/avif" srcset="/assets/img/r/intro-krakow-800.avif 800w, /assets/img/r/intro-krakow-1200.avif 1200w, /assets/img/r/intro-krakow-1600.avif 1600w" sizes="(min-width: 1440px) 1200px, calc(100vw - 48px)"><source type="image/webp" srcset="/assets/img/r/intro-krakow-800.webp 800w, /assets/img/r/intro-krakow-1200.webp 1200w, /assets/img/r/intro-krakow-1600.webp 1600w" sizes="(min-width: 1440px) 1200px, calc(100vw - 48px)"><img src="/assets/img/r/intro-krakow-1200.jpg" srcset="/assets/img/r/intro-krakow-800.jpg 800w, /assets/img/r/intro-krakow-1200.jpg 1200w, /assets/img/r/intro-krakow-1600.jpg 1600w" sizes="(min-width: 1440px) 1200px, calc(100vw - 48px)" alt="Kraków from the air: the Old Town and Wawel Castle by the Vistula" width="1600" height="827" decoding="async" fetchpriority="high"></picture></figure></div>'
 def nt(b): return ' data-notr' if b.get('notr') else ''
@@ -220,7 +218,7 @@ main = f"""<main id="main" class="art" data-page="articles">
     </div>
   </header>
   <div class="s art-body">
-    {HERO_FOUNDERS}
+    {HERO_JUMP}
     <div class="wrap art-grid">
       <nav class="art-toc" aria-label="In this letter">
         <p class="lbl">In this letter</p>
@@ -270,7 +268,7 @@ main = f"""<main id="main" class="art art--note" data-page="articles">
     </div>
   </header>
   <div class="s art-body">
-    {HERO}
+    {HERO_FOUNDERS}
     <div class="wrap art-grid art-grid--solo">
       <article class="art-col">
         {chr(10).join('        ' + x for x in ab).strip()}
@@ -290,7 +288,7 @@ main = f"""<main id="main" class="art art--note" data-page="articles">
 </main>"""
 pl(f' · {ABOUT_MINS} min read', f' · {ABOUT_MINS} min czytania')
 open(os.path.join(PUB, 'articles', 'why-were-here.html'), 'w', encoding='utf8').write(page('Why we’re here. The founders of HOP · HOP.', REAL[1]['ex'], main, robots=False))
-for old in ('lorem-ipsum-dolor', 'consectetur-adipiscing-elit'):
+for old in ('lorem-ipsum-dolor', 'consectetur-adipiscing-elit', 'duis-aute-irure'):
     f = os.path.join(PUB, 'articles', old + '.html')
     if os.path.exists(f): os.remove(f)
 print('articles written: say-hop (%d sections, %d min), why-were-here (%d min)' % (len(heads), SAY_MINS, ABOUT_MINS))

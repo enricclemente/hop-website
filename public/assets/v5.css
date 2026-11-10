@@ -1382,3 +1382,5 @@ html.cb-wait .consent-bar { opacity: 0; transform: translate3d(0, 16px, 0); poin
   .pdot--david { --x: 35.5%; --y: 46%; }
   .pdot--philip { --x: 63.5%; --y: 47%; }
 }
+/* articles hub: with two articles, two columns fill the row */
+@media (min-width: 760px) { .acards:has(> li:nth-child(2):last-child) { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

@@ -209,8 +209,10 @@ function articleHead(html, slug, origin, indexable) {
   const placeholder = PLACEHOLDER.test(title + ' ' + description)
   const path = '/articles/' + slug
   const img = slug === 'say-hop'
-    ? {src: '/assets/og-founders.jpg', w: 1200, h: 630, alt: 'Philip Jacobson and David Anson, the two senior partners of HOP'}
-    : {src: '/assets/img/r/intro-krakow-1200.jpg', w: 1200, h: 620, alt: 'Kraków, Poland'}
+    ? {src: '/assets/og-say-hop.jpg', w: 1200, h: 630, alt: 'A ski jumper in full flight, in ivory on HOP red'}
+    : slug === 'why-were-here'
+      ? {src: '/assets/og-founders.jpg', w: 1200, h: 630, alt: 'Philip Jacobson and David Anson, the two senior partners of HOP'}
+      : {src: '/assets/img/r/intro-krakow-1200.jpg', w: 1200, h: 620, alt: 'Kraków, Poland'}
   const data = {
     '@context': 'https://schema.org',
     '@graph': [
