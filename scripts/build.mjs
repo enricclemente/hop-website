@@ -116,6 +116,34 @@ if (projectId || fixture) {
 
 applySEO(dist, ARTICLES)
 
+/* Speed: one minified stylesheet, the tiny intro gate inlined (allowed by its CSP hash), body scripts deferred */
+{
+  const { createHash } = await import('node:crypto')
+  const { readdirSync } = await import('node:fs')
+  const minCSS = (css) => css
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/\s+/g, ' ')
+    .replace(/\s*([{};,])\s*/g, '$1')
+    .replace(/;}/g, '}')
+    .trim()
+  const css = minCSS(readFileSync(join(dist, 'assets', 'v2.css'), 'utf8') + '\n' + readFileSync(join(dist, 'assets', 'v5.css'), 'utf8'))
+  writeFileSync(join(dist, 'assets', 'hop.css'), css + '\n')
+  const gate = readFileSync(join(dist, 'assets', 'intro5.js'), 'utf8').replace(/^\/\*[\s\S]*?\*\/\s*/, '').trim()
+  const gateHash = "'sha256-" + createHash('sha256').update(gate).digest('base64') + "'"
+  const vj = readFileSync(join(root, 'vercel.json'), 'utf8')
+  if (!vj.includes(gateHash)) throw new Error(`vercel.json CSP must allow the inlined intro gate: add ${gateHash} to script-src`)
+  const walk = (d) => readdirSync(d, { withFileTypes: true }).flatMap((e) => e.isDirectory() ? walk(join(d, e.name)) : e.name.endsWith('.html') ? [join(d, e.name)] : [])
+  for (const f of walk(dist)) {
+    const html = readFileSync(f, 'utf8')
+    let out = html.replace(/<link rel="stylesheet" href="\/assets\/v2\.css">\s*<link rel="stylesheet" href="\/assets\/v5\.css">/, '<link rel="stylesheet" href="/assets/hop.css">')
+    out = out.replace('<script src="/assets/intro5.js"></script>', '<script>' + gate + '</script>')
+    if (!out.includes('InstrumentSans.woff2" as="font"')) out = out.replace('<link rel="preload" href="/assets/fonts/Newsreader-V.woff2" as="font" type="font/woff2" crossorigin>', '<link rel="preload" href="/assets/fonts/InstrumentSans.woff2" as="font" type="font/woff2" crossorigin>\n<link rel="preload" href="/assets/fonts/Newsreader-V.woff2" as="font" type="font/woff2" crossorigin>')
+    const b = out.indexOf('<body')
+    if (b > 0) out = out.slice(0, b) + out.slice(b).replace(/<script src="([^"]+)"><\/script>/g, '<script src="$1" defer></script>')
+    if (out !== html) writeFileSync(f, out)
+  }
+}
+
 /* Cache-busting: version every /assets/*.css|js link with a short content hash */
 {
   const { createHash } = await import('node:crypto')
