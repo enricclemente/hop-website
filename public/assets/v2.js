@@ -151,7 +151,8 @@
   if (!navSentinel) nav.classList.add("is-scrolled");
   /* Solid as soon as the page moves, so nothing ever slides under a see-through nav */
   var navTick = false;
-  function navSolid() { navTick = false; nav.classList.toggle("is-scrolled", !navSentinel || window.scrollY > 4); }
+  var navWas = null;
+  function navSolid() { navTick = false; var s = !navSentinel || window.scrollY > 4; if (s !== navWas) { navWas = s; nav.classList.toggle("is-scrolled", s); } }
   navSolid();
   window.addEventListener("scroll", function () { if (!navTick) { navTick = true; requestAnimationFrame(navSolid); } }, { passive: true });
   if ("IntersectionObserver" in window) {
@@ -531,6 +532,7 @@
     var jTrack = jump.querySelector(".jump-track"), jPin = jump.querySelector(".jump-pin"), jBase = 0, jOver = -1, jPrevAcc = 0;
     var jUpdate = function () {
       jTick = false;
+      if (!mqWide.matches) { if (doc.classList.contains("jump-pinned")) { doc.classList.remove("jump-pinned"); jPin.style.top = ""; } return; }
       var vh = window.innerHeight, p;
       var navH = (document.getElementById("nav") || {}).offsetHeight || 84, pinH = window.HOPacc && jBase ? jBase : (jBase = jPin.offsetHeight);
       /* the side quotes sit a little above the pin's box: count them so nothing tucks under the nav */
@@ -675,15 +677,18 @@
   if (whoLines.length && !reduce) {
     doc.classList.add("who-reveal");
     var whoTick = false;
+    var whoVis = true, whoLast = [];
+    if ("IntersectionObserver" in window) new IntersectionObserver(function (es) { whoVis = es[0].isIntersecting; if (whoVis) whoUpd(); }, { rootMargin: "25% 0px" }).observe(whoH);
     var whoUpd = function () {
       whoTick = false;
+      if (!whoVis) return;
       var r = whoH.getBoundingClientRect(), vh = window.innerHeight;
       var p = (vh * .88 - r.top) / (vh * .88 - vh * .3 + r.height * .3);
       p = p < 0 ? 0 : p > 1 ? 1 : p;
       var n = whoLines.length;
-      whoLines.forEach(function (l, k) { var t = p * n - k; t = t < 0 ? 0 : t > 1 ? 1 : t; l.style.setProperty("--wr", t.toFixed(3)); });
+      whoLines.forEach(function (l, k) { var t = p * n - k; t = t < 0 ? 0 : t > 1 ? 1 : t; var v = t.toFixed(3); if (whoLast[k] !== v) { whoLast[k] = v; l.style.setProperty("--wr", v); } });
     };
-    window.addEventListener("scroll", function () { if (!whoTick) { whoTick = true; requestAnimationFrame(whoUpd); } }, { passive: true });
+    window.addEventListener("scroll", function () { if (whoVis && !whoTick) { whoTick = true; requestAnimationFrame(whoUpd); } }, { passive: true });
     window.addEventListener("resize", whoUpd); whoUpd();
   }
 

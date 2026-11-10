@@ -223,8 +223,11 @@
   /* ---------- motion ---------- */
   var running = false, visible = false, raf = 0, last = 0, t0 = performance.now();
   var clampLat = function (v) { return v > 70 ? 70 : v < -70 ? -70 : v; };
+  var coarse = window.matchMedia("(hover: none)").matches, scrollHold = 0;
+  if (coarse) window.addEventListener("scroll", function () { scrollHold = performance.now() + 180; }, { passive: true });
   var step = function (now) {
     raf = 0;
+    if (coarse && now < scrollHold && !globes.some(function (g) { return g.drag; })) { last = now; if (running) raf = requestAnimationFrame(step); return; }
     var dt = Math.min(48, now - (last || now)); last = now;
     var k = dt / 16.67;
     globes.forEach(function (g) {

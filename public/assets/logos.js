@@ -40,8 +40,8 @@
     var dt = Math.min(64, now - (last || now)); last = now;
     x -= speed() * dt / 1000;
     var first = track.firstElementChild;
-    while (first && -x >= first.offsetWidth) {
-      x += first.offsetWidth;
+    while (first && -x >= (first._w || (first._w = first.offsetWidth))) {
+      x += first._w;
       track.removeChild(first);
       track.appendChild(next());
       first = track.firstElementChild;
@@ -63,5 +63,6 @@
   root.addEventListener("pointerleave", function (e) { if (e.pointerType === "mouse") { hover = false; sync(); } });
   root.addEventListener("pointerup", function (e) { if (e.pointerType !== "mouse") { tapped = !tapped; sync(); } });
   /* images load lazily: top up once they have widths */
-  [].forEach.call(track.querySelectorAll("img"), function (im) { if (!im.complete) im.addEventListener("load", fill, { once: true }); });
+  [].forEach.call(track.querySelectorAll("img"), function (im) { if (!im.complete) im.addEventListener("load", function () { [].forEach.call(track.children, function (li) { li._w = 0; }); fill(); }, { once: true }); });
+  window.addEventListener("resize", function () { [].forEach.call(track.children, function (li) { li._w = 0; }); });
 })();

@@ -406,15 +406,17 @@
   var mmap = $(".mmap"), mPath = $(".mmap-path"), mDot = $(".mmap-dot"), mCols = $(".jump-cols");
   if (mmap && mPath && mDot && mCols && mPath.getTotalLength) {
     var mLen = mPath.getTotalLength(), mLinks = $$(".mmap-l a", mmap), mCol = $$(".jump-col"), mTick = false;
+    var mVis = true;
+    if ("IntersectionObserver" in window) new IntersectionObserver(function (es) { mVis = es[0].isIntersecting; if (mVis) mUpd(); }, { rootMargin: "20% 0px" }).observe(mCols);
     var mUpd = function () {
-      mTick = false; if (mqDesk.matches) return;
+      mTick = false; if (mqDesk.matches || !mVis || !mmap.offsetParent) return;
       var ref = mmap.getBoundingClientRect().bottom + 24, r = mCols.getBoundingClientRect();
       var p = clamp((ref - r.top) / Math.max(1, r.height - window.innerHeight * .45), 0, 1);
       var pt = mPath.getPointAtLength(p * mLen); mDot.setAttribute("cx", pt.x.toFixed(1)); mDot.setAttribute("cy", pt.y.toFixed(1));
       var a = 0; mCol.forEach(function (c, i) { if (c.getBoundingClientRect().top <= ref + 40) a = i; });
       mLinks.forEach(function (l, i) { if (i === a) l.setAttribute("aria-current", "step"); else l.removeAttribute("aria-current"); });
     };
-    window.addEventListener("scroll", function () { if (!mTick) { mTick = true; requestAnimationFrame(mUpd); } }, { passive: true });
+    window.addEventListener("scroll", function () { if (mVis && !mTick) { mTick = true; requestAnimationFrame(mUpd); } }, { passive: true });
     window.addEventListener("resize", mUpd); mUpd();
   }
 
