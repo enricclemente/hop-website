@@ -83,7 +83,7 @@ function orgLd(origin) {
     knowsAbout: SERVICES,
     hasOfferCatalog: {'@type': 'OfferCatalog', name: 'Brand strategy services', itemListElement: SERVICES.map((n) => ({'@type': 'Offer', itemOffered: {'@type': 'Service', name: n}}))},
     founder: PEOPLE.map((p) => ({'@id': origin + '/#' + p.name.toLowerCase().replace(/\s+/g, '-')})),
-    sameAs: ['https://www.linkedin.com/company/hoppartner/', 'https://www.instagram.com/hoppartner/'],
+    sameAs: ['https://www.linkedin.com/company/hoppartner', 'https://www.instagram.com/hoppartner/'],
     contactPoint: {'@type': 'ContactPoint', contactType: 'new business', url: origin + '/contact', availableLanguage: ['English', 'Polish']},
   }
 }
