@@ -34,12 +34,17 @@
           idot = $(".i5-dot", i5), anims = [], timers = [], ended = false;
       var A = function (el, kf, o) { var a = el.animate(kf, Object.assign({ fill: "forwards" }, o)); anims.push(a); return a; };
       var later = function (fn, ms) { timers.push(setTimeout(fn, ms)); };
+      var released = false;
+      /* let the hero start writing while the curtain is still lifting, so there is no dead beat */
+      var release = function () { if (released) return; released = true; resolve(); setTimeout(function () { doc.classList.remove("cb-wait"); }, 700); };
       var end = function (fast) {
         if (ended) return; ended = true;
         timers.forEach(clearTimeout);
-        var out = i5.animate([{ opacity: 1 }, { opacity: 0 }], { duration: fast ? 320 : 220, easing: "ease-out", fill: "forwards" });
-        out.onfinish = function () { doc.classList.remove("i5-on"); if (i5.parentNode) i5.parentNode.removeChild(i5); resolve(); };
+        if (fast) release();
+        var out = i5.animate([{ opacity: 1 }, { opacity: 0 }], { duration: fast ? 320 : 180, easing: "ease-out", fill: "forwards" });
+        out.onfinish = function () { doc.classList.remove("i5-on"); if (i5.parentNode) i5.parentNode.removeChild(i5); release(); };
       };
+      doc.classList.add("cb-wait");
       var skip = function () { end(true); };
       i5.addEventListener("pointerdown", skip);
       window.addEventListener("keydown", skip, { once: true });
@@ -53,7 +58,7 @@
         logo.style.left = (-lw / 2) + "px"; logo.style.top = (-lh / 2) + "px";
         logo.style.transformOrigin = "50% 50%";
         /* the letters resolve; the dot drops onto its place with a small hop */
-        A(logo, [{ opacity: 0, filter: "blur(16px)", transform: "scale(1.08)" }, { opacity: 1, filter: "blur(0px)", transform: "scale(1)" }], { duration: 800, easing: "cubic-bezier(.16,1,.3,1)" });
+        A(logo, [{ opacity: 0, transform: "translate(0,10px) scale(1.035)" }, { opacity: 1, transform: "translate(0,0) scale(1)" }], { duration: 760, easing: "cubic-bezier(.16,1,.3,1)" });
         var ds = lw * 61 / 516, bx = -lw / 2 + lw * (504.94 - 22) / 516, by = -lh / 2 + lh * (196.78 - 18) / 268, up = Math.max(lh * 1.35, 96);
         idot.style.width = idot.style.height = ds + "px";
         var T = function (y, sx, sy) { return "translate(" + (bx - ds / 2).toFixed(1) + "px," + (y - ds / 2).toFixed(1) + "px) scale(" + sx + "," + sy + ")"; };
@@ -73,17 +78,21 @@
           { offset: .5, transform: "translate(0," + (-j).toFixed(1) + "px) scale(.98,1.04)", easing: "cubic-bezier(.4,0,.8,.4)" },
           { offset: .8, transform: "translate(0," + (lh * .02).toFixed(1) + "px) scale(1.05,.92)" },
           { offset: 1, transform: "translate(0,0) scale(1,1)" }];
-        var hopOpts = { duration: 640, delay: 1050, easing: "cubic-bezier(.33,0,.25,1)", composite: "add" };
+        var hopOpts = { duration: 640, delay: 860, easing: "cubic-bezier(.33,0,.25,1)", composite: "add" };
         try { A(logo, hop, hopOpts); A(idot, hop.map(function (k) { return { offset: k.offset, transform: k.transform.replace(/ scale\([^)]*\)/, ""), easing: k.easing }; }), hopOpts); } catch (e) {}
-        later(function () { fly(lw, lh); }, 1760);
+        later(function () { fly(lw, lh); }, 1540);
       };
       var fly = function (lw, lh) {
         var nl = $(".nav-logo svg"), cx = window.innerWidth / 2, cy = window.innerHeight / 2;
         var nr = nl ? nl.getBoundingClientRect() : { left: cx - 40, top: 20, width: 80 };
         var s = nr.width / lw, tx = nr.left - (cx - s * lw / 2), ty = nr.top - (cy - s * lh / 2);
-        A(stage, [{ transform: "translate(0px,0px) scale(1)" }, { transform: "translate(" + tx.toFixed(1) + "px," + ty.toFixed(1) + "px) scale(" + s.toFixed(4) + ")" }], { duration: 900, easing: "cubic-bezier(.7,0,.16,1)" });
-        A(bg, [{ clipPath: "inset(0 0 0% 0)" }, { clipPath: "inset(0 0 100% 0)" }], { duration: 980, delay: 140, easing: "cubic-bezier(.76,0,.24,1)" })
+        /* the nav's own full stop restarts its rhythm now, so it is resting when the wordmark lands on it */
+        var nd = $(".nav-logo .nav-dot"); if (nd) { nd.style.animation = "none"; void nd.getBoundingClientRect(); nd.style.animation = ""; }
+        /* one move: the wordmark glides into the nav while the curtain slides up (transforms only: smooth on phones) */
+        A(stage, [{ transform: "translate(0px,0px) scale(1)" }, { transform: "translate(" + tx.toFixed(1) + "px," + ty.toFixed(1) + "px) scale(" + s.toFixed(4) + ")" }], { duration: 1000, easing: "cubic-bezier(.65,0,.18,1)" });
+        A(bg, [{ transform: "translate3d(0,0,0)" }, { transform: "translate3d(0,-100%,0)" }], { duration: 1000, delay: 90, easing: "cubic-bezier(.7,0,.2,1)" })
           .onfinish = function () { end(false); };
+        later(release, 420);
       };
       var go5 = function () { if (!ended) run(); };
       var f = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();

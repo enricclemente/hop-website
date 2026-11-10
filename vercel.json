@@ -8,6 +8,21 @@
   "trailingSlash": false,
   "headers": [
     {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": ".*\\.vercel\\.app"
+        }
+      ],
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
       "source": "/assets/fonts/(.*)",
       "headers": [
         {
@@ -98,22 +113,22 @@
     {
       "source": "/house-of-poland/say-hop",
       "destination": "/articles/say-hop",
-      "permanent": false
+      "permanent": true
     },
     {
       "source": "/house-of-poland/:slug",
       "destination": "/articles",
-      "permanent": false
+      "permanent": true
     },
     {
       "source": "/house-of-poland",
       "destination": "/articles",
-      "permanent": false
+      "permanent": true
     },
     {
       "source": "/house-of-poland.html",
       "destination": "/articles",
-      "permanent": false
+      "permanent": true
     },
     {
       "source": "/index",

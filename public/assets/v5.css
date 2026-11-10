@@ -1330,3 +1330,27 @@ html #site-foot, html #site-foot.ink { background: var(--charcoal) !important; }
   html.jm-live .jmini.is-landed .jmini-dot { animation: jm-land .5s cubic-bezier(.3, 1.4, .5, 1) both; }
 }
 @keyframes jm-land { 0% { transform: scale(1.25, .7); } 55% { transform: scale(.92, 1.1); } 100% { transform: none; } }
+
+/* ---------- 65. Nov 10: a11y contrast + targets, phone heading match, phone footer columns ---------- */
+/* small labels on paper reach 4.5:1 */
+.logos-tag, .cperson-c { color: rgba(10, 10, 10, .64); }
+.cbody .opt, .cbody .counter { color: rgba(10, 10, 10, .62); }
+@media (max-width: 1023px) { .jmini-l span { color: rgba(10, 10, 10, .62); } .jmini-l span.is-on { color: var(--ink); } }
+/* the hero pause control is visually hidden: show it when a keyboard reaches it */
+.hs-pause:focus-visible { width: 32px; height: 32px; margin: 0; overflow: visible; clip-path: none; left: 0; bottom: 0; z-index: 3; background: var(--charcoal); outline: 1px solid var(--ivory); outline-offset: 3px; }
+/* consent box: a comfortable target */
+#c-consent { min-width: 24px; min-height: 24px; }
+/* phones: 'Two senior partners…' set exactly like 'Everything the leap needs' */
+@media (max-width: 1023px) {
+  .who-h, .who-head .who-h { font-size: calc(40px + 56 * var(--t)); line-height: 1.2; letter-spacing: -0.025em; }
+}
+/* phones: Site and Contact side by side, House of Poland full width below */
+@media (max-width: 599px) {
+  #site-foot .foot-links { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px 20px; }
+  #site-foot .fcol--hop { grid-column: 1 / -1; }
+  #site-foot .fcol a { white-space: normal; }
+}
+/* intro: GPU-friendly curtain; the cookie bar waits for the reveal, then rises in */
+.i5-bg, .i5-stage { will-change: transform; }
+.consent-bar { transition: opacity .5s ease, transform .6s cubic-bezier(.2, .8, .2, 1); }
+html.cb-wait .consent-bar { opacity: 0; transform: translate3d(0, 16px, 0); pointer-events: none; transition: none; }

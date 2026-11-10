@@ -316,9 +316,18 @@
   else window.addEventListener("resize", sizeAll);
 
   globes.forEach(sizeGlobe);
-  fetch("/assets/geo/land.json").then(function (r) { return r.json(); }).then(function (rings) {
-    GL = initGL(makeMask(rings));
-    if (reduce) globes.forEach(function (g) { g.lon = g.reg.home[0]; g.lat = g.reg.home[1]; });
-    ready = true; drawAll(0, true); sync();
-  }).catch(function () { ready = true; drawAll(0, true); });
+  /* the land data and WebGL start only as the section approaches, keeping the first load light */
+  var booted = false;
+  var boot = function () {
+    if (booted) return; booted = true;
+    fetch("/assets/geo/land.json").then(function (r) { return r.json(); }).then(function (rings) {
+      GL = initGL(makeMask(rings));
+      if (reduce) globes.forEach(function (g) { g.lon = g.reg.home[0]; g.lat = g.reg.home[1]; });
+      ready = true; drawAll(0, true); sync();
+    }).catch(function () { ready = true; drawAll(0, true); });
+  };
+  if ("IntersectionObserver" in window) {
+    var bio = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { bio.disconnect(); boot(); } }, { rootMargin: "900px 0px" });
+    bio.observe(root);
+  } else boot();
 })();

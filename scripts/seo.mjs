@@ -8,7 +8,7 @@
                 without it every page is marked noindex, so the vercel.app copy with placeholder
                 text never ends up in Google. */
 
-import {mkdirSync, readFileSync, readdirSync, renameSync, writeFileSync} from 'node:fs'
+import {existsSync, mkdirSync, readFileSync, readdirSync, renameSync, writeFileSync} from 'node:fs'
 import {join} from 'node:path'
 
 const NAME = 'HOP.'
@@ -16,9 +16,13 @@ const LOGO = '/assets/icon-512.png'
 const OG = {src: '/assets/og.jpg', w: 1200, h: 630, alt: 'hop. — HOP. wordmark on a textured black board'}
 const ORG_DESC = 'HOP is Poland’s first global brand partner. Brand strategy for businesses ready to leap.'
 const PEOPLE = [
-  {name: 'Philip Jacobson', email: 'philip@hoppartners.pl'},
-  {name: 'David Anson', email: 'david@hoppartners.pl'},
+  {name: 'Philip Jacobson', city: 'Poznań', li: 'https://www.linkedin.com/in/philip-jacobson-2276556/'},
+  {name: 'David Anson', city: 'Warsaw', li: 'https://www.linkedin.com/in/david-anson-9a08334/'},
 ]
+const SERVICES = ['Brand strategy', 'Brand positioning', 'Brand audit', 'Audience research', 'Brand identity and messaging', 'Brand internationalisation']
+const PROD = 'https://hoppartners.pl'
+/* placeholder articles stay out of search until they carry real text */
+const PLACEHOLDER = /lorem|ipsum|consectetur|eiusmod|duis aute/i
 
 const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 const en = (v) => (v && typeof v === 'object' && !Array.isArray(v) ? v.en || '' : v || '')
@@ -27,7 +31,8 @@ const pad = (n) => (n < 10 ? '0' : '') + n
 const ld = (obj) => `<script type="application/ld+json">${JSON.stringify(obj).replace(/</g, '\\u003c')}</script>`
 
 function siteOrigin() {
-  const raw = process.env.SITE_URL || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 'https://hop-website-olive.vercel.app')
+  /* canonical URLs always point at the real domain, so vercel.app copies and previews never compete with it */
+  const raw = process.env.SITE_URL || PROD
   return raw.replace(/\/+$/, '')
 }
 
@@ -58,19 +63,31 @@ function headBlock({origin, path, title, description, type = 'website', indexabl
   ].filter(Boolean).join('\n')
 }
 
+function personLd(origin, p) {
+  return {'@type': 'Person', '@id': origin + '/#' + p.name.toLowerCase().replace(/\s+/g, '-'), name: p.name, jobTitle: 'Senior partner', worksFor: {'@id': origin + '/#org'}, workLocation: {'@type': 'Place', name: p.city + ', Poland'}, sameAs: [p.li]}
+}
+
 function orgLd(origin) {
   return {
-    '@type': 'Organization',
+    '@type': ['Organization', 'ProfessionalService'],
     '@id': origin + '/#org',
     name: NAME,
-    alternateName: 'HOP',
+    alternateName: ['HOP', 'HOP Partners', 'hop.'],
     url: origin + '/',
-    logo: origin + LOGO,
+    logo: {'@type': 'ImageObject', url: origin + LOGO, width: 512, height: 512},
+    image: origin + '/assets/og-partners.jpg',
     description: ORG_DESC,
+    slogan: 'Brand strategy for businesses ready to leap.',
     address: {'@type': 'PostalAddress', addressLocality: 'Poznań', addressCountry: 'PL'},
-    founder: PEOPLE.map((p) => ({'@type': 'Person', name: p.name, jobTitle: 'Senior partner', email: 'mailto:' + p.email})),
+    areaServed: [{'@type': 'Country', name: 'Poland'}, 'Europe'],
+    knowsAbout: SERVICES,
+    hasOfferCatalog: {'@type': 'OfferCatalog', name: 'Brand strategy services', itemListElement: SERVICES.map((n) => ({'@type': 'Offer', itemOffered: {'@type': 'Service', name: n}}))},
+    founder: PEOPLE.map((p) => ({'@id': origin + '/#' + p.name.toLowerCase().replace(/\s+/g, '-')})),
+    contactPoint: {'@type': 'ContactPoint', contactType: 'new business', url: origin + '/contact', availableLanguage: ['English', 'Polish']},
   }
 }
+
+const crumbs = (origin, items) => ({'@type': 'BreadcrumbList', itemListElement: items.map(([name, path], i) => ({'@type': 'ListItem', position: i + 1, name, item: origin + path}))})
 
 /* Same markup the browser renderer (site.js renderBody) produces */
 function bodyHTML(a) {
@@ -176,12 +193,30 @@ function articlePage(tpl, a, i, list, origin, indexable) {
 }
 
 /* Static pages: path, and structured data where it helps */
+const OG_HOME = {src: '/assets/og-partners.jpg', w: 1200, h: 630, alt: 'Philip Jacobson and David Anson, the two senior partners of HOP, on a street in Poznań'}
 const PAGES = {
-  'index.html': {path: '/', og: {src: '/assets/og-partners.jpg', w: 1200, h: 630, alt: 'Philip Jacobson and David Anson, the two senior partners of HOP, on a street in Poznań'}, data: (o) => ({'@context': 'https://schema.org', '@graph': [orgLd(o), {'@type': 'WebSite', '@id': o + '/#site', name: NAME, url: o + '/', publisher: {'@id': o + '/#org'}, inLanguage: 'en'}]})},
-  'house-of-poland.html': {path: '/house-of-poland'},
-  'articles/index.html': {path: '/articles'},
-  'contact.html': {path: '/contact'},
+  'index.html': {path: '/', og: OG_HOME, data: (o) => ({'@context': 'https://schema.org', '@graph': [orgLd(o), ...PEOPLE.map((p) => personLd(o, p)), {'@type': 'WebSite', '@id': o + '/#site', name: NAME, url: o + '/', publisher: {'@id': o + '/#org'}, inLanguage: 'en'}, {'@type': 'WebPage', '@id': o + '/#page', url: o + '/', name: 'HOP. Brand strategy for Polish businesses ready to leap', isPartOf: {'@id': o + '/#site'}, about: {'@id': o + '/#org'}, primaryImageOfPage: o + OG_HOME.src, inLanguage: 'en'}]})},
+  'articles/index.html': {path: '/articles', og: OG_HOME, data: (o) => ({'@context': 'https://schema.org', '@graph': [{'@type': 'CollectionPage', '@id': o + '/articles#page', url: o + '/articles', name: 'House of Poland', description: 'Notes on brand strategy, positioning and taking Polish companies global, from the two senior partners of HOP.', isPartOf: {'@id': o + '/#site'}, publisher: {'@id': o + '/#org'}, inLanguage: 'en'}, crumbs(o, [['Home', '/'], ['House of Poland', '/articles']])]})},
+  'contact.html': {path: '/contact', og: OG_HOME, data: (o) => ({'@context': 'https://schema.org', '@graph': [{'@type': 'ContactPage', '@id': o + '/contact#page', url: o + '/contact', name: 'Contact HOP.', about: {'@id': o + '/#org'}, inLanguage: 'en'}, orgLd(o), ...PEOPLE.map((p) => personLd(o, p)), crumbs(o, [['Home', '/'], ['Contact', '/contact']])]})},
   'privacy.html': {path: '/privacy'},
+}
+
+/* The real article pages, built by make-hub.py at /articles/<slug> */
+function articleHead(html, slug, origin, indexable) {
+  const title = ((html.match(/<title>([\s\S]*?)<\/title>/) || [])[1] || '').replace(/\s*·\s*(House of Poland\s*·\s*)?HOP\.\s*$/, '').replace(/&amp;/g, '&')
+  const description = ((html.match(/<meta name="description" content="([^"]*)"/) || [])[1] || ORG_DESC).replace(/&amp;/g, '&').replace(/&quot;/g, '"')
+  const placeholder = PLACEHOLDER.test(title + ' ' + description)
+  const path = '/articles/' + slug
+  const img = {src: '/assets/img/r/intro-krakow-1200.jpg', w: 1200, h: 620, alt: 'Kraków, Poland'}
+  const data = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {'@type': 'Article', '@id': origin + path + '#article', headline: title.replace(/\.$/, ''), description, inLanguage: 'en', mainEntityOfPage: origin + path, image: {'@type': 'ImageObject', url: origin + img.src, width: img.w, height: img.h}, author: PEOPLE.map((p) => ({'@id': origin + '/#' + p.name.toLowerCase().replace(/\s+/g, '-'), '@type': 'Person', name: p.name, url: p.li})), publisher: {'@id': origin + '/#org'}, isPartOf: {'@type': 'Blog', name: 'House of Poland', url: origin + '/articles'}},
+      crumbs(origin, [['Home', '/'], ['House of Poland', '/articles'], [title.replace(/\.$/, ''), path]]),
+      orgLd(origin),
+    ],
+  }
+  return {placeholder, path, block: headBlock({origin, path, title, description, type: 'article', indexable: indexable && !placeholder, og: img, extra: ld(data)})}
 }
 
 export function applySEO(dist, articles) {
@@ -205,8 +240,21 @@ export function applySEO(dist, articles) {
     writeFileSync(p, html)
   }
 
+  /* The real article pages */
+  const live = []
+  const adir = join(dist, 'articles')
+  for (const f of existsSync(adir) ? readdirSync(adir) : []) {
+    if (!f.endsWith('.html') || f === 'index.html') continue
+    const p = join(adir, f)
+    let html = readFileSync(p, 'utf8')
+    const r = articleHead(html, f.replace(/\.html$/, ''), origin, indexable)
+    html = html.includes('<!--SEO-->') ? html.replace('<!--SEO-->', r.block) : html.replace(/<meta name="robots" content="noindex">/, r.block)
+    writeFileSync(p, html)
+    if (!r.placeholder) live.push(r.path)
+  }
+
   /* The 404 page and the old hash-based article page are never indexed */
-  for (const file of ['404.html', 'article.html']) {
+  for (const file of ['404.html', 'article.html', 'house-of-poland.html']) {
     const p = join(dist, file)
     writeFileSync(p, readFileSync(p, 'utf8').replace('<!--SEO-->', '<meta name="robots" content="noindex">'))
   }
@@ -224,14 +272,18 @@ export function applySEO(dist, articles) {
 
   /* Sitemap and robots */
   const today = new Date().toISOString().slice(0, 10)
+  /* only real, canonical, indexable URLs: no redirects, no placeholders */
   const urls = [
-    ...Object.values(PAGES).map((c) => ({loc: origin + c.path, lastmod: today})),
-    ...sorted.map((a) => ({loc: `${origin}/house-of-poland/${a.slug}`, lastmod: String(a.date).slice(0, 10)})),
+    {loc: origin + '/', pri: '1.0'},
+    {loc: origin + '/articles', pri: '0.7'},
+    ...live.map((p) => ({loc: origin + p, pri: '0.6'})),
+    {loc: origin + '/contact', pri: '0.8'},
+    {loc: origin + '/privacy', pri: '0.2'},
   ]
-  writeFileSync(join(dist, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((u) => `  <url><loc>${esc(u.loc)}</loc><lastmod>${u.lastmod}</lastmod></url>`).join('\n')}\n</urlset>\n`)
+  writeFileSync(join(dist, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((u) => `  <url><loc>${esc(u.loc)}</loc><lastmod>${today}</lastmod><priority>${u.pri}</priority></url>`).join('\n')}\n</urlset>\n`)
   writeFileSync(join(dist, 'robots.txt'), `User-agent: *\n${indexable ? 'Allow: /' : 'Allow: /\n# Not launched yet: every page carries noindex until SITE_URL is set.'}\n\nSitemap: ${origin}/sitemap.xml\n`)
 
   const left = readdirSync(dist).filter((f) => f.endsWith('.html') && readFileSync(join(dist, f), 'utf8').includes('<!--SEO-->'))
   if (left.length) throw new Error('SEO: no metadata written for ' + left.join(', '))
-  console.log(`SEO: ${sorted.length} article page(s), sitemap with ${urls.length} URLs, origin ${origin}, ${indexable ? 'indexable' : 'noindex until SITE_URL is set'}`)
+  console.log(`SEO: ${live.length} live article page(s), sitemap with ${urls.length} URLs, origin ${origin}, ${indexable ? 'indexable' : 'noindex until SITE_URL is set'}`)
 }

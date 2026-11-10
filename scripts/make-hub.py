@@ -69,7 +69,7 @@ hub_main = f'''<main id="main" class="ahub">
 </main>'''
 os.makedirs(os.path.join(PUB, 'articles'), exist_ok=True)
 open(os.path.join(PUB, 'articles', 'index.html'), 'w', encoding='utf8').write(
-    page('House of Poland · HOP.', 'Notes on brand, positioning and taking Polish companies global, from the two partners of HOP.', hub_main, robots=False).replace('<main id="main" class="ahub">', '<main id="main" class="ahub" data-page="articles">'))
+    page('House of Poland: notes on brand strategy · HOP.', 'Notes on brand strategy, positioning and taking Polish companies global, from the two senior partners of HOP.', hub_main, robots=False).replace('<main id="main" class="ahub">', '<main id="main" class="ahub" data-page="articles">'))
 
 # ---------- articles ----------
 for idx, a in enumerate(ARTICLES):
@@ -97,7 +97,7 @@ for idx, a in enumerate(ARTICLES):
       <p class="art-crumbs"><a class="lbl" href="/articles">← All articles</a></p>
       <h1 class="h1 art-h">{title_html(a)}</h1>
       <p class="art-dek">{e(a['sub'])}</p>
-      <div class="art-meta"><p class="lbl"><span data-notr>{e(a['by'])}</span> · <time datetime="{a['date']}">{e(a['dlabel'])}</time> · {a['mins']} min read · {e(a['topic'])}</p><button class="art-share" type="button" data-share>Share <span aria-hidden="true">→</span></button></div>
+      <div class="art-meta"><p class="lbl"><span data-notr>{e(a['by'])}</span> · <time datetime="{a['date']}">{e(a['dlabel'])}</time> · {a['mins']} min read · {e(a['topic'])}</p></div>
     </div>
   </header>
   <div class="s art-body">
@@ -130,7 +130,7 @@ for idx, a in enumerate(ARTICLES):
     </div>
   </section>
 </main>'''
-    open(os.path.join(PUB, 'articles', a['slug'] + '.html'), 'w', encoding='utf8').write(page(a['title'][:-1] + ' · House of Poland · HOP.', a['ex'], main))
+    open(os.path.join(PUB, 'articles', a['slug'] + '.html'), 'w', encoding='utf8').write(page(a['title'][:-1] + ' · House of Poland · HOP.', a['ex'], main, robots=False))
 print('hub + %d articles written' % len(ARTICLES))
 
 # ---------- the letter (Say Hop.) on the same article template ----------
@@ -172,7 +172,7 @@ main = f'''<main id="main" class="art" data-page="articles">
       <p class="art-crumbs"><a class="lbl" href="/articles">← All articles</a></p>
       <h1 class="h1 art-h">Say <em>Hop</em><span class="tdot">.</span></h1>
       <p class="art-dek">{e(L['subtitle'])}</p>
-      <div class="art-meta"><p class="lbl"><span data-notr>{e(L['authors'])}</span> · <time datetime="{L['date']}">{e(dl)}</time> · {mins} min read · {e(topics)}</p><button class="art-share" type="button" data-share>Share <span aria-hidden="true">→</span></button></div>
+      <div class="art-meta"><p class="lbl"><span data-notr>{e(L['authors'])}</span> · <time datetime="{L['date']}">{e(dl)}</time> · {mins} min read · {e(topics)}</p></div>
     </div>
   </header>
   <div class="s art-body">
@@ -205,7 +205,7 @@ main = f'''<main id="main" class="art" data-page="articles">
     </div>
   </section>
 </main>'''
-open(os.path.join(PUB, 'articles', 'say-hop.html'), 'w', encoding='utf8').write(page('Say Hop. · House of Poland · HOP.', L['summary'], main))
+open(os.path.join(PUB, 'articles', 'say-hop.html'), 'w', encoding='utf8').write(page('Say Hop. A letter to Poland’s best companies · HOP.', L['summary'], main, robots=False))
 print('letter written: /articles/say-hop (%d sections, %d min read)' % (len(heads), mins))
 
 
