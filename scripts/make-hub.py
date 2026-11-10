@@ -103,7 +103,7 @@ for idx, a in enumerate(ARTICLES):
     nxt = REAL[0]
     authors = []
     for name, img, bio in [('Philip Jacobson', 'philip', 'Chief Brand Officer at Vimergy. Brand-led growth at Tylko, Autry and Chilly’s; a decade at Nike EMEA; Global Head of Brand Creative at Maserati.'),
-                           ('David Anson', 'david', 'Led business at BBH Singapore, Saatchi & Saatchi London and Wieden+Kennedy Amsterdam on Samsung, Meta, Netflix and HSBC. Brand creative lead at Nike UK.')]:
+                           ('David Anson', 'david', 'Brand Creative Lead at Nike; Head of Business Leadership at BBH Singapore. Led Nike, Samsung, Meta, Netflix and HSBC.')]:
         if name in a['by']:
             authors.append(f'<li class="art-author"><img src="/assets/img/{img}.webp?v=2" alt="" width="96" height="96" loading="lazy" decoding="async"><span><span class="lbl lbl--m lbl--red">Senior partner</span><span class="art-an">{name}</span><span class="art-ab">{e(bio)}</span></span></li>')
     main = f'''<main id="main" class="art" data-page="articles">
@@ -159,8 +159,8 @@ HERO = '<div class="wrap art-hero-w"><figure class="art-hero"><picture><source t
 def nt(b): return ' data-notr' if b.get('notr') else ''
 SHORT_BIO = {'Philip Jacobson': ('philip', 'Chief Brand Officer at Vimergy. Brand-led growth at Tylko, Autry and Chilly’s; a decade at Nike EMEA; Global Head of Brand Creative at Maserati.',
                                  'Dyrektor ds. marki w Vimergy. Wzrost oparty na marce w Tylko, Autry i Chilly’s; dekada w Nike EMEA; globalny szef kreacji Maserati.'),
-             'David Anson': ('david', 'Led business at BBH Singapore, Saatchi & Saatchi London and Wieden+Kennedy Amsterdam on Samsung, Meta, Netflix and HSBC. Brand creative lead at Nike UK.',
-                             'Kierował obsługą klientów i rozwojem biznesu w BBH Singapore, Saatchi & Saatchi London i Wieden+Kennedy Amsterdam przy markach Samsung, Meta, Netflix i HSBC. Lider kreacji marki w Nike UK.')}
+             'David Anson': ('david', 'Brand Creative Lead at Nike; Head of Business Leadership at BBH Singapore. Led Nike, Samsung, Meta, Netflix and HSBC.',
+                             'Lider kreacji marki w Nike; szef obsługi klientów i rozwoju biznesu w BBH Singapore. Prowadził Nike, Samsung, Meta, Netflix i HSBC.')}
 def authors_html(bios=None):
     out = []
     for k, name in enumerate(['Philip Jacobson', 'David Anson']):

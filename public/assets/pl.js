@@ -186,10 +186,10 @@ window.HOP_PL = {
 "This page didn’t make the leap.": "Ta strona nie wykonała skoku.",
 "The link may be old, or the address mistyped.": "Link może być nieaktualny albo adres jest błędny.",
 "Back to the home page": "Wróć na stronę główną",
-"David has led business at some of the world’s best agencies, most recently at BBH Singapore, and before that Saatchi & Saatchi London and Wieden+Kennedy Amsterdam, on brands like Samsung, Meta, Netflix and HSBC. He was also a brand creative lead at Nike UK.": "David kierował obsługą klientów i rozwojem biznesu w jednych z najlepszych agencji na świecie: ostatnio w BBH Singapore, a wcześniej w Saatchi & Saatchi London i Wieden+Kennedy Amsterdam, przy markach takich jak Samsung, Meta, Netflix i HSBC. Był również liderem kreacji marki w Nike UK.",
 "The big idea made real": "Idee wcielone w życie",
 "Get their attention. Be remembered.": "Przyciągnij uwagę. Zostań zapamiętany.",
 "Ideas people see, touch and taste, built to travel and proven to work.": "Idee, które ludzie mogą zobaczyć, dotknąć i posmakować – stworzone, by podróżować, i sprawdzone w działaniu.",
+"David was a Brand Creative Lead at Nike and Head of Business Leadership and Client Service at BBH Singapore. Across BBH Singapore, Wieden+Kennedy Amsterdam and Saatchi & Saatchi London, he has led the Nike, Samsung, Meta, Netflix and HSBC business.": "David był liderem kreacji marki w Nike oraz szefem obsługi klientów i rozwoju biznesu w BBH Singapore. W BBH Singapore, Wieden+Kennedy Amsterdam i Saatchi & Saatchi London prowadził klientów takich jak Nike, Samsung, Meta, Netflix i HSBC.",
 "Say": "Powiedzcie",
 "Why we’re": "Dlaczego tu",
 "here": "jesteśmy",
@@ -270,7 +270,7 @@ window.HOP_PL = {
 "Who’s writing this, and why do we care?": "Kto to pisze i dlaczego nam zależy?",
 "Read our story": "Przeczytaj naszą historię",
 "Chief Brand Officer at Vimergy. Brand-led growth at Tylko, Autry and Chilly’s; a decade at Nike EMEA; Global Head of Brand Creative at Maserati.": "Dyrektor ds. marki w Vimergy. Wzrost oparty na marce w Tylko, Autry i Chilly’s; dekada w Nike EMEA; globalny szef kreacji Maserati.",
-"Led business at BBH Singapore, Saatchi & Saatchi London and Wieden+Kennedy Amsterdam on Samsung, Meta, Netflix and HSBC. Brand creative lead at Nike UK.": "Kierował obsługą klientów i rozwojem biznesu w BBH Singapore, Saatchi & Saatchi London i Wieden+Kennedy Amsterdam przy markach Samsung, Meta, Netflix i HSBC. Lider kreacji marki w Nike UK.",
+"Brand Creative Lead at Nike; Head of Business Leadership at BBH Singapore. Led Nike, Samsung, Meta, Netflix and HSBC.": "Lider kreacji marki w Nike; szef obsługi klientów i rozwoju biznesu w BBH Singapore. Prowadził Nike, Samsung, Meta, Netflix i HSBC.",
 "· 6 min read": "· 6 min czytania",
 "We’re two brand strategists who’ve spent our careers building names people choose.": "Jesteśmy strategami, którzy całe zawodowe życie budują marki, które ludzie chętnie wybierają.",
 "We both married into Poland. We came for love and stayed because we couldn’t believe what we found: world-class products, ferocious work ethic, services the rest of Europe should envy, and almost no one telling the story.": "Obaj wżeniliśmy się w Polskę. Przyjechaliśmy tu z miłości, a zostaliśmy, bo nie mogliśmy uwierzyć w to, co tu zastaliśmy: światowej klasy produkty, nieprawdopodobną etykę pracy oraz usługi, których reszta Europy powinna nam zazdrościć, a przy tym niemal nikogo, kto by potrafił opowiedzieć o tym światu.",
@@ -288,5 +288,6 @@ window.HOP_PL = {
 "We’re outsiders who chose to be insiders. That’s the point. We can see what you’re too close to see, and we care too much to stay polite about it.": "Przyszliśmy z zewnątrz, ale wybraliśmy bycie częścią Waszego świata. I właśnie o to chodzi. Widzimy to, czego Wy z bliska możecie nie dostrzegać, ale zależy nam na tym zbyt mocno, żeby owijać w bawełnę.",
 "We’re launching HOP on 11 November, Poland’s Independence Day. It felt like the right day to say hop.": "HOP startuje 11 listopada, w Narodowe Święto Niepodległości. Uznaliśmy, że to najlepszy dzień, żeby powiedzieć „Hop!”.",
 "Phil has spent his last few roles in the C-suite, most recently as Chief Brand Officer at PE-backed Vimergy. He has led brands across the USA, UK and Italy, from Maserati and Autry to Chilly’s, and was brand consultant to Tylko in Poland. Before that, he spent a decade leading brand communication for Nike EMEA.": "Phil zdobywał doświadczenie na stanowiskach kierowniczych najwyższego szczebla, a ostatnio był dyrektorem ds. marki w Vimergy, spółce z portfela funduszu private equity. Zarządzał również markami w Stanach Zjednoczonych, Wielkiej Brytanii i we Włoszech – od Maserati i Autry po Chilly’s – a także był konsultantem ds. marki w polskiej firmie Tylko. Wcześniej przez dekadę kierował komunikacją marki Nike w regionie EMEA.",
+"David has led business at some of the world’s best agencies, most recently at BBH Singapore, and before that Saatchi & Saatchi London and Wieden+Kennedy Amsterdam, on brands like Samsung, Meta, Netflix and HSBC. He also was a brand creative lead at Nike UK.": "David kierował obsługą klientów i rozwojem biznesu w jednych z najlepszych agencji na świecie: ostatnio w BBH Singapore, a wcześniej w Saatchi & Saatchi London i Wieden+Kennedy Amsterdam, przy markach takich jak Samsung, Meta, Netflix i HSBC. Był również liderem kreacji marki w Nike UK.",
 "· 2 min read": "· 2 min czytania"
 };
