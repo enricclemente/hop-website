@@ -1372,9 +1372,9 @@ html.cb-wait .consent-bar { opacity: 0; transform: translate3d(0, 16px, 0); poin
 .art-sign-n { font-family: var(--sans); font-size: 15px; color: var(--muted-l); }
 .art-sign-tag { margin-top: 20px; font-family: var(--sans); font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: rgba(10, 10, 10, .62); }
 .lang-note[hidden] { display: none !important; }
-/* client ticker sits under the partners' headline, before the photo */
+/* client ticker sits under the partners photo */
 .who .logos-tag { margin-top: calc(56px + 24 * var(--t)); }
-.who .logos + .duo { margin-top: calc(56px + 32 * var(--t)); }
+.who .duo + .logos-tag, .who .duo-hint + .logos-tag { margin-top: calc(64px + 32 * var(--t)); }
 /* desktop: wider partners photo (less tall); phones keep the street crop */
 @media (min-width: 1024px) {
   .duo { aspect-ratio: 3200 / 1646; }
