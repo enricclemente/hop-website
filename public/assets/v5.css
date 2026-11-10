@@ -1384,3 +1384,8 @@ html.cb-wait .consent-bar { opacity: 0; transform: translate3d(0, 16px, 0); poin
 }
 /* articles hub: with two articles, two columns fill the row */
 @media (min-width: 760px) { .acards:has(> li:nth-child(2):last-child) { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+/* hero statements: room around the type so italic overhangs (g, p, f) are never clipped by the blur layers (Safari clips to the box) */
+.hs-v { padding: .14em .18em .3em; margin: -.14em -.18em -.3em; }
+@media (prefers-reduced-motion: no-preference) { html.hs-live .hs-i.is-in .c { filter: none; } }
+/* the same room for the line-by-line headline reveals (their masks are overflow:hidden) */
+.intro-l, .rl-w { padding-inline: .12em; margin-inline: -.12em; }
