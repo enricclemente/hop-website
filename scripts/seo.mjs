@@ -75,7 +75,7 @@ function orgLd(origin) {
     alternateName: ['HOP', 'HOP Partners', 'hop.'],
     url: origin + '/',
     logo: {'@type': 'ImageObject', url: origin + LOGO, width: 512, height: 512},
-    image: origin + '/assets/og-partners.jpg',
+    image: origin + '/assets/og-partners.jpg?v=2',
     description: ORG_DESC,
     slogan: 'Brand strategy for businesses ready to leap.',
     address: {'@type': 'PostalAddress', addressLocality: 'Poznań', addressCountry: 'PL'},
@@ -194,7 +194,7 @@ function articlePage(tpl, a, i, list, origin, indexable) {
 }
 
 /* Static pages: path, and structured data where it helps */
-const OG_HOME = {src: '/assets/og-partners.jpg', w: 1200, h: 630, alt: 'Philip Jacobson and David Anson, the two senior partners of HOP, on a street in Poznań'}
+const OG_HOME = {src: '/assets/og-partners.jpg?v=2', w: 1200, h: 630, alt: 'Philip Jacobson and David Anson, the two senior partners of HOP, on a street in Poznań'}
 const PAGES = {
   'index.html': {path: '/', og: OG_HOME, data: (o) => ({'@context': 'https://schema.org', '@graph': [orgLd(o), ...PEOPLE.map((p) => personLd(o, p)), {'@type': 'WebSite', '@id': o + '/#site', name: NAME, url: o + '/', publisher: {'@id': o + '/#org'}, inLanguage: 'en'}, {'@type': 'WebPage', '@id': o + '/#page', url: o + '/', name: 'HOP. Brand strategy for Polish businesses ready to leap', isPartOf: {'@id': o + '/#site'}, about: {'@id': o + '/#org'}, primaryImageOfPage: o + OG_HOME.src, inLanguage: 'en'}]})},
   'articles/index.html': {path: '/articles', og: OG_HOME, data: (o) => ({'@context': 'https://schema.org', '@graph': [{'@type': 'CollectionPage', '@id': o + '/articles#page', url: o + '/articles', name: 'House of Poland', description: 'Notes on brand strategy, positioning and taking Polish companies global, from the two senior partners of HOP.', isPartOf: {'@id': o + '/#site'}, publisher: {'@id': o + '/#org'}, inLanguage: 'en'}, crumbs(o, [['Home', '/'], ['House of Poland', '/articles']])]})},
