@@ -165,7 +165,10 @@ def authors_html(bios=None):
     out = []
     for k, name in enumerate(['Philip Jacobson', 'David Anson']):
         img, en, plb = SHORT_BIO[name]
-        if bios: en, plb = bios[0][k], bios[1][k]
+        if bios is None:  # one bio per partner on every article: the 'Why we're here' versions
+            _ab = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'copy_articles.json'), encoding='utf-8'))['about']
+            bios = (_ab['en']['bios'], _ab['pl']['bios'])
+        en, plb = bios[0][k], bios[1][k]
         pl(en, plb)
         out.append(f'<li class="art-author"><img src="/assets/img/{img}.webp?v=3" alt="" width="96" height="96" loading="lazy" decoding="async"><span><span class="lbl lbl--m lbl--red">Senior partner</span><span class="art-an" data-notr>{name}</span><span class="art-ab">{e(bio_fix(en))}</span></span></li>')
     return ''.join(out)
