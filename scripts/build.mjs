@@ -9,7 +9,7 @@
 
    For local testing without Sanity: SANITY_FIXTURE=path/to/response.json node scripts/build.mjs */
 
-import {cpSync, existsSync, readFileSync, rmSync, writeFileSync} from 'node:fs'
+import {cpSync, existsSync, readFileSync, readdirSync, rmSync, writeFileSync} from 'node:fs'
 import {dirname, join} from 'node:path'
 import {fileURLToPath} from 'node:url'
 import vm from 'node:vm'
@@ -115,6 +115,26 @@ if (projectId || fixture) {
 }
 
 applySEO(dist, ARTICLES)
+
+/* Analytics: Umami Cloud (cookieless). The page carries the website ID; consent.js loads the tracker
+   unless the visitor has switched Statistics off, and only on hoppartners.pl (data-domains).
+   Clicks worth counting get data-umami-event attributes here, so the HTML sources stay clean. */
+{
+  const UMAMI_ID = (process.env.UMAMI_WEBSITE_ID || '10cbe963-2e08-4bdf-a52c-86447e0ef658').trim()
+  const walkH = (d) => readdirSync(d, { withFileTypes: true }).flatMap((e) => e.isDirectory() ? walkH(join(d, e.name)) : e.name.endsWith('.html') ? [join(d, e.name)] : [])
+  const tag = (html, re, name, extra = () => '') => html.replace(re, (m, ...g) => m.includes('data-umami-event') ? m : m.replace(/^<(a|button)\b/, `<$1 data-umami-event="${name}"${extra(m, ...g)}`))
+  for (const f of walkH(dist)) {
+    let h = readFileSync(f, 'utf8'), o = h
+    if (/^[0-9a-f-]{36}$/i.test(UMAMI_ID) && !h.includes('name="hop-umami"')) h = h.replace('</head>', `<meta name="hop-umami" content="${UMAMI_ID}">\n</head>`)
+    h = tag(h, /<a class="pcta[^"]*"[^>]*href="\/contact"[^>]*>/g, 'CTA: Let’s make the leap', (m) => ` data-umami-event-where="${/nav-cta/.test(m) ? 'nav' : /pcta--menu/.test(m) ? 'menu' : /f-cta/.test(m) ? 'footer' : 'page'}"`)
+    h = tag(h, /<a [^>]*href="mailto:([^"]+)"[^>]*>/g, 'Email click', (m, to) => ` data-umami-event-to="${to}"`)
+    h = tag(h, /<a [^>]*href="tel:([^"]+)"[^>]*>/g, 'Phone click', (m, to) => ` data-umami-event-to="${to}"`)
+    h = tag(h, /<a class="foot-social"[^>]*aria-label="HOP on (LinkedIn|Instagram)"[^>]*>/g, 'Social click', (m, n) => ` data-umami-event-network="${n}"`)
+    h = tag(h, /<button type="button" data-lang="(en|pl)"[^>]*>/g, 'Language switch', (m, l) => ` data-umami-event-to="${l.toUpperCase()}"`)
+    h = tag(h, /<button[^>]*id="letter-toggle"[^>]*>/g, 'Letter opened')
+    if (h !== o) writeFileSync(f, h)
+  }
+}
 
 /* Speed: one minified stylesheet, the tiny intro gate inlined (allowed by its CSP hash), body scripts deferred */
 {

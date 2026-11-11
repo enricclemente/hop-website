@@ -4,9 +4,8 @@
 
    Categories
      preferences  keeps an unsent contact-form draft (localStorage "hop-contact-draft")
-     analytics    visit statistics; nothing uses it yet. Any analytics added later
-                  must start only when HOPConsent.allowed("analytics") is true, or on
-                  the "hop:consent" event.
+     analytics    visit statistics (Umami Cloud, cookieless): counts unless the visitor
+                  has switched this off; see loadStats below.
 
    API (window.HOPConsent)
      allowed(category) -> boolean
@@ -96,6 +95,23 @@
   if (dialog) dialog.addEventListener("click", function (e) { if (e.target === dialog) dialog.close(); });
 
   window.HOPConsent = { allowed: allowed, open: open };
+
+  /* Visit statistics: Umami Cloud. Cookieless and stores nothing in the browser, so it counts by
+     default; anyone who switches Statistics off (or clicks Reject all) is not counted. */
+  var um = document.querySelector('meta[name="hop-umami"]');
+  var statsOff = function () { var s = read(); return !!(s && s.analytics === false); };
+  window.hopUmamiGate = function (type, payload) { return statsOff() ? false : payload; };
+  var loadStats = function () {
+    if (!um || statsOff() || document.getElementById("umami-js")) return;
+    var s = document.createElement("script");
+    s.id = "umami-js"; s.defer = true; s.src = "https://cloud.umami.is/script.js";
+    s.setAttribute("data-website-id", um.getAttribute("content"));
+    s.setAttribute("data-domains", "hoppartners.pl,www.hoppartners.pl");
+    s.setAttribute("data-before-send", "hopUmamiGate");
+    document.head.appendChild(s);
+  };
+  document.addEventListener("hop:consent", loadStats);
+  loadStats();
 
   if (!state) showBar(true);
   apply();

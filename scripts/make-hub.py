@@ -319,6 +319,7 @@ privacy_main = '''<main id="main" class="art legal" data-page="privacy">
         <h2 class="art-sub" id="what"><span>3. What data we process, why, and on what legal basis</span></h2>
         <ul>
           <li><strong>Contact form and emails.</strong> Your name, email address, and optionally your company, phone number and anything you write in your message. We use them to reply to you and to discuss a possible collaboration. Legal basis: steps taken at your request before entering into a contract (Art. 6(1)(b) GDPR) and our legitimate interest in answering enquiries (Art. 6(1)(f) GDPR).</li>
+          <li><strong>Visit statistics.</strong> Anonymous, aggregated data about visits (pages viewed, referring site, country, device and browser type, and clicks on key buttons), collected with Umami without cookies and without identifying you. We use it to understand which content is useful and to improve the site. Legal basis: our legitimate interest in running and improving the site (Art. 6(1)(f) GDPR). You can switch it off at any time with the Statistics setting.</li>
           <li><strong>Technical data.</strong> When you visit the site, our hosting provider automatically processes your IP address, browser type, date and time of the request and the page requested. We need this to deliver the site and keep it secure. Legal basis: our legitimate interest in running a secure website (Art. 6(1)(f) GDPR).</li>
           <li><strong>Claims.</strong> Where necessary, we may keep correspondence to establish, exercise or defend legal claims. Legal basis: our legitimate interest (Art. 6(1)(f) GDPR).</li>
         </ul>
@@ -328,6 +329,7 @@ privacy_main = '''<main id="main" class="art legal" data-page="privacy">
         <ul>
           <li><strong>Vercel Inc.</strong> (USA): website hosting and technical logs.</li>
           <li><strong>Resend</strong> (Plus Five Five, Inc., USA): delivering contact form messages to our inboxes.</li>
+          <li><strong>Umami Software, Inc.</strong> (USA): anonymous visit statistics (Umami Cloud).</li>
         </ul>
         <p>We may also disclose data where the law requires it, for example to courts or public authorities.</p>
         <h2 class="art-sub" id="transfers"><span>5. Transfers outside the European Economic Area</span></h2>
@@ -353,7 +355,7 @@ privacy_main = '''<main id="main" class="art legal" data-page="privacy">
         <h2 class="art-sub" id="automated"><span>8. Automated decisions and profiling</span></h2>
         <p>We do not make decisions based solely on automated processing, and we do not profile visitors.</p>
         <h2 class="art-sub" id="cookies"><span>9. Cookies and browser storage</span></h2>
-        <p>This site sets no advertising or tracking cookies and uses no analytics. Fonts are served from this site, so no visitor data is sent to third parties when a page loads. We store a few small items in your browser (local and session storage). Items strictly necessary for the site to work do not require consent (Art. 399 of the Electronic Communications Law); the optional item is stored only if you allow it. You can change your choice at any time with <button class="linkbtn ulink" type="button" data-consent="settings">Cookie settings</button>, also in the footer, or by clearing your browser storage.</p>
+        <p>This site sets no advertising or tracking cookies. To count visits we use Umami, a privacy-focused statistics service that sets no cookies, stores nothing on your device and does not identify you; you can switch it off with the Statistics setting. Fonts are served from this site. We store a few small items in your browser (local and session storage). Items strictly necessary for the site to work do not require consent (Art. 399 of the Electronic Communications Law); the optional item is stored only if you allow it. You can change your choice at any time with <button class="linkbtn ulink" type="button" data-consent="settings">Cookie settings</button>, also in the footer, or by clearing your browser storage.</p>
         <div class="table-wrap">
           <table class="store-table">
             <thead><tr><th scope="col">Name</th><th scope="col">Category</th><th scope="col">Purpose</th><th scope="col">Kept</th></tr></thead>

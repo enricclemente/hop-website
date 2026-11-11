@@ -195,6 +195,7 @@
       send.then(function (res) {
         if (!res.ok) throw new Error(res.error || "failed");
         clearDraft();
+        if (!res.demo && window.umami && typeof window.umami.track === "function") window.umami.track("Contact form sent", { to: payload.who || payload.partner || "", lang: H.lang() });
         sent.querySelector('[data-sent="name"]').textContent = payload.name ? ", " + payload.name.split(" ")[0] : "";
         sent.querySelector('[data-sent="name"]').setAttribute("data-notr", "");
         sent.querySelector('[data-sent="email"]').textContent = payload.email;
