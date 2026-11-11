@@ -1399,3 +1399,30 @@ html.cb-wait .consent-bar { opacity: 0; transform: translate3d(0, 16px, 0); poin
   html.hs-live .hs-fx { transform: none; }
   html.hs-live .hs-i .c { filter: none !important; }
 }
+/* footer credit: a quiet glass pill, the name lights up and the arrow lifts on hover */
+#site-foot .f-credit {
+  position: relative; isolation: isolate; overflow: hidden; justify-self: start;
+  display: inline-flex; align-items: center; gap: 7px; height: 34px; padding: 0 13px 0 15px; border-radius: 999px;
+  border: 1px solid rgba(232, 222, 206, .14); background: rgba(232, 222, 206, .03);
+  font-family: var(--sans); font-size: 12px; line-height: 1; letter-spacing: .01em; color: var(--muted-d); text-decoration: none;
+  transition: border-color .35s ease, background-color .35s ease, color .35s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+#site-foot .f-credit::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(105deg, transparent 30%, rgba(232, 222, 206, .14) 50%, transparent 70%);
+  transform: translateX(-120%);
+}
+#site-foot .f-credit-n {
+  font-weight: 600; color: var(--ivory);
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; padding-bottom: 2px;
+  transition: background-size .45s var(--expo, cubic-bezier(.16, 1, .3, 1));
+}
+#site-foot .f-credit-i { width: 11px; height: 11px; fill: none; stroke: var(--red); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; transition: transform .45s var(--expo, cubic-bezier(.16, 1, .3, 1)); }
+#site-foot .f-credit:hover, #site-foot .f-credit:focus-visible { border-color: rgba(232, 222, 206, .38); background: rgba(232, 222, 206, .06); color: var(--ivory); }
+#site-foot .f-credit:hover .f-credit-n, #site-foot .f-credit:focus-visible .f-credit-n { background-size: 100% 1px; }
+#site-foot .f-credit:hover .f-credit-i, #site-foot .f-credit:focus-visible .f-credit-i { transform: translate(2px, -2px); }
+#site-foot .f-credit:focus-visible { outline: 2px solid var(--ivory); outline-offset: 3px; }
+@media (prefers-reduced-motion: no-preference) {
+  #site-foot .f-credit:hover::before { transform: translateX(120%); transition: transform .9s cubic-bezier(.16, 1, .3, 1); }
+}
