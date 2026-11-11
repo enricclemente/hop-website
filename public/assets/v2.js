@@ -70,6 +70,18 @@
     translate(document.body, l);
     if (langNote) langNote.hidden = !(l === "pl" && missing > 0);
     placeLangDot(true);
+    /* artwork with its words baked in: Polish files sit next to the English ones as name-pl-<width> */
+    $$("picture[data-l10n-img]").forEach(function (pic) {
+      var fix = function (v) { return v.replace(/(\/letter-(?:web3|m3))(?:-pl)?-/g, l === "pl" ? "$1-pl-" : "$1-"); };
+      $$("source, img", pic).forEach(function (n) {
+        if (n.srcset) n.srcset = fix(n.getAttribute("srcset"));
+        if (n.tagName === "IMG") {
+          if (n.getAttribute("src")) n.setAttribute("src", fix(n.getAttribute("src")));
+          if (!n.dataset.altEn) n.dataset.altEn = n.alt;
+          n.alt = l === "pl" && n.dataset.altPl ? n.dataset.altPl : n.dataset.altEn;
+        }
+      });
+    });
     try { document.dispatchEvent(new CustomEvent("hop:lang", { detail: l })); } catch (e) {}
   }
   /* The red dot sits after the chosen language and hops to the other one on a switch */
