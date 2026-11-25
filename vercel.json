@@ -1,8 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "node scripts/build.mjs",
+  "buildCommand": "node scripts/build.mjs && node scripts/build-studio.mjs",
   "outputDirectory": "dist",
-  "installCommand": "echo 'No dependencies'",
+  "installCommand": "if [ -n \"$SANITY_PROJECT_ID\" ]; then npm --prefix studio install --no-audit --no-fund; else echo \"No dependencies\"; fi",
   "framework": null,
   "cleanUrls": true,
   "trailingSlash": false,
@@ -82,7 +82,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' https://cloud.umami.is 'sha256-ozTBpplsyrZHR2MyjIZdRFvmm0dQ+9Op/JPgNa4tzgs='; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://cloud.umami.is https://gateway.umami.is https://api-gateway.umami.dev; media-src 'self'; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; manifest-src 'self'; upgrade-insecure-requests"
+          "value": "default-src 'self'; script-src 'self' https://cloud.umami.is 'sha256-ozTBpplsyrZHR2MyjIZdRFvmm0dQ+9Op/JPgNa4tzgs='; style-src 'self'; img-src 'self' data: https://cdn.sanity.io; font-src 'self'; connect-src 'self' https://cloud.umami.is https://gateway.umami.is https://api-gateway.umami.dev; media-src 'self'; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; manifest-src 'self'; upgrade-insecure-requests"
         },
         {
           "key": "X-Content-Type-Options",
@@ -122,6 +122,32 @@
           "value": "no-store"
         }
       ]
+    },
+    {
+      "source": "/studio(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.sanity.io https://*.sanity-cdn.com; style-src 'self' 'unsafe-inline' https://*.sanity.io https://*.sanity-cdn.com; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https://*.sanity.io wss://*.sanity.io https://*.sanity-cdn.com https://*.sanity.work; frame-src 'self' https://*.sanity.io; worker-src 'self' blob:; media-src 'self' https: blob:; object-src 'none'; frame-ancestors 'self'; base-uri 'self'"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        }
+      ]
+    },
+    {
+      "source": "/studio/static/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     }
   ],
   "redirects": [
@@ -154,6 +180,12 @@
       "source": "/articles/duis-aute-irure",
       "destination": "/articles",
       "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/studio/:path*",
+      "destination": "/studio/index.html"
     }
   ]
 }

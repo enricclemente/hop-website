@@ -82,6 +82,12 @@
         }
       });
     });
+    /* pictures with a Polish description (Sanity articles) */
+    $$("img[data-alt-pl]").forEach(function (n) {
+      if (n.closest("picture[data-l10n-img]")) return;
+      if (!n.dataset.altEn) n.dataset.altEn = n.alt;
+      n.alt = l === "pl" ? n.dataset.altPl : n.dataset.altEn;
+    });
     try { document.dispatchEvent(new CustomEvent("hop:lang", { detail: l })); } catch (e) {}
   }
   /* The red dot sits after the chosen language and hops to the other one on a switch */

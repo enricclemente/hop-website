@@ -1,0 +1,30 @@
+{
+ "authors": {
+  "philip": {
+   "name": "Philip Jacobson",
+   "img": "/assets/img/philip.webp?v=3",
+   "en": "Phil has spent his last few roles in the C-suite, most recently as Chief Brand Officer at PE-backed Vimergy. He has led brands across the USA, UK and Italy, from Maserati and Autry to Chilly’s, and was brand consultant to Tylko in Poland. Before that, he spent a decade leading brand communication for Nike EMEA.",
+   "pl": "Phil zdobywał doświadczenie na stanowiskach kierowniczych najwyższego szczebla, a ostatnio był dyrektorem ds. marki w Vimergy, spółce z portfela funduszu private equity. Zarządzał również markami w Stanach Zjednoczonych, Wielkiej Brytanii i we Włoszech – od Maserati i Autry po Chilly’s – a także był konsultantem ds. marki w polskiej firmie Tylko. Wcześniej przez dekadę kierował komunikacją marki Nike w regionie EMEA."
+  },
+  "david": {
+   "name": "David Anson",
+   "img": "/assets/img/david.webp?v=3",
+   "en": "David has led business at some of the world’s best agencies, most recently at BBH Singapore, and before that Saatchi & Saatchi London and Wieden+Kennedy Amsterdam, on brands like Samsung, Meta, Netflix and HSBC. He also was a brand creative lead at Nike UK.",
+   "pl": "David kierował obsługą klientów i rozwojem biznesu w jednych z najlepszych agencji na świecie: ostatnio w BBH Singapore, a wcześniej w Saatchi & Saatchi London i Wieden+Kennedy Amsterdam, przy markach takich jak Samsung, Meta, Netflix i HSBC. Był również liderem kreacji marki w Nike UK."
+  }
+ },
+ "static": [
+  {
+   "slug": "why-were-here",
+   "title": "Why we’re here.",
+   "it": "here",
+   "date": "2026-11-11"
+  },
+  {
+   "slug": "say-hop",
+   "title": "Say hop.",
+   "it": "hop",
+   "date": "2026-11-11"
+  }
+ ]
+}

@@ -77,6 +77,7 @@ hub_main = f'''<main id="main" class="ahub">
   <section class="s ahub-list" aria-label="All articles">
     <div class="wrap">
       <ul class="acards" role="list">
+<!--CMS-CARDS-->
 {chr(10).join(cards)}
       </ul>
     </div>
@@ -292,6 +293,16 @@ main = f"""<main id="main" class="art art--note" data-page="articles">
 </main>"""
 pl(f' · {ABOUT_MINS} min read', f' · {ABOUT_MINS} min czytania')
 open(os.path.join(PUB, 'articles', 'why-were-here.html'), 'w', encoding='utf8').write(page('Why we’re here. The founders of HOP · HOP.', BY['why-were-here']['ex'], main, robots=False))
+# ---------- Sanity articles: page shell + shared parts, filled by scripts/cms.mjs at build time ----------
+open(os.path.join(PUB, 'articles', '_cms.html'), 'w', encoding='utf8').write(page('__TITLE__', '__DESC__', '<!--CMS-MAIN-->', robots=False))
+_ab = C['about']
+json.dump({
+    'authors': {
+        'philip': {'name': 'Philip Jacobson', 'img': '/assets/img/philip.webp?v=3', 'en': _ab['en']['bios'][0], 'pl': _ab['pl']['bios'][0]},
+        'david': {'name': 'David Anson', 'img': '/assets/img/david.webp?v=3', 'en': _ab['en']['bios'][1], 'pl': _ab['pl']['bios'][1]},
+    },
+    'static': [{'slug': r['slug'], 'title': r['title'], 'it': r['it'], 'date': r['date']} for r in REAL],
+}, open(os.path.join(ROOT, 'scripts', 'cms_parts.json'), 'w', encoding='utf8'), ensure_ascii=False, indent=1)
 for old in ('lorem-ipsum-dolor', 'consectetur-adipiscing-elit', 'duis-aute-irure'):
     f = os.path.join(PUB, 'articles', old + '.html')
     if os.path.exists(f): os.remove(f)

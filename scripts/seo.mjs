@@ -39,6 +39,7 @@ function siteOrigin() {
 function headBlock({origin, path, title, description, type = 'website', indexable, extra = '', published, og = OG}) {
   const url = origin + path
   const OG_ = og
+  const ogURL = esc(OG_.abs ? OG_.src : origin + OG_.src)
   return [
     `<link rel="canonical" href="${esc(url)}">`,
     indexable ? '<meta name="robots" content="index, follow, max-image-preview:large">' : '<meta name="robots" content="noindex, nofollow">',
@@ -47,11 +48,11 @@ function headBlock({origin, path, title, description, type = 'website', indexabl
     `<meta property="og:title" content="${esc(title)}">`,
     `<meta property="og:description" content="${esc(description)}">`,
     `<meta property="og:url" content="${esc(url)}">`,
-    `<meta property="og:image" content="${origin}${OG_.src}">`,
+    `<meta property="og:image" content="${ogURL}">`,
     `<meta property="og:image:width" content="${OG_.w}">`,
     `<meta property="og:image:height" content="${OG_.h}">`,
     `<meta property="og:image:alt" content="${esc(OG_.alt)}">`,
-    `<meta name="twitter:image" content="${origin}${OG_.src}">`,
+    `<meta name="twitter:image" content="${ogURL}">`,
     `<meta name="twitter:title" content="${esc(title)}">`,
     `<meta name="twitter:description" content="${esc(description)}">`,
     `<link rel="alternate" hreflang="en" href="${esc(url)}">`,
@@ -208,7 +209,10 @@ function articleHead(html, slug, origin, indexable) {
   const description = ((html.match(/<meta name="description" content="([^"]*)"/) || [])[1] || ORG_DESC).replace(/&amp;/g, '&').replace(/&quot;/g, '"')
   const placeholder = PLACEHOLDER.test(title + ' ' + description)
   const path = '/articles/' + slug
-  const img = slug === 'say-hop'
+  const cmsOg = html.match(/<meta name="hop-og" content="([^"]+)" data-alt="([^"]*)">/)
+  const img = cmsOg
+    ? {src: cmsOg[1].replace(/&amp;/g, '&'), w: 1200, h: 630, alt: cmsOg[2].replace(/&amp;/g, '&').replace(/&quot;/g, '"'), abs: true}
+    : slug === 'say-hop'
     ? {src: '/assets/og-say-hop.jpg', w: 1200, h: 630, alt: 'A ski jumper in full flight, in ivory on HOP red'}
     : slug === 'why-were-here'
       ? {src: '/assets/og-founders.jpg', w: 1200, h: 630, alt: 'Philip Jacobson and David Anson, the two senior partners of HOP'}
@@ -216,7 +220,7 @@ function articleHead(html, slug, origin, indexable) {
   const data = {
     '@context': 'https://schema.org',
     '@graph': [
-      {'@type': 'Article', '@id': origin + path + '#article', headline: title.replace(/\.$/, ''), description, inLanguage: 'en', mainEntityOfPage: origin + path, image: {'@type': 'ImageObject', url: origin + img.src, width: img.w, height: img.h}, author: PEOPLE.map((p) => ({'@id': origin + '/#' + p.name.toLowerCase().replace(/\s+/g, '-'), '@type': 'Person', name: p.name, url: p.li})), publisher: {'@id': origin + '/#org'}, isPartOf: {'@type': 'Blog', name: 'House of Poland', url: origin + '/articles'}},
+      {'@type': 'Article', '@id': origin + path + '#article', headline: title.replace(/\.$/, ''), description, inLanguage: 'en', mainEntityOfPage: origin + path, image: {'@type': 'ImageObject', url: img.abs ? img.src : origin + img.src, width: img.w, height: img.h}, author: PEOPLE.map((p) => ({'@id': origin + '/#' + p.name.toLowerCase().replace(/\s+/g, '-'), '@type': 'Person', name: p.name, url: p.li})), publisher: {'@id': origin + '/#org'}, isPartOf: {'@type': 'Blog', name: 'House of Poland', url: origin + '/articles'}},
       crumbs(origin, [['Home', '/'], ['House of Poland', '/articles'], [title.replace(/\.$/, ''), path]]),
       orgLd(origin),
     ],
