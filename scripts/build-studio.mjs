@@ -20,7 +20,7 @@ if (!projectId || !existsSync(join(studio, 'node_modules', '.bin', 'sanity'))) {
   execFileSync(join(studio, 'node_modules', '.bin', 'sanity'), ['build', out, '--yes'], {
     cwd: studio,
     stdio: 'inherit',
-    env: {...process.env, SANITY_STUDIO_PROJECT_ID: projectId, SANITY_STUDIO_DATASET: process.env.SANITY_DATASET || 'production'},
+    env: {...process.env, SANITY_STUDIO_BASEPATH: '/studio', SANITY_STUDIO_PROJECT_ID: projectId, SANITY_STUDIO_DATASET: process.env.SANITY_DATASET || 'production'},
   })
   console.log('Studio: built to dist/studio')
 }
