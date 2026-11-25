@@ -9,7 +9,6 @@ const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'REPLACE_WITH_PROJECT_
 export default defineConfig({
   name: 'house-of-poland',
   title: 'HOP. House of Poland',
-  basePath: '/studio',
   projectId,
   dataset: process.env.SANITY_STUDIO_DATASET || 'production',
   plugins: [
